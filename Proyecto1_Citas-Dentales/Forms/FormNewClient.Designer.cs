@@ -62,8 +62,9 @@ namespace Proyecto1_Citas_Dentales.Forms
             panel1.Controls.Add(label1);
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
+            panel1.Margin = new Padding(3, 4, 3, 4);
             panel1.Name = "panel1";
-            panel1.Size = new Size(800, 70);
+            panel1.Size = new Size(914, 93);
             panel1.TabIndex = 2;
             // 
             // button2
@@ -73,10 +74,11 @@ namespace Proyecto1_Citas_Dentales.Forms
             button2.BackColor = Color.FromArgb(25, 25, 50);
             button2.FlatStyle = FlatStyle.Flat;
             button2.ForeColor = Color.White;
-            button2.Location = new Point(1268, 17);
+            button2.Location = new Point(1426, 23);
+            button2.Margin = new Padding(3, 4, 3, 4);
             button2.Name = "button2";
-            button2.Padding = new Padding(8, 4, 8, 4);
-            button2.Size = new Size(110, 35);
+            button2.Padding = new Padding(9, 5, 9, 5);
+            button2.Size = new Size(149, 53);
             button2.TabIndex = 3;
             button2.Text = "Nuevo Cliente";
             button2.UseVisualStyleBackColor = false;
@@ -88,10 +90,11 @@ namespace Proyecto1_Citas_Dentales.Forms
             button1.BackColor = Color.FromArgb(25, 25, 50);
             button1.FlatStyle = FlatStyle.Flat;
             button1.ForeColor = Color.White;
-            button1.Location = new Point(1877, 17);
+            button1.Location = new Point(2121, 23);
+            button1.Margin = new Padding(3, 4, 3, 4);
             button1.Name = "button1";
-            button1.Padding = new Padding(8, 4, 8, 4);
-            button1.Size = new Size(101, 35);
+            button1.Padding = new Padding(9, 5, 9, 5);
+            button1.Size = new Size(139, 53);
             button1.TabIndex = 2;
             button1.Text = "Agregar tipo";
             button1.UseVisualStyleBackColor = false;
@@ -102,9 +105,9 @@ namespace Proyecto1_Citas_Dentales.Forms
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 24F, FontStyle.Bold, GraphicsUnit.Point);
             label1.ForeColor = Color.White;
-            label1.Location = new Point(12, 11);
+            label1.Location = new Point(14, 15);
             label1.Name = "label1";
-            label1.Size = new Size(225, 45);
+            label1.Size = new Size(283, 54);
             label1.TabIndex = 1;
             label1.Text = "Nuevo cliente";
             // 
@@ -120,10 +123,11 @@ namespace Proyecto1_Citas_Dentales.Forms
             panel2.Controls.Add(label3);
             panel2.Controls.Add(inputId);
             panel2.Controls.Add(label2);
-            panel2.Location = new Point(71, 122);
+            panel2.Location = new Point(81, 163);
+            panel2.Margin = new Padding(3, 4, 3, 4);
             panel2.Name = "panel2";
-            panel2.Padding = new Padding(10);
-            panel2.Size = new Size(296, 250);
+            panel2.Padding = new Padding(11, 13, 11, 13);
+            panel2.Size = new Size(338, 333);
             panel2.TabIndex = 3;
             // 
             // inputSecondLastName
@@ -134,9 +138,10 @@ namespace Proyecto1_Citas_Dentales.Forms
             inputSecondLastName.Dock = DockStyle.Top;
             inputSecondLastName.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
             inputSecondLastName.ForeColor = Color.White;
-            inputSecondLastName.Location = new Point(10, 215);
+            inputSecondLastName.Location = new Point(11, 274);
+            inputSecondLastName.Margin = new Padding(3, 4, 3, 4);
             inputSecondLastName.Name = "inputSecondLastName";
-            inputSecondLastName.Size = new Size(276, 25);
+            inputSecondLastName.Size = new Size(316, 30);
             inputSecondLastName.TabIndex = 14;
             // 
             // label5
@@ -145,10 +150,10 @@ namespace Proyecto1_Citas_Dentales.Forms
             label5.Dock = DockStyle.Top;
             label5.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
             label5.ForeColor = Color.LightGray;
-            label5.Location = new Point(10, 180);
+            label5.Location = new Point(11, 228);
             label5.Name = "label5";
-            label5.Padding = new Padding(0, 10, 0, 4);
-            label5.Size = new Size(134, 35);
+            label5.Padding = new Padding(0, 13, 0, 5);
+            label5.Size = new Size(171, 46);
             label5.TabIndex = 13;
             label5.Text = "Segundo apellido:";
             // 
@@ -160,9 +165,10 @@ namespace Proyecto1_Citas_Dentales.Forms
             inputFirstLastName.Dock = DockStyle.Top;
             inputFirstLastName.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
             inputFirstLastName.ForeColor = Color.White;
-            inputFirstLastName.Location = new Point(10, 155);
+            inputFirstLastName.Location = new Point(11, 198);
+            inputFirstLastName.Margin = new Padding(3, 4, 3, 4);
             inputFirstLastName.Name = "inputFirstLastName";
-            inputFirstLastName.Size = new Size(276, 25);
+            inputFirstLastName.Size = new Size(316, 30);
             inputFirstLastName.TabIndex = 12;
             // 
             // label4
@@ -171,10 +177,10 @@ namespace Proyecto1_Citas_Dentales.Forms
             label4.Dock = DockStyle.Top;
             label4.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
             label4.ForeColor = Color.LightGray;
-            label4.Location = new Point(10, 120);
+            label4.Location = new Point(11, 152);
             label4.Name = "label4";
-            label4.Padding = new Padding(0, 10, 0, 4);
-            label4.Size = new Size(119, 35);
+            label4.Padding = new Padding(0, 13, 0, 5);
+            label4.Size = new Size(149, 46);
             label4.TabIndex = 11;
             label4.Text = "Primer apellido:";
             // 
@@ -186,9 +192,10 @@ namespace Proyecto1_Citas_Dentales.Forms
             inputName.Dock = DockStyle.Top;
             inputName.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
             inputName.ForeColor = Color.White;
-            inputName.Location = new Point(10, 95);
+            inputName.Location = new Point(11, 122);
+            inputName.Margin = new Padding(3, 4, 3, 4);
             inputName.Name = "inputName";
-            inputName.Size = new Size(276, 25);
+            inputName.Size = new Size(316, 30);
             inputName.TabIndex = 10;
             // 
             // label3
@@ -197,10 +204,10 @@ namespace Proyecto1_Citas_Dentales.Forms
             label3.Dock = DockStyle.Top;
             label3.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
             label3.ForeColor = Color.LightGray;
-            label3.Location = new Point(10, 60);
+            label3.Location = new Point(11, 76);
             label3.Name = "label3";
-            label3.Padding = new Padding(0, 10, 0, 4);
-            label3.Size = new Size(71, 35);
+            label3.Padding = new Padding(0, 13, 0, 5);
+            label3.Size = new Size(89, 46);
             label3.TabIndex = 9;
             label3.Text = "Nombre:";
             // 
@@ -212,9 +219,10 @@ namespace Proyecto1_Citas_Dentales.Forms
             inputId.Dock = DockStyle.Top;
             inputId.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
             inputId.ForeColor = Color.White;
-            inputId.Location = new Point(10, 35);
+            inputId.Location = new Point(11, 46);
+            inputId.Margin = new Padding(3, 4, 3, 4);
             inputId.Name = "inputId";
-            inputId.Size = new Size(276, 25);
+            inputId.Size = new Size(316, 30);
             inputId.TabIndex = 8;
             // 
             // label2
@@ -223,10 +231,10 @@ namespace Proyecto1_Citas_Dentales.Forms
             label2.Dock = DockStyle.Top;
             label2.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
             label2.ForeColor = Color.LightGray;
-            label2.Location = new Point(10, 10);
+            label2.Location = new Point(11, 13);
             label2.Name = "label2";
-            label2.Padding = new Padding(0, 0, 0, 4);
-            label2.Size = new Size(186, 25);
+            label2.Padding = new Padding(0, 0, 0, 5);
+            label2.Size = new Size(234, 33);
             label2.TabIndex = 0;
             label2.Text = "Identificación del usuario:";
             // 
@@ -239,10 +247,11 @@ namespace Proyecto1_Citas_Dentales.Forms
             panel3.Controls.Add(label6);
             panel3.Controls.Add(inputBirthday);
             panel3.Controls.Add(label9);
-            panel3.Location = new Point(420, 122);
+            panel3.Location = new Point(480, 163);
+            panel3.Margin = new Padding(3, 4, 3, 4);
             panel3.Name = "panel3";
-            panel3.Padding = new Padding(10);
-            panel3.Size = new Size(293, 250);
+            panel3.Padding = new Padding(11, 13, 11, 13);
+            panel3.Size = new Size(335, 333);
             panel3.TabIndex = 4;
             // 
             // buttonSaveClient
@@ -254,9 +263,10 @@ namespace Proyecto1_Citas_Dentales.Forms
             buttonSaveClient.FlatStyle = FlatStyle.Flat;
             buttonSaveClient.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
             buttonSaveClient.ForeColor = Color.White;
-            buttonSaveClient.Location = new Point(10, 207);
+            buttonSaveClient.Location = new Point(11, 267);
+            buttonSaveClient.Margin = new Padding(3, 4, 3, 4);
             buttonSaveClient.Name = "buttonSaveClient";
-            buttonSaveClient.Size = new Size(273, 33);
+            buttonSaveClient.Size = new Size(313, 53);
             buttonSaveClient.TabIndex = 4;
             buttonSaveClient.Text = "Guardar cliente";
             buttonSaveClient.UseVisualStyleBackColor = true;
@@ -272,9 +282,10 @@ namespace Proyecto1_Citas_Dentales.Forms
             inputGender.ForeColor = Color.White;
             inputGender.FormattingEnabled = true;
             inputGender.Items.AddRange(new object[] { "No especificado", "Femenino", "Masculino" });
-            inputGender.Location = new Point(10, 95);
+            inputGender.Location = new Point(11, 122);
+            inputGender.Margin = new Padding(3, 4, 3, 4);
             inputGender.Name = "inputGender";
-            inputGender.Size = new Size(273, 25);
+            inputGender.Size = new Size(313, 31);
             inputGender.TabIndex = 3;
             inputGender.Text = "No especificado";
             // 
@@ -284,10 +295,10 @@ namespace Proyecto1_Citas_Dentales.Forms
             label6.Dock = DockStyle.Top;
             label6.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
             label6.ForeColor = Color.LightGray;
-            label6.Location = new Point(10, 60);
+            label6.Location = new Point(11, 76);
             label6.Name = "label6";
-            label6.Padding = new Padding(0, 10, 0, 4);
-            label6.Size = new Size(64, 35);
+            label6.Padding = new Padding(0, 13, 0, 5);
+            label6.Size = new Size(80, 46);
             label6.TabIndex = 2;
             label6.Text = "Género:";
             // 
@@ -302,11 +313,12 @@ namespace Proyecto1_Citas_Dentales.Forms
             inputBirthday.CustomFormat = "dd/mm/yyyy";
             inputBirthday.Dock = DockStyle.Top;
             inputBirthday.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
-            inputBirthday.Location = new Point(10, 35);
+            inputBirthday.Location = new Point(11, 46);
+            inputBirthday.Margin = new Padding(3, 4, 3, 4);
             inputBirthday.MaxDate = new DateTime(2023, 9, 29, 0, 0, 0, 0);
             inputBirthday.MinDate = new DateTime(1960, 1, 1, 0, 0, 0, 0);
             inputBirthday.Name = "inputBirthday";
-            inputBirthday.Size = new Size(273, 25);
+            inputBirthday.Size = new Size(313, 30);
             inputBirthday.TabIndex = 1;
             inputBirthday.Value = new DateTime(2023, 9, 29, 0, 0, 0, 0);
             // 
@@ -316,22 +328,23 @@ namespace Proyecto1_Citas_Dentales.Forms
             label9.Dock = DockStyle.Top;
             label9.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
             label9.ForeColor = Color.LightGray;
-            label9.Location = new Point(10, 10);
+            label9.Location = new Point(11, 13);
             label9.Name = "label9";
-            label9.Padding = new Padding(0, 0, 0, 4);
-            label9.Size = new Size(155, 25);
+            label9.Padding = new Padding(0, 0, 0, 5);
+            label9.Size = new Size(195, 33);
             label9.TabIndex = 0;
             label9.Text = "Fecha de nacimiento:";
             // 
             // FormNewClient
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(25, 25, 50);
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(914, 600);
             Controls.Add(panel3);
             Controls.Add(panel2);
             Controls.Add(panel1);
+            Margin = new Padding(3, 4, 3, 4);
             Name = "FormNewClient";
             Text = "FormNewClient";
             panel1.ResumeLayout(false);

@@ -1,7 +1,5 @@
 using System.ComponentModel;
 
-
-
 namespace Proyecto1_Citas_Dentales
 {
     public partial class FormMainMenu : Form

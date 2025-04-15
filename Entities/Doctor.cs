@@ -21,4 +21,6 @@ namespace Entities
             State = state;
         }
     }
-}
+    
+    
+    }

@@ -299,6 +299,7 @@
             Controls.Add(panel3);
             Controls.Add(panel2);
             Controls.Add(panel1);
+            ForeColor = SystemColors.ControlLight;
             Margin = new Padding(3, 4, 3, 4);
             Name = "FormNewDoctor";
             Text = "FormNewDoctor";

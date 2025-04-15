@@ -12,3 +12,4 @@ namespace Entities
         public string SecondLastName { get; set; }
     }
 }
+

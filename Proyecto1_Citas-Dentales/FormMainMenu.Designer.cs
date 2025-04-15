@@ -272,7 +272,7 @@
             // panelDesktopPanel
             // 
             panelDesktopPanel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            panelDesktopPanel.BackColor = Color.DeepSkyBlue;
+            panelDesktopPanel.BackColor = Color.FromArgb(25, 25, 50);
             panelDesktopPanel.Controls.Add(pictureBox1);
             panelDesktopPanel.Location = new Point(251, 0);
             panelDesktopPanel.Margin = new Padding(3, 4, 3, 4);
