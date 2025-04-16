@@ -2,12 +2,18 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <TargetFramework>net9.0-windows7.0</TargetFramework>
     <RootNamespace>Proyecto1_Citas_Dentales</RootNamespace>
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
+    <ApplicationIcon>toothdoctor_diente_10727.ico</ApplicationIcon>
+    <AssemblyName>CDental</AssemblyName>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="toothdoctor_diente_10727.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\BusinessLogic\BusinessLogic.csproj" />
