@@ -7,8 +7,13 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
+<<<<<<< HEAD
     <AssemblyName>CDental</AssemblyName>
     <ApplicationIcon>toothdoctor_diente_10727.ico</ApplicationIcon>
+=======
+    <ApplicationIcon>toothdoctor_diente_10727.ico</ApplicationIcon>
+    <AssemblyName>CDental</AssemblyName>
+>>>>>>> 65b923dae2a7aac3cca6df638347be1c8091af47
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,10 +21,13 @@
   </ItemGroup>
 
   <ItemGroup>
+<<<<<<< HEAD
     <PackageReference Include="Oracle.ManagedDataAccess" Version="23.8.0" />
   </ItemGroup>
 
   <ItemGroup>
+=======
+>>>>>>> 65b923dae2a7aac3cca6df638347be1c8091af47
     <ProjectReference Include="..\BusinessLogic\BusinessLogic.csproj" />
     <ProjectReference Include="..\Entities\Entities.csproj" />
   </ItemGroup>
