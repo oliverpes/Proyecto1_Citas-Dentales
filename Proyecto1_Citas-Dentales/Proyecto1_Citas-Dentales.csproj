@@ -1,50 +1,42 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net9.0-windows7.0</TargetFramework>
-    <RootNamespace>Proyecto1_Citas_Dentales</RootNamespace>
-    <Nullable>enable</Nullable>
-    <UseWindowsForms>true</UseWindowsForms>
-    <ImplicitUsings>enable</ImplicitUsings>
-<<<<<<< HEAD
-    <AssemblyName>CDental</AssemblyName>
-    <ApplicationIcon>toothdoctor_diente_10727.ico</ApplicationIcon>
-=======
-    <ApplicationIcon>toothdoctor_diente_10727.ico</ApplicationIcon>
-    <AssemblyName>CDental</AssemblyName>
->>>>>>> 65b923dae2a7aac3cca6df638347be1c8091af47
-  </PropertyGroup>
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net9.0-windows7.0</TargetFramework>
+		<RootNamespace>Proyecto1_Citas_Dentales</RootNamespace>
+		<Nullable>enable</Nullable>
+		<UseWindowsForms>true</UseWindowsForms>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<AssemblyName>CDental</AssemblyName>
+		<ApplicationIcon>toothdoctor_diente_10727.ico</ApplicationIcon>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <Content Include="toothdoctor_diente_10727.ico" />
-  </ItemGroup>
+	<ItemGroup>
+		<Content Include="toothdoctor_diente_10727.ico" />
+	</ItemGroup>
 
-  <ItemGroup>
-<<<<<<< HEAD
-    <PackageReference Include="Oracle.ManagedDataAccess" Version="23.8.0" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Oracle.ManagedDataAccess" Version="23.8.0" />
+	</ItemGroup>
 
-  <ItemGroup>
-=======
->>>>>>> 65b923dae2a7aac3cca6df638347be1c8091af47
-    <ProjectReference Include="..\BusinessLogic\BusinessLogic.csproj" />
-    <ProjectReference Include="..\Entities\Entities.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\BusinessLogic\BusinessLogic.csproj" />
+		<ProjectReference Include="..\Entities\Entities.csproj" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Compile Update="Properties\Resources.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-  </ItemGroup>
+	<ItemGroup>
+		<Compile Update="Properties\Resources.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>Resources.resx</DependentUpon>
+		</Compile>
+	</ItemGroup>
 
-  <ItemGroup>
-    <EmbeddedResource Update="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Update="Properties\Resources.resx">
+			<Generator>ResXFileCodeGenerator</Generator>
+			<LastGenOutput>Resources.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+	</ItemGroup>
 
 </Project>
