@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Proyecto1_Citas-Dentales": {
+      "commandName": "Project",
+      "workingDirectory": "C:\\Users\\oliver\\Desktop\\dental-system-master\\Proyecto1_Citas-Dentales\\bin\\Release\\net9.0-windows7.0"
+    }
+  }
+}
