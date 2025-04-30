@@ -7,10 +7,12 @@ namespace BusinessLogic
 {
     public class UserService
     {
-        private string connectionString = "Server=TU_SERVIDOR;Database=CitasDentales;User Id=CDENTAL;Password=OLIVER4209;";
+        private string connectionString = "Server=LAPTOP-OHN2CMN7\\SQLEXPRESSOLIVER;Database=CitasDentales;User Id=CDENTAL;Password=OLIVER4209;";
 
+        // Método para registrar un usuario
         public bool RegistrarUsuario(string usuario, string contraseña)
         {
+            // Hashear la contraseña usando BCrypt
             string contraseñaHash = PasswordHasher.HashPassword(contraseña);
 
             using (SqlConnection conn = new SqlConnection(connectionString))
@@ -35,23 +37,31 @@ namespace BusinessLogic
             }
         }
 
+        // Método para validar un usuario
         public bool ValidarUsuario(string usuario, string contraseña)
         {
-            string contraseñaHash = PasswordHasher.HashPassword(contraseña);
-
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                string query = "SELECT COUNT(*) FROM Usuarios WHERE Usuario = @usuario AND Contraseña = @contraseña";
+                string query = "SELECT Contraseña FROM Usuarios WHERE Usuario = @usuario";
                 using (SqlCommand cmd = new SqlCommand(query, connection))
                 {
                     cmd.Parameters.AddWithValue("@usuario", usuario);
-                    cmd.Parameters.AddWithValue("@contraseña", contraseñaHash);
 
-                    int count = (int)cmd.ExecuteScalar();
-                    return count > 0;
+                    var resultado = cmd.ExecuteScalar();
+
+                    if (resultado != null)
+                    {
+                        string contraseñaGuardada = resultado.ToString();
+
+                        // Comparar directamente texto plano
+                        return contraseña == contraseñaGuardada;
+                    }
+
+                    return false; // Usuario no encontrado
                 }
             }
         }
+
     }
 }

@@ -1,25 +1,23 @@
-﻿using System.Security.Cryptography;
+﻿using BCrypt.Net;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace BusinessLogic
 {
     public static class PasswordHasher
     {
-        public static string HashPassword(string contraseña)
+        // Método que usa BCrypt para hacer hash de la contraseña
+        public static string HashPassword(string password)
         {
-            using (SHA256 sha256 = SHA256.Create())
-            {
-                byte[] bytes = Encoding.UTF8.GetBytes(contraseña);
-                byte[] hashBytes = sha256.ComputeHash(bytes);
+            // Hashing de la contraseña con BCrypt
+            return BCrypt.Net.BCrypt.HashPassword(password);
+        }
 
-                StringBuilder builder = new StringBuilder();
-                foreach (var b in hashBytes)
-                {
-                    builder.Append(b.ToString("x2"));
-                }
-
-                return builder.ToString();
-            }
+        // Método para verificar la contraseña con un hash previamente generado
+        public static bool VerifyPassword(string password, string hashedPassword)
+        {
+            // Verificación de la contraseña contra el hash almacenado
+            return BCrypt.Net.BCrypt.Verify(password, hashedPassword);
         }
     }
 }

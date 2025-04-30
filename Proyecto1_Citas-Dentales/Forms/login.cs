@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BusinessLogic;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -34,10 +35,32 @@ namespace Proyecto1_Citas_Dentales.Forms
 
         private void searchButton_Click(object sender, EventArgs e)
         {
-            //OpenC(new Forms.FormAppointments(), sender);
-            FormMainMenu mainMenu = new FormMainMenu();
-            mainMenu.Show();
-            this.Hide(); // Oculta el login, o usa this.Close() para cerrarlo completamente
+
+            string usuario = txtUsuario.Text.Trim();
+            string contraseña = txtContraseña.Text;
+
+            UserService userService = new UserService();
+
+            bool esValido = userService.ValidarUsuario(usuario, contraseña);
+
+            if (esValido)
+            {
+                MessageBox.Show("¡Login exitoso!");
+                //OpenC(new Forms.FormAppointments(), sender);
+                FormMainMenu mainMenu = new FormMainMenu();
+                mainMenu.Show();
+                this.Hide(); // Oculta el login, o usa this.Close() para cerrarlo completamente
+            }
+            else
+            {
+                MessageBox.Show("Usuario o contraseña incorrectos.");
+            }
+
+
+        }
+
+        private void inputId_TextChanged(object sender, EventArgs e)
+        {
 
 
         }
