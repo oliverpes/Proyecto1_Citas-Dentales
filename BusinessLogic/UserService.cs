@@ -2,12 +2,27 @@
 using System.Data.SqlClient;
 using Entities;
 using System.Data;
+using System.IO;
 
 namespace BusinessLogic
 {
     public class UserService
     {
-        private string connectionString = "Server=LAPTOP-OHN2CMN7\\SQLEXPRESSOLIVER;Database=CitasDentales;User Id=CDENTAL;Password=OLIVER4209;";
+        private string connectionString;
+
+        public UserService()
+        {
+            string configPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config.txt");
+
+            if (File.Exists(configPath))
+            {
+                connectionString = File.ReadAllText(configPath).Trim();
+            }
+            else
+            {
+                throw new Exception("No se encontró el archivo config.txt con la cadena de conexión.");
+            }
+        }
 
         // Método para registrar un usuario
         public bool RegistrarUsuario(string usuario, string contraseña)
@@ -53,15 +68,12 @@ namespace BusinessLogic
                     if (resultado != null)
                     {
                         string contraseñaGuardada = resultado.ToString();
-
-                        // Comparar directamente texto plano
-                        return contraseña == contraseñaGuardada;
+                        return contraseña == contraseñaGuardada; // compara directamente texto plano
                     }
 
                     return false; // Usuario no encontrado
                 }
             }
         }
-
     }
 }
