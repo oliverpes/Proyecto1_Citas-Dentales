@@ -49,7 +49,6 @@
             txtUsuario.Name = "txtUsuario";
             txtUsuario.Size = new Size(443, 30);
             txtUsuario.TabIndex = 9;
-            txtUsuario.TextAlign = HorizontalAlignment.Center;
             txtUsuario.TextChanged += inputId_TextChanged;
             // 
             // label3
@@ -64,6 +63,7 @@
             label3.Size = new Size(119, 46);
             label3.TabIndex = 12;
             label3.Text = "Usuario";
+            label3.TextAlign = ContentAlignment.TopCenter;
             // 
             // txtContraseña
             // 
@@ -78,7 +78,6 @@
             txtContraseña.PasswordChar = '*';
             txtContraseña.Size = new Size(443, 30);
             txtContraseña.TabIndex = 13;
-            txtContraseña.TextAlign = HorizontalAlignment.Center;
             // 
             // label4
             // 
@@ -95,7 +94,7 @@
             // 
             // label2
             // 
-            label2.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            label2.Anchor = AnchorStyles.None;
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 24F, FontStyle.Bold);
             label2.ForeColor = Color.Transparent;
@@ -108,7 +107,7 @@
             // 
             // label1
             // 
-            label1.Anchor = AnchorStyles.None;
+            label1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 20F, FontStyle.Bold);
             label1.ForeColor = Color.Transparent;
@@ -121,6 +120,7 @@
             // 
             // loginButton
             // 
+            loginButton.Anchor = AnchorStyles.None;
             loginButton.AutoSize = true;
             loginButton.FlatAppearance.BorderColor = Color.DimGray;
             loginButton.FlatStyle = FlatStyle.Flat;

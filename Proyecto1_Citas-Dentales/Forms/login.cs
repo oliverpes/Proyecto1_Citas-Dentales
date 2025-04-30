@@ -35,27 +35,30 @@ namespace Proyecto1_Citas_Dentales.Forms
 
         private void searchButton_Click(object sender, EventArgs e)
         {
-
+            
+            /*codigo de prueba para abrir la trancision*/
             string usuario = txtUsuario.Text.Trim();
             string contraseña = txtContraseña.Text;
 
             UserService userService = new UserService();
-
             bool esValido = userService.ValidarUsuario(usuario, contraseña);
 
             if (esValido)
             {
-                MessageBox.Show("¡Login exitoso!");
-                //OpenC(new Forms.FormAppointments(), sender);
+                //permite centrar la apliacion y que sea responsive
                 FormMainMenu mainMenu = new FormMainMenu();
+                mainMenu.StartPosition = FormStartPosition.CenterScreen;
+                mainMenu.Location = this.Location; // Misma posición que el login
+                mainMenu.Size = this.Size;         // Misma dimensión (opcional)
+
                 mainMenu.Show();
-                this.Hide(); // Oculta el login, o usa this.Close() para cerrarlo completamente
+                this.Hide(); // O this.Close() si quieres cerrarlo
             }
+
             else
             {
                 MessageBox.Show("Usuario o contraseña incorrectos.");
             }
-
 
         }
 

@@ -1,8 +1,3 @@
-
-/* 
-* Clase principal del programa, se encarga de inicializar la aplicacion.
-*/
-
 using Proyecto1_Citas_Dentales.Forms;
 
 namespace Proyecto1_Citas_Dentales
@@ -15,11 +10,13 @@ namespace Proyecto1_Citas_Dentales
         [STAThread]
         static void Main()
         {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new login());
-            //Application.Run(new FormMainMenu()); levantar la app directamente al menu
+
+            // Crear una instancia de login
+            login loginForm = new login();
+            loginForm.StartPosition = FormStartPosition.CenterScreen;
+            loginForm.Size = new Size(1000, 700);
+            Application.Run(loginForm);
         }
     }
 }
