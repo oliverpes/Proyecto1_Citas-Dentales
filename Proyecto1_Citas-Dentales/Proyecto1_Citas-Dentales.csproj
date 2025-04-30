@@ -9,6 +9,8 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<AssemblyName>CDental</AssemblyName>
 		<ApplicationIcon>toothdoctor_diente_10727.ico</ApplicationIcon>
+		<BaseOutputPath>C:\Users\oliver\Desktop\CDentalTest</BaseOutputPath>
+		<ProduceReferenceAssembly>False</ProduceReferenceAssembly>
 	</PropertyGroup>
 
 	<ItemGroup>
