@@ -27,7 +27,6 @@ namespace BusinessLogic
         // Método para registrar un usuario
         public bool RegistrarUsuario(string usuario, string contraseña)
         {
-            // Hashear la contraseña usando BCrypt
             string contraseñaHash = PasswordHasher.HashPassword(contraseña);
 
             using (SqlConnection conn = new SqlConnection(connectionString))
@@ -47,7 +46,10 @@ namespace BusinessLogic
                 }
                 catch (SqlException ex)
                 {
-                    throw new Exception("Error al registrar usuario: " + ex.Message);
+                    if (ex.Number == 26 || ex.Number == 53) // Error de red o instancia no encontrada
+                        throw new Exception("No se pudo conectar al servidor de base de datos. Verifique que esté encendido y que la cadena de conexión sea correcta.");
+                    else
+                        throw new Exception("Error al registrar usuario: " + ex.Message);
                 }
             }
         }
@@ -55,24 +57,33 @@ namespace BusinessLogic
         // Método para validar un usuario
         public bool ValidarUsuario(string usuario, string contraseña)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            try
             {
-                connection.Open();
-                string query = "SELECT Contraseña FROM Usuarios WHERE Usuario = @usuario";
-                using (SqlCommand cmd = new SqlCommand(query, connection))
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
-                    cmd.Parameters.AddWithValue("@usuario", usuario);
-
-                    var resultado = cmd.ExecuteScalar();
-
-                    if (resultado != null)
+                    connection.Open();
+                    string query = "SELECT Contraseña FROM Usuarios WHERE Usuario = @usuario";
+                    using (SqlCommand cmd = new SqlCommand(query, connection))
                     {
-                        string contraseñaGuardada = resultado.ToString();
-                        return contraseña == contraseñaGuardada; // compara directamente texto plano
-                    }
+                        cmd.Parameters.AddWithValue("@usuario", usuario);
+                        var resultado = cmd.ExecuteScalar();
 
-                    return false; // Usuario no encontrado
+                        if (resultado != null)
+                        {
+                            string contraseñaGuardada = resultado.ToString();
+                            return contraseña == contraseñaGuardada;
+                        }
+
+                        return false;
+                    }
                 }
+            }
+            catch (SqlException ex)
+            {
+                if (ex.Number == 26 || ex.Number == 53)
+                    throw new Exception("No se pudo conectar al servidor de base de datos. Verifique la conexión.");
+                else
+                    throw new Exception("Error al validar usuario: " + ex.Message);
             }
         }
     }

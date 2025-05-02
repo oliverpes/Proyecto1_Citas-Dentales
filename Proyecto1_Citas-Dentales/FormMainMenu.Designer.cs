@@ -79,7 +79,7 @@
             buttonReportDoctor.Dock = DockStyle.Top;
             buttonReportDoctor.FlatAppearance.BorderSize = 0;
             buttonReportDoctor.FlatStyle = FlatStyle.Flat;
-            buttonReportDoctor.Font = new Font("Segoe UI", 10F);
+            buttonReportDoctor.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
             buttonReportDoctor.ForeColor = Color.LightGray;
             buttonReportDoctor.Location = new Point(0, 537);
             buttonReportDoctor.Margin = new Padding(3, 4, 3, 4);
@@ -98,7 +98,7 @@
             buttonReportClient.Dock = DockStyle.Top;
             buttonReportClient.FlatAppearance.BorderSize = 0;
             buttonReportClient.FlatStyle = FlatStyle.Flat;
-            buttonReportClient.Font = new Font("Segoe UI", 10F);
+            buttonReportClient.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
             buttonReportClient.ForeColor = Color.LightGray;
             buttonReportClient.Location = new Point(0, 477);
             buttonReportClient.Margin = new Padding(3, 4, 3, 4);
@@ -117,7 +117,7 @@
             buttonReportDate.Dock = DockStyle.Top;
             buttonReportDate.FlatAppearance.BorderSize = 0;
             buttonReportDate.FlatStyle = FlatStyle.Flat;
-            buttonReportDate.Font = new Font("Segoe UI", 10F);
+            buttonReportDate.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
             buttonReportDate.ForeColor = Color.LightGray;
             buttonReportDate.Location = new Point(0, 417);
             buttonReportDate.Margin = new Padding(3, 4, 3, 4);
@@ -134,7 +134,7 @@
             // 
             label4.AutoSize = true;
             label4.Dock = DockStyle.Top;
-            label4.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
+            label4.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point);
             label4.ForeColor = Color.White;
             label4.Location = new Point(0, 389);
             label4.Name = "label4";
@@ -149,7 +149,7 @@
             buttonAdmDoctors.Dock = DockStyle.Top;
             buttonAdmDoctors.FlatAppearance.BorderSize = 0;
             buttonAdmDoctors.FlatStyle = FlatStyle.Flat;
-            buttonAdmDoctors.Font = new Font("Segoe UI", 10F);
+            buttonAdmDoctors.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
             buttonAdmDoctors.ForeColor = Color.LightGray;
             buttonAdmDoctors.Location = new Point(0, 329);
             buttonAdmDoctors.Margin = new Padding(3, 4, 3, 4);
@@ -168,7 +168,7 @@
             buttonAdmClients.Dock = DockStyle.Top;
             buttonAdmClients.FlatAppearance.BorderSize = 0;
             buttonAdmClients.FlatStyle = FlatStyle.Flat;
-            buttonAdmClients.Font = new Font("Segoe UI", 10F);
+            buttonAdmClients.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
             buttonAdmClients.ForeColor = Color.LightGray;
             buttonAdmClients.Location = new Point(0, 269);
             buttonAdmClients.Margin = new Padding(3, 4, 3, 4);
@@ -185,7 +185,7 @@
             // 
             label3.AutoSize = true;
             label3.Dock = DockStyle.Top;
-            label3.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
+            label3.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point);
             label3.ForeColor = Color.White;
             label3.Location = new Point(0, 241);
             label3.Name = "label3";
@@ -200,7 +200,7 @@
             buttonNewQueryType.Dock = DockStyle.Top;
             buttonNewQueryType.FlatAppearance.BorderSize = 0;
             buttonNewQueryType.FlatStyle = FlatStyle.Flat;
-            buttonNewQueryType.Font = new Font("Segoe UI", 10F);
+            buttonNewQueryType.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
             buttonNewQueryType.ForeColor = Color.LightGray;
             buttonNewQueryType.Location = new Point(0, 181);
             buttonNewQueryType.Margin = new Padding(3, 4, 3, 4);
@@ -219,7 +219,7 @@
             buttonNewDates.Dock = DockStyle.Top;
             buttonNewDates.FlatAppearance.BorderSize = 0;
             buttonNewDates.FlatStyle = FlatStyle.Flat;
-            buttonNewDates.Font = new Font("Segoe UI", 10F);
+            buttonNewDates.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
             buttonNewDates.ForeColor = Color.LightGray;
             buttonNewDates.Location = new Point(0, 121);
             buttonNewDates.Margin = new Padding(3, 4, 3, 4);
@@ -236,7 +236,7 @@
             // 
             label2.AutoSize = true;
             label2.Dock = DockStyle.Top;
-            label2.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
+            label2.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point);
             label2.ForeColor = Color.White;
             label2.Location = new Point(0, 93);
             label2.Name = "label2";
@@ -260,7 +260,7 @@
             label1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             label1.AutoSize = true;
             label1.Cursor = Cursors.Hand;
-            label1.Font = new Font("Microsoft Sans Serif", 15.75F, FontStyle.Bold);
+            label1.Font = new Font("Microsoft Sans Serif", 15.75F, FontStyle.Bold, GraphicsUnit.Point);
             label1.ForeColor = Color.Teal;
             label1.Location = new Point(83, 29);
             label1.Name = "label1";
