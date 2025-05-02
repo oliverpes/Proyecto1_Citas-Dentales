@@ -138,5 +138,9 @@ namespace Proyecto1_Citas_Dentales.Forms
             }
         }
 
+        private void doctorDataViewer_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }
