@@ -208,7 +208,7 @@ namespace BusinessLogic
                 using (SqlConnection connection = new SqlConnection(connectionString))
                     {
                         connection.Open();
-
+                    //esta es el query que conecta savedoctors con la base de datos
                         string query = "INSERT INTO Doctores (Id, Nombre, ApellidoPaterno, ApellidoMaterno, EstadoId) " +
                                        "VALUES (@Id, @Nombre, @ApellidoPaterno, @ApellidoMaterno, @EstadoId)";
 
