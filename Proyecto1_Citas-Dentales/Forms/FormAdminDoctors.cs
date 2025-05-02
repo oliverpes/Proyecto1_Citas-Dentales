@@ -10,13 +10,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-/* UNED: Proyecto III Cuatrimestre
- * Proyecto #1: Aplicacion para gestionar citas de una clinica dental
- * Estidiante: Marco Fernando Agüero Barboza
- * Fecha: 11/10/2023
- * 
- * Clase de la interfaz de administracion de doctores
- */
 
 namespace Proyecto1_Citas_Dentales.Forms
 {
@@ -65,7 +58,7 @@ namespace Proyecto1_Citas_Dentales.Forms
                     string name = doctor.Name;
                     string firstLastName = doctor.LastName;
                     string secondLastName = doctor.SecondLastName;
-                    string state = doctor.State == 'A' ? "Activo" : "Inactivo";
+                    string state = doctor.State == 1  ? "Activo" : "Inactivo";
 
                     string[] row = { id, name, firstLastName, secondLastName, state };
 

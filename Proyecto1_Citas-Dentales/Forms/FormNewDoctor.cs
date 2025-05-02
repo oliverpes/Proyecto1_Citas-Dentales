@@ -1,21 +1,8 @@
 ﻿using BusinessLogic;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 using System.Windows.Forms;
-
-/* UNED: Proyecto III Cuatrimestre
- * Proyecto #1: Aplicacion para gestionar citas de una clinica dental
- * Estidiante: Marco Fernando Agüero Barboza
- * Fecha: 11/10/2023
- * 
- * Clase de formulario para agregar un nuevo doctor
- */
 
 namespace Proyecto1_Citas_Dentales.Forms
 {
@@ -24,22 +11,30 @@ namespace Proyecto1_Citas_Dentales.Forms
         public FormNewDoctor()
         {
             InitializeComponent();
+
+            // Configurar ComboBox de estados
+            inputState.DataSource = new List<KeyValuePair<int, string>> {
+                new KeyValuePair<int, string>(1, "Activo"),
+                new KeyValuePair<int, string>(0, "Inactivo")
+            };
+            inputState.DisplayMember = "Value";
+            inputState.ValueMember = "Key";
         }
 
-        // Boton para guardar un nuevo doctor
         private void buttonSaveDoctor_Click(object sender, EventArgs e)
         {
-            char state = inputState.Text[0];
-            Response res = Business.SaveDoctor(inputId.Text, inputName.Text, inputFirstLastName.Text, inputSecondLastName.Text, state);
+            int estadoId = ((KeyValuePair<int, string>)inputState.SelectedItem).Key;
+            Response res = Business.SaveDoctor(inputId.Text, inputName.Text, inputFirstLastName.Text, inputSecondLastName.Text, estadoId);
+
             if (res.Success)
             {
-                if (MessageBox.Show("Doctor agregado. ¿desea agregar otro?", "Nuevo doctor", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                if (MessageBox.Show("Doctor agregado. ¿Desea agregar otro?", "Nuevo doctor", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     inputId.Text = "";
                     inputName.Text = "";
                     inputFirstLastName.Text = "";
                     inputSecondLastName.Text = "";
-                    inputState.Text = "Inactivo";
+                    inputState.SelectedIndex = 1; // "Inactivo"
                 }
                 else
                 {
@@ -54,6 +49,11 @@ namespace Proyecto1_Citas_Dentales.Forms
             {
                 MessageBox.Show(res.Message, "Nuevo doctor", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void inputState_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // No es necesario hacer nada aquí por ahora
         }
     }
 }

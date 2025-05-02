@@ -159,7 +159,7 @@ namespace BusinessLogic
 
         // Metodo para guardar un doctor
 
-        public static Response SaveDoctor(string id, string name, string lastName, string secondLastName, char state)
+        public static Response SaveDoctor(string id, string name, string lastName, string secondLastName, int state)
             {
                 Response response = new()
                 {
@@ -186,7 +186,7 @@ namespace BusinessLogic
                     {
                         throw new ArgumentException("El apellido materno del cliente no puede estar vacío.");
                     }
-                    if (state != 'A' && state != 'I')
+                    if (state != 1 && state != 0)
                     {
                         throw new ArgumentException("El estado de consulta debe ser 'Activo' o 'Inactivo'.");
                     }
@@ -209,8 +209,8 @@ namespace BusinessLogic
                     {
                         connection.Open();
 
-                        string query = "INSERT INTO Doctores (Id, Nombre, ApellidoPaterno, ApellidoMaterno, Estado) " +
-                                       "VALUES (@Id, @Nombre, @ApellidoPaterno, @ApellidoMaterno, @Estado)";
+                        string query = "INSERT INTO Doctores (Id, Nombre, ApellidoPaterno, ApellidoMaterno, EstadoId) " +
+                                       "VALUES (@Id, @Nombre, @ApellidoPaterno, @ApellidoMaterno, @EstadoId)";
 
                         using (SqlCommand cmd = new SqlCommand(query, connection))
                         {
@@ -218,7 +218,7 @@ namespace BusinessLogic
                             cmd.Parameters.AddWithValue("@Nombre", name);
                             cmd.Parameters.AddWithValue("@ApellidoPaterno", lastName);
                             cmd.Parameters.AddWithValue("@ApellidoMaterno", secondLastName);
-                            cmd.Parameters.AddWithValue("@Estado", state);
+                            cmd.Parameters.AddWithValue("@EstadoId", state);
 
                             int rowsAffected = cmd.ExecuteNonQuery();
                             if (rowsAffected > 0)
@@ -530,7 +530,6 @@ namespace BusinessLogic
                 return response;
             }
         }
-
 
 
         // ****** CLIENTES ****** //

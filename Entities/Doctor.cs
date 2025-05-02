@@ -10,9 +10,9 @@ namespace Entities
 {
     public class Doctor : Person
     {
-        public char State { get; set; }
+        public int State { get; set; }
 
-        public Doctor(int id, string name, string lastName, string secondLastName, char state)
+        public Doctor(int id, string name, string lastName, string secondLastName, int state)
         {
             Id = id;
             Name = name;
