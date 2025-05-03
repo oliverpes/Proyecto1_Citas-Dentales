@@ -4,6 +4,7 @@ using Entities;
 using System;
 using System.IO;
 using System.Data.SqlClient;
+using System.Collections.Generic;
 
 
 namespace BusinessLogic
@@ -80,6 +81,37 @@ namespace BusinessLogic
                 response.Message = e.Message;
                 return response;
             }
+        }
+        //funcion para mostrar doctores en el DataGrid
+        public static List<Doctor> GetDoctorsFromDatabase()
+        {
+            List<Doctor> doctors = new List<Doctor>();
+            string connectionString = File.ReadAllText("config.txt").Trim();
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                string query = @"SELECT d.Id, d.Nombre, d.ApellidoPaterno, d.ApellidoMaterno, d.EstadoId
+                         FROM Doctores d";
+
+                using (SqlCommand cmd = new SqlCommand(query, connection))
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        int id = reader.GetInt32(0);
+                        string nombre = reader.GetString(1);
+                        string apellidoPaterno = reader.GetString(2);
+                        string apellidoMaterno = reader.GetString(3);
+                        int estadoId = reader.GetInt32(4);
+
+                        doctors.Add(new Doctor(id, nombre, apellidoPaterno, apellidoMaterno, estadoId));
+                    }
+                }
+            }
+
+            return doctors;
         }
 
         // Metodo para guardar un cliente

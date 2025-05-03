@@ -41,15 +41,25 @@ namespace Proyecto1_Citas_Dentales.Forms
             doctorDataViewer.Columns.Add(columnSLName);
             doctorDataViewer.Columns.Add(columnState);
 
+            
+            this.Load += FormAdminDoctors_Load;
+        }
+
+        //metodo que actualiza los doctores en el DataGrid
+        private void FormAdminDoctors_Load(object sender, EventArgs e)
+        {
             UpdateData();
         }
+
 
         // Actualiza los datos del DataGridView
         public void UpdateData()
         {
             doctorDataViewer.Rows.Clear();
 
-            foreach (Doctor doctor in Business.doctors)
+            List<Doctor> doctoresBD = Business.GetDoctorsFromDatabase();
+
+            foreach (Doctor doctor in doctoresBD)
             {
                 if (doctor != null)
                 {
@@ -58,7 +68,7 @@ namespace Proyecto1_Citas_Dentales.Forms
                     string name = doctor.Name;
                     string firstLastName = doctor.LastName;
                     string secondLastName = doctor.SecondLastName;
-                    string state = doctor.State == 1  ? "Activo" : "Inactivo";
+                    string state = doctor.State == 1 ? "Activo" : "Inactivo";
 
                     string[] row = { id, name, firstLastName, secondLastName, state };
 
