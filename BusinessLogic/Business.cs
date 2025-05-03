@@ -653,27 +653,57 @@ namespace BusinessLogic
             {
                 if (id <= 0)
                 {
-                    throw new ArgumentException("Seleccione la fila a modificar");
+                    throw new ArgumentException("Seleccione la fila a modificar.");
                 }
 
-                for (int i = 0; i < doctors.Length; i++)
+                // Leer cadena de conexión
+                string connectionString = File.ReadAllText("config.txt").Trim();
+
+                int currentState = -1;
+
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
-                    if (doctors[i] != null && doctors[i].Id == id)
+                    connection.Open();
+
+                    // Obtener el estado actual del doctor
+                    string selectQuery = "SELECT EstadoId FROM Doctores WHERE Id = @Id";
+                    using (SqlCommand selectCmd = new SqlCommand(selectQuery, connection))
                     {
-                        if (doctors[i].State == 'A')
+                        selectCmd.Parameters.AddWithValue("@Id", id);
+                        object result = selectCmd.ExecuteScalar();
+
+                        if (result == null)
                         {
-                            doctors[i].State = 'I';
+                            throw new InvalidOperationException("No se encontró el doctor.");
+                        }
+
+                        currentState = Convert.ToInt32(result);
+                    }
+
+                    // Cambiar el estado (1 -> 0, 0 -> 1)
+                    int newState = currentState == 1 ? 0 : 1;
+
+                    // Actualizar el estado
+                    string updateQuery = "UPDATE Doctores SET EstadoId = @EstadoId WHERE Id = @Id";
+                    using (SqlCommand updateCmd = new SqlCommand(updateQuery, connection))
+                    {
+                        updateCmd.Parameters.AddWithValue("@EstadoId", newState);
+                        updateCmd.Parameters.AddWithValue("@Id", id);
+
+                        int rowsAffected = updateCmd.ExecuteNonQuery();
+                        if (rowsAffected > 0)
+                        {
+                            response.Success = true;
+                            response.Message = "Estado actualizado correctamente.";
                         }
                         else
                         {
-                            doctors[i].State = 'A';
+                            response.Message = "No se pudo actualizar el estado en la base de datos.";
                         }
-                        response.Success = true;
-                        return response;
                     }
                 }
 
-                throw new InvalidOperationException("No se pudo cambiar el estado del doctor.");
+                return response;
             }
             catch (ArgumentException ae)
             {
@@ -690,8 +720,9 @@ namespace BusinessLogic
                 response.Message = e.Message;
                 return response;
             }
-
         }
+
+
 
         // Eliminar doctor
         public static Response DeleteDoctor(int id)
@@ -708,17 +739,34 @@ namespace BusinessLogic
                     throw new ArgumentException("Seleccione la fila a eliminar.");
                 }
 
-                for (int i = 0; i < doctors.Length; i++)
+                // Leer cadena de conexión
+                string connectionString = File.ReadAllText("config.txt").Trim();
+
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
-                    if (doctors[i] != null && doctors[i].Id == id)
+                    connection.Open();
+
+                    string query = "DELETE FROM Doctores WHERE Id = @Id";
+
+                    using (SqlCommand cmd = new SqlCommand(query, connection))
                     {
-                        doctors[i] = null;
-                        response.Success = true;
-                        return response;
+                        cmd.Parameters.AddWithValue("@Id", id);
+
+                        int rowsAffected = cmd.ExecuteNonQuery();
+
+                        if (rowsAffected > 0)
+                        {
+                            response.Success = true;
+                            response.Message = "Doctor eliminado correctamente.";
+                        }
+                        else
+                        {
+                            response.Message = "No se encontró el doctor para eliminar.";
+                        }
                     }
                 }
 
-                throw new InvalidOperationException("No se pudo eliminar el doctor.");
+                return response;
             }
             catch (ArgumentException ae)
             {
@@ -736,6 +784,7 @@ namespace BusinessLogic
                 return response;
             }
         }
+
 
 
 
