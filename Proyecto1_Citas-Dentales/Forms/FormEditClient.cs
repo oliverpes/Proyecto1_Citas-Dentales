@@ -8,14 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
-/* UNED: Proyecto III Cuatrimestre
- * Proyecto #1: Aplicacion para gestionar citas de una clinica dental
- * Estidiante: Marco Fernando Agüero Barboza
- * Fecha: 11/10/2023
- * 
- * Clase de la interfaz de edicion de clientes
- */
+using System.Data.SqlClient;
 
 namespace Proyecto1_Citas_Dentales.Forms
 {
@@ -26,37 +19,50 @@ namespace Proyecto1_Citas_Dentales.Forms
         {
             InitializeComponent();
 
-            // Cargar los datos del cliente seleccionado
-            for (int i = 0; i < Business.clients.Length; i++)
+            int id = Business.selectedClientId;
+
+            string connectionString = File.ReadAllText("config.txt").Trim();
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                if (Business.clients[i] != null && Business.clients[i].Id == Business.selectedClientId)
+                connection.Open();
+
+                string query = "SELECT * FROM Clientes WHERE Id = @Id";
+                using (SqlCommand cmd = new SqlCommand(query, connection))
                 {
-                    inputId.Text = Business.clients[i].Id.ToString();
-                    inputName.Text = Business.clients[i].Name;
-                    inputFirstLastName.Text = Business.clients[i].LastName;
-                    inputSecondLastName.Text = Business.clients[i].SecondLastName;
-                    inputBirthday.Text = Business.clients[i].BirthDate.ToString();
-                    if (Business.clients[i].Gender == 'M')
+                    cmd.Parameters.AddWithValue("@Id", id);
+                    using (SqlDataReader reader = cmd.ExecuteReader())
                     {
-                        inputGender.Text = "Masculino";
-                    }
-                    else if (Business.clients[i].Gender == 'F')
-                    {
-                        inputGender.Text = "Femenino";
-                    }
-                    else
-                    {
-                        inputGender.Text = "No especificado";
+                        if (reader.Read())
+                        {
+                            inputId.Text = reader["Id"].ToString();
+                            inputName.Text = reader["Nombre"].ToString();
+                            inputFirstLastName.Text = reader["ApellidoPaterno"].ToString();
+                            inputSecondLastName.Text = reader["ApellidoMaterno"].ToString();
+                            inputBirthday.Value = Convert.ToDateTime(reader["FechaNacimiento"]);
+
+                            string genero = reader["Genero"].ToString();
+                            inputGender.Text = genero == "M" ? "Masculino" :
+                                               genero == "F" ? "Femenino" : "No especificado";
+                        }
                     }
                 }
             }
+
+            // Bloquear edición de campos que no se pueden cambiar (si es necesario)
+            inputId.ReadOnly = true;
+            inputName.ReadOnly = true;
+            inputFirstLastName.ReadOnly = true;
+            inputSecondLastName.ReadOnly = true;
         }
+
 
         // Boton para guardar los cambios y cerrar la ventana
         private void buttonSaveClient_Click(object sender, EventArgs e)
         {
-            char state = inputGender.Text.Length > 0 ? inputGender.Text[0] : 'N';
-            Response res = Business.UpdateClientData(inputBirthday.Value, state);
+            char gender = inputGender.Text.StartsWith("M") ? 'M' :
+                          inputGender.Text.StartsWith("F") ? 'F' : 'N';
+
+            Response res = Business.UpdateClientData(inputBirthday.Value, gender);
 
             if (res.Success)
             {
@@ -71,5 +77,6 @@ namespace Proyecto1_Citas_Dentales.Forms
                 MessageBox.Show(res.Message, "Editar cliente", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
     }
 }

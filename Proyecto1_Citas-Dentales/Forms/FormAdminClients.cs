@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.AxHost;
+using System.Data.SqlClient;
 
 /* UNED: Proyecto III Cuatrimestre
  * Proyecto #1: Aplicacion para gestionar citas de una clinica dental
@@ -55,11 +56,6 @@ namespace Proyecto1_Citas_Dentales.Forms
         // Boton para agregar un nuevo cliente
         private void buttonNewClient_Click(object sender, EventArgs e)
         {
-            if (Business.clients[19] != null)
-            {
-                MessageBox.Show("No se pueden agregar mas clientes", "Nuevo cliente", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
             FormNewClient formNewClient = new FormNewClient();
             formNewClient.Owner = this;
             formNewClient.ShowDialog();
@@ -70,22 +66,34 @@ namespace Proyecto1_Citas_Dentales.Forms
         {
             clientDataViewer.Rows.Clear();
 
-            foreach (Client client in Business.clients)
-            {
-                if (client != null)
-                {
-                    string id = client.Id.ToString();
-                    string name = client.Name;
-                    string firstLastName = client.LastName;
-                    string secondLastName = client.SecondLastName;
-                    string birthday = client.BirthDate.ToString("dd/MM/yyyy");
-                    string gender = client.Gender == 'F' ? "Femenino" : client.Gender == 'M' ? "Masculino" : "No especificado";
-                    string[] row = { id, name, firstLastName, secondLastName, birthday, gender };
+            string connectionString = File.ReadAllText("config.txt").Trim();
 
-                    clientDataViewer.Rows.Add(row);
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                string query = "SELECT Id, Nombre, ApellidoPaterno, ApellidoMaterno, FechaNacimiento, Genero FROM Clientes";
+
+                using (SqlCommand cmd = new SqlCommand(query, connection))
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        string id = reader["Id"].ToString();
+                        string name = reader["Nombre"].ToString();
+                        string firstLastName = reader["ApellidoPaterno"].ToString();
+                        string secondLastName = reader["ApellidoMaterno"].ToString();
+                        string birthday = Convert.ToDateTime(reader["FechaNacimiento"]).ToString("dd/MM/yyyy");
+
+                        string genderCode = reader["Genero"].ToString();
+                        string gender = genderCode == "F" ? "Femenino" : genderCode == "M" ? "Masculino" : "No especificado";
+
+                        string[] row = { id, name, firstLastName, secondLastName, birthday, gender };
+                        clientDataViewer.Rows.Add(row);
+                    }
                 }
             }
         }
+
 
         // Seleccionar una fila del DataGridView
         private void HandleSelectId(object sender, DataGridViewCellEventArgs e)

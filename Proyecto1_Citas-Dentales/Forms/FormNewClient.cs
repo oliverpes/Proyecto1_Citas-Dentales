@@ -9,13 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-/* UNED: Proyecto III Cuatrimestre
- * Proyecto #1: Aplicacion para gestionar citas de una clinica dental
- * Estidiante: Marco Fernando Agüero Barboza
- * Fecha: 11/10/2023
- * 
- * Clase de formulario para agregar un nuevo cliente
- */
+
 
 namespace Proyecto1_Citas_Dentales.Forms
 {
@@ -32,12 +26,13 @@ namespace Proyecto1_Citas_Dentales.Forms
         private void buttonSaveClient_Click(object sender, EventArgs e)
         {
             char gndr = inputGender.Text[0];
-            Response res = Business.SaveClient(inputId.Text, inputName.Text, inputFirstLastName.Text, inputSecondLastName.Text, inputBirthday.Value.Date, gndr);
+            Response res = Business.SaveClient(inputName.Text, inputFirstLastName.Text, inputSecondLastName.Text, inputBirthday.Value.Date, gndr);
+
             if (res.Success)
             {
-                if (MessageBox.Show("Cliente agregado. ¿desea agregar otro?", "Nuevo cliente", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                string info = res.GeneratedId.HasValue ? $"ID asignado: {res.GeneratedId}" : "";
+                if (MessageBox.Show($"Cliente agregado. {info}\n¿Desea agregar otro?", "Nuevo cliente", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
-                    inputId.Text = "";
                     inputName.Text = "";
                     inputFirstLastName.Text = "";
                     inputSecondLastName.Text = "";
@@ -58,5 +53,6 @@ namespace Proyecto1_Citas_Dentales.Forms
                 MessageBox.Show(res.Message, "Nuevo cliente", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
     }
 }

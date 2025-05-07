@@ -115,81 +115,79 @@ namespace BusinessLogic
         }
 
         // Metodo para guardar un cliente
-        public static Response SaveClient(string id, string name, string lastName, string secondLastName, DateTime birthday, char gender)
+        public static Response SaveClient(string name, string lastName, string secondLastName, DateTime birthday, char gender)
         {
-            Response response = new()
-            {
-                Success = false
-            };
+            Response response = new() { Success = false };
 
             try
             {
-                int idInt;
-                if (!int.TryParse(id, out idInt) || idInt <= 0)
-                {
-                    throw new ArgumentException("El ID de consulta debe ser un número positivo mayor que cero.");
-                }
                 if (string.IsNullOrEmpty(name))
-                {
                     throw new ArgumentException("El nombre del cliente no puede estar vacío.");
-                }
+
                 if (string.IsNullOrEmpty(lastName))
-                {
-                    throw new ArgumentException("El apellido paterno del cliente no puede estar vacío.");
-                }
+                    throw new ArgumentException("El apellido paterno no puede estar vacío.");
+
                 if (string.IsNullOrEmpty(secondLastName))
-                {
-                    throw new ArgumentException("El apellido materno del cliente no puede estar vacío.");
-                }
+                    throw new ArgumentException("El apellido materno no puede estar vacío.");
+
                 if (gender != 'M' && gender != 'F' && gender != 'N')
-                {
-                    throw new ArgumentException("El género del cliente debe ser 'Masculino', 'Femenino' o 'No especificado'.");
-                }
+                    throw new ArgumentException("El género debe ser M, F o N.");
+
                 if (birthday > DateTime.Now || birthday < new DateTime(1925, 1, 1))
-                {
-                    throw new ArgumentException("La fecha de nacimiento del cliente no puede ser mayor a la fecha actual o menor a 1925.");
-                }
+                    throw new ArgumentException("La fecha de nacimiento debe estar entre 1925 y hoy.");
 
-                // Verificar que el ID no exista en la lista
-                for (int i = 0; i < clients.Length; i++)
+                string connectionString = File.ReadAllText("config.txt").Trim();
+                int newId = 0;
+
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
-                    if (clients[i] != null && clients[i].Id == idInt)
+                    connection.Open();
+
+                    // Obtener siguiente ID disponible
+                    string selectMaxId = "SELECT MAX(Id) FROM Clientes";
+                    using (SqlCommand cmd = new SqlCommand(selectMaxId, connection))
                     {
-                        throw new InvalidOperationException("El ID de cliente ya existe.");
+                        var result = cmd.ExecuteScalar();
+                        newId = (result != DBNull.Value) ? Convert.ToInt32(result) + 1 : 1;
+                    }
+
+                    string insertQuery = "INSERT INTO Clientes (Id, Nombre, ApellidoPaterno, ApellidoMaterno, FechaNacimiento, Genero) " +
+                                         "VALUES (@Id, @Nombre, @ApellidoPaterno, @ApellidoMaterno, @FechaNacimiento, @Genero)";
+
+                    using (SqlCommand cmd = new SqlCommand(insertQuery, connection))
+                    {
+                        cmd.Parameters.AddWithValue("@Id", newId);
+                        cmd.Parameters.AddWithValue("@Nombre", name);
+                        cmd.Parameters.AddWithValue("@ApellidoPaterno", lastName);
+                        cmd.Parameters.AddWithValue("@ApellidoMaterno", secondLastName);
+                        cmd.Parameters.AddWithValue("@FechaNacimiento", birthday);
+                        cmd.Parameters.AddWithValue("@Genero", gender);
+
+                        int rowsAffected = cmd.ExecuteNonQuery();
+                        if (rowsAffected > 0)
+                        {
+                            response.Success = true;
+                            response.GeneratedId = newId;
+                            response.Message = "Cliente guardado correctamente.";
+                        }
+                        else
+                        {
+                            response.Message = "No se pudo guardar el cliente.";
+                        }
                     }
                 }
 
-                // Agregar el cliente si es posible
-                for (int i = 0; i < clients.Length; i++)
-                {
-                    if (clients[i] == null)
-                    {
-                        clients[i] = new Client(idInt, name, lastName, secondLastName, birthday, gender);
-                        response.Success = true;
-                        return response;
-                    }
-                }
-
-                throw new InvalidOperationException("No se pueden agregar más clientes.");
-            }
-            catch (ArgumentException ae)
-            {
-                response.Message = ae.Message;
                 return response;
             }
-            catch (InvalidOperationException ioe)
+            catch (Exception ex)
             {
-                response.Message = ioe.Message;
-                return response;
-            }
-            catch (Exception e)
-            {
-                response.Message = e.Message;
+                response.Message = ex.Message;
                 return response;
             }
         }
 
         // Metodo para guardar un doctor
+
         public static Response SaveDoctor(string name, string lastName, string secondLastName, int state)
         {
             Response response = new()
@@ -564,46 +562,51 @@ namespace BusinessLogic
         // Actualizar datos del cliente
         public static Response UpdateClientData(DateTime birthday, char gender)
         {
-            Response response = new()
-            {
-                Success = false
-            };
+            Response response = new() { Success = false };
 
             try
             {
                 if (selectedClientId <= 0)
+                    throw new ArgumentException("No se ha seleccionado ningún cliente.");
+
+                if (gender != 'M' && gender != 'F' && gender != 'N')
+                    throw new ArgumentException("El género debe ser M, F o N.");
+
+                if (birthday > DateTime.Now || birthday < new DateTime(1925, 1, 1))
+                    throw new ArgumentException("La fecha de nacimiento debe estar entre 1925 y hoy.");
+
+                string connectionString = File.ReadAllText("config.txt").Trim();
+
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
-                    throw new ArgumentException("No se ha seleccionado ningun cliente.");
-                }
-                for (int i = 0; i < clients.Length; i++)
-                {
-                    if (clients[i] != null && clients[i].Id == selectedClientId)
+                    connection.Open();
+
+                    string query = "UPDATE Clientes SET FechaNacimiento = @FechaNacimiento, Genero = @Genero WHERE Id = @Id";
+                    using (SqlCommand cmd = new SqlCommand(query, connection))
                     {
-                        clients[i].BirthDate = birthday;
-                        clients[i].Gender = gender;
-                        response.Success = true;
-                        return response;
+                        cmd.Parameters.AddWithValue("@FechaNacimiento", birthday);
+                        cmd.Parameters.AddWithValue("@Genero", gender);
+                        cmd.Parameters.AddWithValue("@Id", selectedClientId);
+
+                        int rows = cmd.ExecuteNonQuery();
+                        if (rows > 0)
+                        {
+                            response.Success = true;
+                            response.Message = "Cliente actualizado correctamente.";
+                        }
+                        else
+                        {
+                            response.Message = "No se encontró el cliente para actualizar.";
+                        }
                     }
                 }
-
-                throw new InvalidOperationException("No se pudo actualizar los datos del cliente.");
             }
-            catch (ArgumentException ae)
+            catch (Exception ex)
             {
-                response.Message = ae.Message;
-                return response;
-            }
-            catch (InvalidOperationException ioe)
-            {
-                response.Message = ioe.Message;
-                return response;
-            }
-            catch (Exception e)
-            {
-                response.Message = e.Message;
-                return response;
+                response.Message = ex.Message;
             }
 
+            return response;
         }
 
         // Eliminar cliente
