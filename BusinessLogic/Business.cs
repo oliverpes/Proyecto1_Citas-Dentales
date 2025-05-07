@@ -151,8 +151,10 @@ namespace BusinessLogic
                         newId = (result != DBNull.Value) ? Convert.ToInt32(result) + 1 : 1;
                     }
 
-                    string insertQuery = "INSERT INTO Clientes (Id, Nombre, ApellidoPaterno, ApellidoMaterno, FechaNacimiento, Genero) " +
-                                         "VALUES (@Id, @Nombre, @ApellidoPaterno, @ApellidoMaterno, @FechaNacimiento, @Genero)";
+                    // Insertar cliente con EstadoId por defecto en 1 (activo)
+                    string insertQuery = @"INSERT INTO Clientes 
+                (Id, Nombre, ApellidoPaterno, ApellidoMaterno, FechaNacimiento, Genero, EstadoId) 
+                VALUES (@Id, @Nombre, @ApellidoPaterno, @ApellidoMaterno, @FechaNacimiento, @Genero, 1)";
 
                     using (SqlCommand cmd = new SqlCommand(insertQuery, connection))
                     {
@@ -185,6 +187,7 @@ namespace BusinessLogic
                 return response;
             }
         }
+
 
         // Metodo para guardar un doctor
 

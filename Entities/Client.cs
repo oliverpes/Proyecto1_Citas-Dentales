@@ -11,6 +11,7 @@ namespace Entities
     {
         public DateTime BirthDate { get; set; }
         public char Gender { get; set; }
+        public int StateId { get; set; }
 
         public Client(int id, string name, string lastName, string secondLastName, DateTime birthDate, char gender)
         {

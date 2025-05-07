@@ -12,13 +12,6 @@ using System.Windows.Forms;
 using static System.Windows.Forms.AxHost;
 using System.Data.SqlClient;
 
-/* UNED: Proyecto III Cuatrimestre
- * Proyecto #1: Aplicacion para gestionar citas de una clinica dental
- * Estidiante: Marco Fernando Agüero Barboza
- * Fecha: 11/10/2023
- * 
- * Clase de la interfaz de administracion de clientes
- */
 
 namespace Proyecto1_Citas_Dentales.Forms
 {
@@ -35,13 +28,15 @@ namespace Proyecto1_Citas_Dentales.Forms
             DataGridViewTextBoxColumn columnSLName = new DataGridViewTextBoxColumn();
             DataGridViewTextBoxColumn columnBirthday = new DataGridViewTextBoxColumn();
             DataGridViewTextBoxColumn columnGender = new DataGridViewTextBoxColumn();
+            DataGridViewTextBoxColumn columnEstado = new DataGridViewTextBoxColumn(); // NUEVA COLUMNA
 
             columnId.HeaderText = "ID";
             columnName.HeaderText = "Nombre";
             columnFLName.HeaderText = "Primer apellido";
             columnSLName.HeaderText = "Segundo apellido";
             columnBirthday.HeaderText = "Cumpleaños";
-            columnGender.HeaderText = "Genero";
+            columnGender.HeaderText = "Género";
+            columnEstado.HeaderText = "Estado"; // NUEVA COLUMNA
 
             clientDataViewer.Columns.Add(columnId);
             clientDataViewer.Columns.Add(columnName);
@@ -49,6 +44,7 @@ namespace Proyecto1_Citas_Dentales.Forms
             clientDataViewer.Columns.Add(columnSLName);
             clientDataViewer.Columns.Add(columnBirthday);
             clientDataViewer.Columns.Add(columnGender);
+            clientDataViewer.Columns.Add(columnEstado); // NUEVA COLUMNA
 
             UpdateData();
         }
@@ -71,7 +67,8 @@ namespace Proyecto1_Citas_Dentales.Forms
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                string query = "SELECT Id, Nombre, ApellidoPaterno, ApellidoMaterno, FechaNacimiento, Genero FROM Clientes";
+                string query = @"SELECT Id, Nombre, ApellidoPaterno, ApellidoMaterno, FechaNacimiento, Genero, EstadoId 
+                         FROM Clientes";
 
                 using (SqlCommand cmd = new SqlCommand(query, connection))
                 using (SqlDataReader reader = cmd.ExecuteReader())
@@ -87,12 +84,16 @@ namespace Proyecto1_Citas_Dentales.Forms
                         string genderCode = reader["Genero"].ToString();
                         string gender = genderCode == "F" ? "Femenino" : genderCode == "M" ? "Masculino" : "No especificado";
 
-                        string[] row = { id, name, firstLastName, secondLastName, birthday, gender };
+                        int estadoId = Convert.ToInt32(reader["EstadoId"]);
+                        string estado = estadoId == 1 ? "Activo" : "Inactivo";
+
+                        string[] row = { id, name, firstLastName, secondLastName, birthday, gender, estado };
                         clientDataViewer.Rows.Add(row);
                     }
                 }
             }
         }
+
 
 
         // Seleccionar una fila del DataGridView
