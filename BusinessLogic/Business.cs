@@ -190,115 +190,108 @@ namespace BusinessLogic
         }
 
         // Metodo para guardar un doctor
-
-        public static Response SaveDoctor(string id, string name, string lastName, string secondLastName, int state)
+        public static Response SaveDoctor(string name, string lastName, string secondLastName, int state)
+        {
+            Response response = new()
             {
-                Response response = new()
-                {
-                    Success = false
-                };
+                Success = false
+            };
 
-                try
-                {
-                    // Validaciones
-                    int idInt;
-                    if (!int.TryParse(id, out idInt) || idInt <= 0)
-                    {
-                        throw new ArgumentException("El ID de consulta debe ser un número positivo mayor que cero.");
-                    }
-                    if (string.IsNullOrEmpty(name))
-                    {
-                        throw new ArgumentException("El nombre del cliente no puede estar vacío.");
-                    }
-                    if (string.IsNullOrEmpty(lastName))
-                    {
-                        throw new ArgumentException("El apellido paterno del cliente no puede estar vacío.");
-                    }
-                    if (string.IsNullOrEmpty(secondLastName))
-                    {
-                        throw new ArgumentException("El apellido materno del cliente no puede estar vacío.");
-                    }
-                    if (state != 1 && state != 0)
-                    {
-                        throw new ArgumentException("El estado de consulta debe ser 'Activo' o 'Inactivo'.");
-                    }
+            try
+            {
+                // Validaciones
+                if (string.IsNullOrEmpty(name))
+                    throw new ArgumentException("El nombre del cliente no puede estar vacío.");
 
-                    // Verificar que el ID no exista en la lista (puedes eliminar esto si solo quieres guardar en la base de datos)
-                    for (int i = 0; i < doctors.Length; i++)
-                    {
-                        if (doctors[i] != null && doctors[i].Id == idInt)
-                        {
-                            throw new InvalidOperationException("El ID de doctor ya existe.");
-                        }
-                    }
+                if (string.IsNullOrEmpty(lastName))
+                    throw new ArgumentException("El apellido paterno del cliente no puede estar vacío.");
 
-                    // Leer la cadena de conexión desde el archivo config.txt
-                    string connectionString = File.ReadAllText("config.txt").Trim(); // Asegúrate de que el archivo esté en el directorio correcto
-                    Console.WriteLine(connectionString); // Asegúrate de que apunte a la base de datos correcta
+                if (string.IsNullOrEmpty(secondLastName))
+                    throw new ArgumentException("El apellido materno del cliente no puede estar vacío.");
 
-                // Guardar en la base de datos
+                if (state != 1 && state != 0)
+                    throw new ArgumentException("El estado de consulta debe ser 'Activo' o 'Inactivo'.");
+
+                // Leer la cadena de conexión desde el archivo config.txt
+                string connectionString = File.ReadAllText("config.txt").Trim();
+                Console.WriteLine(connectionString);
+
+                int newId = 0;
+
+                // Obtener el siguiente ID disponible
                 using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    string query = "SELECT MAX(Id) FROM Doctores";
+
+                    using (SqlCommand cmd = new SqlCommand(query, connection))
                     {
-                        connection.Open();
-                    //esta es el query que conecta savedoctors con la base de datos
-                        string query = "INSERT INTO Doctores (Id, Nombre, ApellidoPaterno, ApellidoMaterno, EstadoId) " +
-                                       "VALUES (@Id, @Nombre, @ApellidoPaterno, @ApellidoMaterno, @EstadoId)";
+                        var result = cmd.ExecuteScalar();
+                        newId = (result != DBNull.Value) ? Convert.ToInt32(result) + 1 : 1;
+                    }
+                }
 
-                        using (SqlCommand cmd = new SqlCommand(query, connection))
+                // Insertar nuevo doctor
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    string query = "INSERT INTO Doctores (Id, Nombre, ApellidoPaterno, ApellidoMaterno, EstadoId) " +
+                                   "VALUES (@Id, @Nombre, @ApellidoPaterno, @ApellidoMaterno, @EstadoId)";
+
+                    using (SqlCommand cmd = new SqlCommand(query, connection))
+                    {
+                        cmd.Parameters.AddWithValue("@Id", newId);
+                        cmd.Parameters.AddWithValue("@Nombre", name);
+                        cmd.Parameters.AddWithValue("@ApellidoPaterno", lastName);
+                        cmd.Parameters.AddWithValue("@ApellidoMaterno", secondLastName);
+                        cmd.Parameters.AddWithValue("@EstadoId", state);
+
+                        int rowsAffected = cmd.ExecuteNonQuery();
+                        if (rowsAffected > 0)
                         {
-                            cmd.Parameters.AddWithValue("@Id", idInt);
-                            cmd.Parameters.AddWithValue("@Nombre", name);
-                            cmd.Parameters.AddWithValue("@ApellidoPaterno", lastName);
-                            cmd.Parameters.AddWithValue("@ApellidoMaterno", secondLastName);
-                            cmd.Parameters.AddWithValue("@EstadoId", state);
-
-                            int rowsAffected = cmd.ExecuteNonQuery();
-                            if (rowsAffected > 0)
-                            {
-                                response.Success = true;
-                                response.Message = "El doctor se guardó correctamente en la base de datos.";
-                            }
-                            else
-                            {
-                                response.Message = "No se pudo guardar el doctor en la base de datos.";
-                            }
+                            response.Success = true;
+                            response.GeneratedId = newId;
+                            response.Message = $"El doctor se guardó correctamente en la base de datos con ID: {newId}.";
+                        }
+                        else
+                        {
+                            response.Message = "No se pudo guardar el doctor en la base de datos.";
                         }
                     }
+                }
 
-                    // Si deseas guardar también en la lista de doctores (opcional)
-                    for (int i = 0; i < doctors.Length; i++)
+                // Guardar también en el arreglo local (si aplica)
+                for (int i = 0; i < doctors.Length; i++)
+                {
+                    if (doctors[i] == null)
                     {
-                        if (doctors[i] == null)
-                        {
-                            doctors[i] = new Doctor(idInt, name, lastName, secondLastName, state);
-                            return response;
-                        }
+                        doctors[i] = new Doctor(newId, name, lastName, secondLastName, state);
+                        return response;
                     }
+                }
 
-                    throw new InvalidOperationException("No se pueden agregar más doctores.");
-                }
-                catch (ArgumentException 
-                ae)
-                {
-                    response.Message = ae.Message;
-                    return response;
-                }
-                catch (InvalidOperationException ioe)
-                {
-                    response.Message = ioe.Message;
-                    return response;
-                }
-                catch (Exception e)
-                {
-                    response.Message = e.Message;
-                    return response;
-                }
+                throw new InvalidOperationException("No se pueden agregar más doctores.");
             }
-        
+            catch (ArgumentException ae)
+            {
+                response.Message = ae.Message;
+                return response;
+            }
+            catch (InvalidOperationException ioe)
+            {
+                response.Message = ioe.Message;
+                return response;
+            }
+            catch (Exception e)
+            {
+                response.Message = e.Message;
+                return response;
+            }
+        }
 
 
-    // Metodo para guardar una cita
-    public static Response SaveAppointment(string id, DateTime date, string queryTypeData, string clientData, string doctorData)
+        // Metodo para guardar una cita
+        public static Response SaveAppointment(string id, DateTime date, string queryTypeData, string clientData, string doctorData)
         {
             Response response = new()
             {
