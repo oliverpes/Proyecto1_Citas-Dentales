@@ -146,5 +146,36 @@ namespace Proyecto1_Citas_Dentales.Forms
                 MessageBox.Show("Seleccione la fila a eliminar", "Eliminar cliente", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        //cambiar el estado de cliente activo a inactivo
+        private void CambiarEstadoCliente_Click(object sender, EventArgs e)
+        {
+            if (clientDataViewer.SelectedRows.Count > 0)
+            {
+                string selectedId = clientDataViewer.SelectedRows[0].Cells[0].Value.ToString();
+                if (int.TryParse(selectedId, out int clientId))
+                {
+                    Response response = Business.ToggleClientStatus(clientId);
+                    if (response.Success)
+                    {
+                        UpdateData();
+                    }
+                    else
+                    {
+                        MessageBox.Show(response.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Seleccione un cliente para cambiar su estado.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
     }
 }

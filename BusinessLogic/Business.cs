@@ -560,6 +560,65 @@ namespace BusinessLogic
 
         // ****** CLIENTES ****** //
 
+        //cambiar estado cliente //
+        public static Response ToggleClientStatus(int clientId)
+        {
+            Response response = new() { Success = false };
+
+            try
+            {
+                string connectionString = File.ReadAllText("config.txt").Trim();
+
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    // Obtener el estado actual
+                    string getStatusQuery = "SELECT EstadoId FROM Clientes WHERE Id = @Id";
+                    int currentStatus = 1;
+
+                    using (SqlCommand getCmd = new SqlCommand(getStatusQuery, connection))
+                    {
+                        getCmd.Parameters.AddWithValue("@Id", clientId);
+                        var result = getCmd.ExecuteScalar();
+                        if (result == null)
+                        {
+                            response.Message = "Cliente no encontrado.";
+                            return response;
+                        }
+                        currentStatus = Convert.ToInt32(result);
+                    }
+
+                    int newStatus = currentStatus == 1 ? 0 : 1;
+
+                    // Actualizar el estado
+                    string updateQuery = "UPDATE Clientes SET EstadoId = @EstadoId WHERE Id = @Id";
+
+                    using (SqlCommand cmd = new SqlCommand(updateQuery, connection))
+                    {
+                        cmd.Parameters.AddWithValue("@EstadoId", newStatus);
+                        cmd.Parameters.AddWithValue("@Id", clientId);
+
+                        int affectedRows = cmd.ExecuteNonQuery();
+                        if (affectedRows > 0)
+                        {
+                            response.Success = true;
+                            response.Message = "Estado actualizado correctamente.";
+                        }
+                        else
+                        {
+                            response.Message = "No se pudo actualizar el estado.";
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Message = ex.Message;
+            }
+
+            return response;
+        }
 
 
         // Actualizar datos del cliente
