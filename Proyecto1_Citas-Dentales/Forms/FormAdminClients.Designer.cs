@@ -71,7 +71,6 @@
             // 
             // buttonNewClient
             // 
-            buttonNewClient.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
             buttonNewClient.AutoSize = true;
             buttonNewClient.BackColor = Color.FromArgb(25, 25, 50);
             buttonNewClient.FlatStyle = FlatStyle.Flat;

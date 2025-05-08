@@ -71,28 +71,35 @@ namespace Proyecto1_Citas_Dentales.Forms
                          FROM Clientes";
 
                 using (SqlCommand cmd = new SqlCommand(query, connection))
-                using (SqlDataReader reader = cmd.ExecuteReader())
                 {
-                    while (reader.Read())
+                    cmd.CommandTimeout = 60; // Evita timeout si la consulta tarda
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
                     {
-                        string id = reader["Id"].ToString();
-                        string name = reader["Nombre"].ToString();
-                        string firstLastName = reader["ApellidoPaterno"].ToString();
-                        string secondLastName = reader["ApellidoMaterno"].ToString();
-                        string birthday = Convert.ToDateTime(reader["FechaNacimiento"]).ToString("dd/MM/yyyy");
+                        while (reader.Read())
+                        {
+                            string id = reader["Id"].ToString();
+                            string name = reader["Nombre"].ToString();
+                            string firstLastName = reader["ApellidoPaterno"].ToString();
+                            string secondLastName = reader["ApellidoMaterno"].ToString();
+                            string birthday = Convert.ToDateTime(reader["FechaNacimiento"]).ToString("dd/MM/yyyy");
 
-                        string genderCode = reader["Genero"].ToString();
-                        string gender = genderCode == "F" ? "Femenino" : genderCode == "M" ? "Masculino" : "No especificado";
+                            string genderCode = reader["Genero"].ToString();
+                            string gender = genderCode == "F" ? "Femenino" :
+                                            genderCode == "M" ? "Masculino" :
+                                            "No especificado";
 
-                        int estadoId = Convert.ToInt32(reader["EstadoId"]);
-                        string estado = estadoId == 1 ? "Activo" : "Inactivo";
+                            int estadoId = Convert.ToInt32(reader["EstadoId"]);
+                            string estado = estadoId == 1 ? "Activo" : "Inactivo";
 
-                        string[] row = { id, name, firstLastName, secondLastName, birthday, gender, estado };
-                        clientDataViewer.Rows.Add(row);
+                            string[] row = { id, name, firstLastName, secondLastName, birthday, gender, estado };
+                            clientDataViewer.Rows.Add(row);
+                        }
                     }
                 }
             }
         }
+
 
 
 

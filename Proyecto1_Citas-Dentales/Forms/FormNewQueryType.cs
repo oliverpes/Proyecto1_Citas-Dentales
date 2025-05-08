@@ -9,13 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-/* UNED: Proyecto III Cuatrimestre
- * Proyecto #1: Aplicacion para gestionar citas de una clinica dental
- * Estidiante: Marco Fernando Agüero Barboza
- * Fecha: 11/10/2023
- * 
- * Clase de formulario para agregar un nuevo tipo de consulta
- */
+
 
 namespace Proyecto1_Citas_Dentales.Forms
 {

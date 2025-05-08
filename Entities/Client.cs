@@ -13,7 +13,7 @@ namespace Entities
         public char Gender { get; set; }
         public int StateId { get; set; }
 
-        public Client(int id, string name, string lastName, string secondLastName, DateTime birthDate, char gender)
+        public Client(int id, string name, string lastName, string secondLastName, DateTime birthDate, char gender, int stateId)
         {
             Id = id;
             Name = name;
@@ -21,7 +21,8 @@ namespace Entities
             SecondLastName = secondLastName;
             BirthDate = birthDate;
             Gender = gender;
+            StateId = stateId;
         }
-
     }
 }
+

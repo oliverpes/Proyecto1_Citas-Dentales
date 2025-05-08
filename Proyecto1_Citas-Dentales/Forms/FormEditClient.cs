@@ -18,6 +18,8 @@ namespace Proyecto1_Citas_Dentales.Forms
         public FormEditClient()
         {
             InitializeComponent();
+            this.StartPosition = FormStartPosition.CenterParent;
+
 
             int id = Business.selectedClientId;
 

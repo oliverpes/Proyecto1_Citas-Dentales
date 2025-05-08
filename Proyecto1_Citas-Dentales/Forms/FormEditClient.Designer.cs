@@ -44,8 +44,6 @@
             inputId = new TextBox();
             label2 = new Label();
             panel1 = new Panel();
-            button2 = new Button();
-            button1 = new Button();
             label1 = new Label();
             panel3.SuspendLayout();
             panel2.SuspendLayout();
@@ -75,7 +73,7 @@
             buttonSaveClient.Dock = DockStyle.Bottom;
             buttonSaveClient.FlatAppearance.BorderColor = Color.DimGray;
             buttonSaveClient.FlatStyle = FlatStyle.Flat;
-            buttonSaveClient.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            buttonSaveClient.Font = new Font("Segoe UI", 12F);
             buttonSaveClient.ForeColor = Color.White;
             buttonSaveClient.Location = new Point(11, 267);
             buttonSaveClient.Margin = new Padding(3, 4, 3, 4);
@@ -92,7 +90,7 @@
             inputGender.Cursor = Cursors.IBeam;
             inputGender.Dock = DockStyle.Top;
             inputGender.FlatStyle = FlatStyle.Flat;
-            inputGender.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
+            inputGender.Font = new Font("Segoe UI", 10F);
             inputGender.ForeColor = Color.White;
             inputGender.FormattingEnabled = true;
             inputGender.Items.AddRange(new object[] { "No especificado", "Femenino", "Masculino" });
@@ -106,7 +104,7 @@
             // 
             label6.AutoSize = true;
             label6.Dock = DockStyle.Top;
-            label6.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            label6.Font = new Font("Segoe UI", 12F);
             label6.ForeColor = Color.LightGray;
             label6.Location = new Point(11, 76);
             label6.Name = "label6";
@@ -125,7 +123,7 @@
             inputBirthday.Cursor = Cursors.IBeam;
             inputBirthday.CustomFormat = "dd/mm/yyyy";
             inputBirthday.Dock = DockStyle.Top;
-            inputBirthday.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
+            inputBirthday.Font = new Font("Segoe UI", 10F);
             inputBirthday.Location = new Point(11, 46);
             inputBirthday.Margin = new Padding(3, 4, 3, 4);
             inputBirthday.MaxDate = new DateTime(2023, 9, 29, 0, 0, 0, 0);
@@ -139,7 +137,7 @@
             // 
             label9.AutoSize = true;
             label9.Dock = DockStyle.Top;
-            label9.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            label9.Font = new Font("Segoe UI", 12F);
             label9.ForeColor = Color.LightGray;
             label9.Location = new Point(11, 13);
             label9.Name = "label9";
@@ -174,7 +172,7 @@
             inputSecondLastName.Cursor = Cursors.No;
             inputSecondLastName.Dock = DockStyle.Top;
             inputSecondLastName.Enabled = false;
-            inputSecondLastName.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
+            inputSecondLastName.Font = new Font("Segoe UI", 10F);
             inputSecondLastName.ForeColor = Color.White;
             inputSecondLastName.Location = new Point(11, 274);
             inputSecondLastName.Margin = new Padding(3, 4, 3, 4);
@@ -186,7 +184,7 @@
             // 
             label5.AutoSize = true;
             label5.Dock = DockStyle.Top;
-            label5.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            label5.Font = new Font("Segoe UI", 12F);
             label5.ForeColor = Color.LightGray;
             label5.Location = new Point(11, 228);
             label5.Name = "label5";
@@ -202,7 +200,7 @@
             inputFirstLastName.Cursor = Cursors.No;
             inputFirstLastName.Dock = DockStyle.Top;
             inputFirstLastName.Enabled = false;
-            inputFirstLastName.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
+            inputFirstLastName.Font = new Font("Segoe UI", 10F);
             inputFirstLastName.ForeColor = Color.White;
             inputFirstLastName.Location = new Point(11, 198);
             inputFirstLastName.Margin = new Padding(3, 4, 3, 4);
@@ -214,7 +212,7 @@
             // 
             label4.AutoSize = true;
             label4.Dock = DockStyle.Top;
-            label4.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            label4.Font = new Font("Segoe UI", 12F);
             label4.ForeColor = Color.LightGray;
             label4.Location = new Point(11, 152);
             label4.Name = "label4";
@@ -230,7 +228,7 @@
             inputName.Cursor = Cursors.No;
             inputName.Dock = DockStyle.Top;
             inputName.Enabled = false;
-            inputName.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
+            inputName.Font = new Font("Segoe UI", 10F);
             inputName.ForeColor = Color.White;
             inputName.Location = new Point(11, 122);
             inputName.Margin = new Padding(3, 4, 3, 4);
@@ -242,7 +240,7 @@
             // 
             label3.AutoSize = true;
             label3.Dock = DockStyle.Top;
-            label3.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            label3.Font = new Font("Segoe UI", 12F);
             label3.ForeColor = Color.LightGray;
             label3.Location = new Point(11, 76);
             label3.Name = "label3";
@@ -258,7 +256,7 @@
             inputId.Cursor = Cursors.No;
             inputId.Dock = DockStyle.Top;
             inputId.Enabled = false;
-            inputId.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
+            inputId.Font = new Font("Segoe UI", 10F);
             inputId.ForeColor = Color.White;
             inputId.Location = new Point(11, 46);
             inputId.Margin = new Padding(3, 4, 3, 4);
@@ -270,7 +268,7 @@
             // 
             label2.AutoSize = true;
             label2.Dock = DockStyle.Top;
-            label2.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            label2.Font = new Font("Segoe UI", 12F);
             label2.ForeColor = Color.LightGray;
             label2.Location = new Point(11, 13);
             label2.Name = "label2";
@@ -282,8 +280,6 @@
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(17, 17, 34);
-            panel1.Controls.Add(button2);
-            panel1.Controls.Add(button1);
             panel1.Controls.Add(label1);
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
@@ -292,43 +288,11 @@
             panel1.Size = new Size(914, 93);
             panel1.TabIndex = 5;
             // 
-            // button2
-            // 
-            button2.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
-            button2.AutoSize = true;
-            button2.BackColor = Color.FromArgb(25, 25, 50);
-            button2.FlatStyle = FlatStyle.Flat;
-            button2.ForeColor = Color.White;
-            button2.Location = new Point(2112, 23);
-            button2.Margin = new Padding(3, 4, 3, 4);
-            button2.Name = "button2";
-            button2.Padding = new Padding(9, 5, 9, 5);
-            button2.Size = new Size(149, 53);
-            button2.TabIndex = 3;
-            button2.Text = "Nuevo Cliente";
-            button2.UseVisualStyleBackColor = false;
-            // 
-            // button1
-            // 
-            button1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
-            button1.AutoSize = true;
-            button1.BackColor = Color.FromArgb(25, 25, 50);
-            button1.FlatStyle = FlatStyle.Flat;
-            button1.ForeColor = Color.White;
-            button1.Location = new Point(2807, 23);
-            button1.Margin = new Padding(3, 4, 3, 4);
-            button1.Name = "button1";
-            button1.Padding = new Padding(9, 5, 9, 5);
-            button1.Size = new Size(139, 53);
-            button1.TabIndex = 2;
-            button1.Text = "Agregar tipo";
-            button1.UseVisualStyleBackColor = false;
-            // 
             // label1
             // 
             label1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
             label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 24F, FontStyle.Bold, GraphicsUnit.Point);
+            label1.Font = new Font("Segoe UI", 24F, FontStyle.Bold);
             label1.ForeColor = Color.White;
             label1.Location = new Point(14, 15);
             label1.Name = "label1";
@@ -376,8 +340,6 @@
         private TextBox inputId;
         private Label label2;
         private Panel panel1;
-        private Button button2;
-        private Button button1;
         private Label label1;
     }
 }

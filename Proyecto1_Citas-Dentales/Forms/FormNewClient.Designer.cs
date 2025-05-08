@@ -31,8 +31,6 @@ namespace Proyecto1_Citas_Dentales.Forms
         private void InitializeComponent()
         {
             panel1 = new Panel();
-            button2 = new Button();
-            button1 = new Button();
             label1 = new Label();
             panel2 = new Panel();
             inputSecondLastName = new TextBox();
@@ -57,8 +55,6 @@ namespace Proyecto1_Citas_Dentales.Forms
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(17, 17, 34);
-            panel1.Controls.Add(button2);
-            panel1.Controls.Add(button1);
             panel1.Controls.Add(label1);
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
@@ -66,38 +62,6 @@ namespace Proyecto1_Citas_Dentales.Forms
             panel1.Name = "panel1";
             panel1.Size = new Size(914, 93);
             panel1.TabIndex = 2;
-            // 
-            // button2
-            // 
-            button2.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
-            button2.AutoSize = true;
-            button2.BackColor = Color.FromArgb(25, 25, 50);
-            button2.FlatStyle = FlatStyle.Flat;
-            button2.ForeColor = Color.White;
-            button2.Location = new Point(1426, 23);
-            button2.Margin = new Padding(3, 4, 3, 4);
-            button2.Name = "button2";
-            button2.Padding = new Padding(9, 5, 9, 5);
-            button2.Size = new Size(149, 53);
-            button2.TabIndex = 3;
-            button2.Text = "Nuevo Cliente";
-            button2.UseVisualStyleBackColor = false;
-            // 
-            // button1
-            // 
-            button1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
-            button1.AutoSize = true;
-            button1.BackColor = Color.FromArgb(25, 25, 50);
-            button1.FlatStyle = FlatStyle.Flat;
-            button1.ForeColor = Color.White;
-            button1.Location = new Point(2121, 23);
-            button1.Margin = new Padding(3, 4, 3, 4);
-            button1.Name = "button1";
-            button1.Padding = new Padding(9, 5, 9, 5);
-            button1.Size = new Size(139, 53);
-            button1.TabIndex = 2;
-            button1.Text = "Agregar tipo";
-            button1.UseVisualStyleBackColor = false;
             // 
             // label1
             // 
@@ -360,8 +324,8 @@ namespace Proyecto1_Citas_Dentales.Forms
         #endregion
 
         private Panel panel1;
-        private Button button2;
-        private Button button1;
+        //private Button button2;
+        //private Button button1;
         private Label label1;
         private Panel panel2;
         private Label label2;
