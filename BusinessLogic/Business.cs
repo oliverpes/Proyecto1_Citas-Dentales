@@ -1,87 +1,83 @@
 using System;
 using System.Windows.Input;
 using Entities;
-using System;
 using System.IO;
 using System.Data.SqlClient;
 using System.Collections.Generic;
+using System.Linq;
 
 
 namespace BusinessLogic
 {
     public static class Business
     {
-        // Variables globales
-        public static QueryType[] queryTypes = new QueryType[10];
-        public static Client[] clients = new Client[20];
-        public static Doctor[] doctors = new Doctor[20];
-        public static Appointment[] appointments = new Appointment[20];
+        //// Variables globales
+        //public static QueryType[] queryTypes = new QueryType[1];
+        //public static Client[] clients = new Client[2];
+        //public static Doctor[] doctors = new Doctor[2];
+        //public static Appointment[] appointments = new Appointment[2];
+
+        //nuevas cadenas de variables globales
+        public static List<QueryType> queryTypes = new List<QueryType>();
+        public static List<Client> clients = new List<Client>();
+        public static List<Doctor> doctors = new List<Doctor>();
+        public static List<Appointment> appointments = new List<Appointment>();
+
 
         // Variable para almacenar el id del cliente de la fila seleccionada
         public static int selectedClientId;
 
         // Metodo para guardar un tipo de consulta
-        public static Response SaveQueryType(int id, string description, char state)
+        public static Response SaveQueryType(string descripcion, int estado)
         {
-            Response response = new()
-            {
-                Success = false
-            };
+            Response response = new() { Success = false };
 
             try
             {
-                // Validaciones
-                if (id <= 0)
-                {
-                    throw new ArgumentException("El ID de consulta debe ser un número positivo mayor que cero.");
-                }
-                if (string.IsNullOrEmpty(description))
-                {
-                    throw new ArgumentException("La descripción de consulta no puede estar vacía.");
-                }
-                if (state != 'A' && state != 'I')
-                {
-                    throw new ArgumentException("El estado de consulta debe ser 'Activo' o 'Inactivo'.");
-                }
+                string connectionString = File.ReadAllText("config.txt").Trim();
+                int newId = 0;
 
-                // Verificar que el ID no exista en la lista
-                for (int i = 0; i < queryTypes.Length; i++)
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
-                    if (queryTypes[i] != null && queryTypes[i].Id == id)
+                    connection.Open();
+
+                    // Obtener siguiente ID disponible
+                    string selectMaxId = "SELECT MAX(Id) FROM TiposConsulta";
+                    using (SqlCommand cmd = new SqlCommand(selectMaxId, connection))
                     {
-                        throw new InvalidOperationException("El ID de consulta ya existe.");
+                        var result = cmd.ExecuteScalar();
+                        newId = (result != DBNull.Value) ? Convert.ToInt32(result) + 1 : 1;
+                    }
+
+                    // Insertar nuevo tipo de consulta
+                    string insertQuery = @"INSERT INTO TiposConsulta (Id, Descripcion, Estado) 
+                                   VALUES (@Id, @Descripcion, @Estado)";
+
+                    using (SqlCommand cmd = new SqlCommand(insertQuery, connection))
+                    {
+                        cmd.Parameters.AddWithValue("@Id", newId);
+                        cmd.Parameters.AddWithValue("@Descripcion", descripcion);
+                        cmd.Parameters.AddWithValue("@Estado", estado == 1);
+
+                        int rows = cmd.ExecuteNonQuery();
+                        if (rows > 0)
+                        {
+                            response.Success = true;
+                            response.GeneratedId = newId;
+                            response.Message = "Tipo de consulta guardado correctamente.";
+                        }
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                response.Message = ex.Message;
+            }
 
-                // Agregar el tipo de consulta si es posible
-                for (int i = 0; i < queryTypes.Length; i++)
-                {
-                    if (queryTypes[i] == null)
-                    {
-                        queryTypes[i] = new QueryType(id, description, state);
-                        response.Success = true;
-                        return response;
-                    }
-                }
-
-                throw new InvalidOperationException("No se pueden agregar más tipos de consulta.");
-            }
-            catch (ArgumentException ae)
-            {
-                response.Message = ae.Message;
-                return response;
-            }
-            catch (InvalidOperationException ioe)
-            {
-                response.Message = ioe.Message;
-                return response;
-            }
-            catch (Exception e)
-            {
-                response.Message = e.Message;
-                return response;
-            }
+            return response;
         }
+
+
         //funcion para mostrar doctores en el DataGrid
         public static List<Doctor> GetDoctorsFromDatabase()
         {
@@ -232,7 +228,7 @@ namespace BusinessLogic
                     }
                 }
 
-                // Insertar nuevo doctor
+                // Insertar nuevo doctor en la base de datos
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
@@ -257,21 +253,14 @@ namespace BusinessLogic
                         else
                         {
                             response.Message = "No se pudo guardar el doctor en la base de datos.";
+                            return response;
                         }
                     }
                 }
 
-                // Guardar también en el arreglo local (si aplica)
-                for (int i = 0; i < doctors.Length; i++)
-                {
-                    if (doctors[i] == null)
-                    {
-                        doctors[i] = new Doctor(newId, name, lastName, secondLastName, state);
-                        return response;
-                    }
-                }
-
-                throw new InvalidOperationException("No se pueden agregar más doctores.");
+                // Guardar también en la lista local
+                doctors.Add(new Doctor(newId, name, lastName, secondLastName, state));
+                return response;
             }
             catch (ArgumentException ae)
             {
@@ -291,7 +280,8 @@ namespace BusinessLogic
         }
 
 
-        // Metodo para guardar una cita
+
+        //Metodo para guardar una cita
         public static Response SaveAppointment(string id, DateTime date, string queryTypeData, string clientData, string doctorData)
         {
             Response response = new()
@@ -309,111 +299,36 @@ namespace BusinessLogic
                 int clientId = int.Parse(infoclient[0]);
                 int doctorId = int.Parse(infodoctor[0]);
 
-                // Validaciones
-                int idInt;
-                if (!int.TryParse(id, out idInt) || idInt <= 0)
-                {
+                if (!int.TryParse(id, out int idInt) || idInt <= 0)
                     throw new ArgumentException("El ID de consulta debe ser un número positivo mayor que cero.");
-                }
+
                 if (date < DateTime.Now)
-                {
                     throw new ArgumentException("La fecha de la cita no puede ser menor a la fecha actual.");
-                }
 
-                // Verificar que exista el tipo de consulta
-                bool queryTypeExists = false;
-                QueryType? queryType = null;
-                for (int i = 0; i < queryTypes.Length; i++)
-                {
-                    if (queryTypes[i] != null && queryTypes[i].Id == queryTypeId)
-                    {
-                        queryTypeExists = true;
-                        queryType = queryTypes[i];
-                        break;
-                    }
-                }
-                if (!queryTypeExists)
-                {
-                    throw new InvalidOperationException("El tipo de consulta no existe.");
-                }
+                var queryType = queryTypes.FirstOrDefault(q => q != null && q.Id == queryTypeId)
+                                ?? throw new InvalidOperationException("El tipo de consulta no existe.");
 
-                // Verificar que exista el cliente
-                bool clientExists = false;
-                Client? client = null;
-                for (int i = 0; i < clients.Length; i++)
-                {
-                    if (clients[i] != null && clients[i].Id == clientId)
-                    {
-                        clientExists = true;
-                        client = clients[i];
-                        break;
-                    }
-                }
-                if (!clientExists)
-                {
-                    throw new InvalidOperationException("El cliente no existe.");
-                }
+                var client = clients.FirstOrDefault(c => c != null && c.Id == clientId)
+                             ?? throw new InvalidOperationException("El cliente no existe.");
 
-                // Verificar que exista el doctor
-                bool doctorExists = false;
-                Doctor? doctor = null;
-                for (int i = 0; i < doctors.Length; i++)
-                {
-                    if (doctors[i] != null && doctors[i].Id == doctorId)
-                    {
-                        doctorExists = true;
-                        doctor = doctors[i];
-                        break;
-                    }
-                }
-                if (!doctorExists)
-                {
-                    throw new InvalidOperationException("El doctor no existe.");
-                }
+                var doctor = doctors.FirstOrDefault(d => d != null && d.Id == doctorId)
+                             ?? throw new InvalidOperationException("El doctor no existe.");
 
-                // Verificar que el ID no exista en la lista
-                for (int i = 0; i < appointments.Length; i++)
-                {
-                    if (appointments[i] != null && appointments[i].Id == idInt)
-                    {
-                        throw new InvalidOperationException("El ID de cita ya existe.");
-                    }
-                }
+                if (appointments.Any(a => a != null && a.Id == idInt))
+                    throw new InvalidOperationException("El ID de cita ya existe.");
 
-                // Validar que el cliente no tenga otra cita en la misma fecha y hora con el mismo doctor
                 TimeSpan margen = TimeSpan.FromMinutes(59);
                 DateTime fechaHoraSeleccionada = date;
 
-                for (int i = 0; i < appointments.Length; i++)
+                if (appointments.Any(a => a != null && a.Client.Id == clientId && a.Doctor.Id == doctorId &&
+                                          Math.Abs((fechaHoraSeleccionada - a.Date).TotalMinutes) <= margen.TotalMinutes))
                 {
-                    if (appointments[i] != null && appointments[i].Client.Id == clientId && appointments[i].Doctor.Id == doctorId)
-                    {
-                        // Calcular la diferencia en minutos entre la fecha y hora seleccionada y la cita existente
-                        TimeSpan diferencia = fechaHoraSeleccionada - appointments[i].Date;
-
-                        // Si la diferencia en minutos absolutos es menor o igual al margen, lanza una excepción
-                        if (Math.Abs(diferencia.TotalMinutes) <= margen.TotalMinutes)
-                        {
-                            throw new InvalidOperationException("El cliente ya tiene una cita con el mismo doctor en un rango de 59 minutos de diferencia.");
-                        }
-                    }
+                    throw new InvalidOperationException("El cliente ya tiene una cita con el mismo doctor en un rango de 59 minutos de diferencia.");
                 }
 
-                // Agregar la cita si es posible
-                if (queryType != null && client != null && doctor != null)
-                {
-                    for (int i = 0; i < appointments.Length; i++)
-                    {
-                        if (appointments[i] == null)
-                        {
-                            appointments[i] = new Appointment(idInt, date, queryType, client, doctor);
-                            response.Success = true;
-                            return response;
-                        }
-                    }
-                }
-
-                throw new InvalidOperationException("No se pueden agregar más citas.");
+                appointments.Add(new Appointment(idInt, date, queryType, client, doctor));
+                response.Success = true;
+                return response;
             }
             catch (ArgumentException ae)
             {
@@ -434,11 +349,11 @@ namespace BusinessLogic
 
 
 
+
         // ****** TIPOS DE CONSULTA ****** //
 
 
 
-        // Actualizar estado de tipo de consulta
         public static Response ChangeStatusQueryType(int id)
         {
             Response response = new()
@@ -453,39 +368,51 @@ namespace BusinessLogic
                     throw new ArgumentException("El ID de consulta debe ser un número positivo mayor que cero.");
                 }
 
-                // Verificar que exista el tipo de consulta
-                bool queryTypeExists = false;
-                QueryType? queryType = null;
-                for (int i = 0; i < queryTypes.Length; i++)
+                string connectionString = File.ReadAllText("config.txt").Trim();
+
+                using (SqlConnection conn = new SqlConnection(connectionString))
                 {
-                    if (queryTypes[i] != null && queryTypes[i].Id == id)
+                    conn.Open();
+
+                    // Obtener estado actual
+                    string selectQuery = "SELECT Estado FROM TiposConsulta WHERE Id = @Id";
+                    bool? estadoActual = null;
+
+                    using (SqlCommand selectCmd = new SqlCommand(selectQuery, conn))
                     {
-                        queryTypeExists = true;
-                        queryType = queryTypes[i];
-                        break;
+                        selectCmd.Parameters.AddWithValue("@Id", id);
+                        object result = selectCmd.ExecuteScalar();
+                        if (result == null)
+                        {
+                            throw new InvalidOperationException("El tipo de consulta no existe.");
+                        }
+
+                        estadoActual = Convert.ToBoolean(result);
                     }
-                }
-                if (!queryTypeExists)
-                {
-                    throw new InvalidOperationException("El tipo de consulta no existe.");
+
+                    // Cambiar estado
+                    bool nuevoEstado = !(estadoActual ?? true);
+
+                    string updateQuery = "UPDATE TiposConsulta SET Estado = @NuevoEstado WHERE Id = @Id";
+                    using (SqlCommand updateCmd = new SqlCommand(updateQuery, conn))
+                    {
+                        updateCmd.Parameters.AddWithValue("@NuevoEstado", nuevoEstado);
+                        updateCmd.Parameters.AddWithValue("@Id", id);
+                        int rowsAffected = updateCmd.ExecuteNonQuery();
+
+                        if (rowsAffected > 0)
+                        {
+                            response.Success = true;
+                            response.Message = "Estado actualizado correctamente.";
+                        }
+                        else
+                        {
+                            throw new InvalidOperationException("No se pudo actualizar el estado.");
+                        }
+                    }
                 }
 
-                // Cambiar el estado del tipo de consulta
-                if (queryType != null)
-                {
-                    if (queryType.State == 'A')
-                    {
-                        queryType.State = 'I';
-                    }
-                    else
-                    {
-                        queryType.State = 'A';
-                    }
-                    response.Success = true;
-                    return response;
-                }
-
-                throw new InvalidOperationException("No se pudo cambiar el estado del tipo de consulta.");
+                return response;
             }
             catch (ArgumentException ae)
             {
@@ -507,54 +434,40 @@ namespace BusinessLogic
         // Eliminar tipo de consulta
         public static Response DeleteQueryType(int id)
         {
-            Response response = new()
-            {
-                Success = false
-            };
+            Response response = new() { Success = false };
 
             try
             {
-                if (id <= 0)
-                {
-                    throw new ArgumentException("El ID de consulta debe ser un número positivo mayor que cero.");
-                }
+                string connectionString = File.ReadAllText("config.txt").Trim();
 
-                // Verificar que exista el tipo de consulta
-                bool queryTypeExists = false;
-                // QueryType? queryType = null;
-                for (int i = 0; i < queryTypes.Length; i++)
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
-                    if (queryTypes[i] != null && queryTypes[i].Id == id)
+                    connection.Open();
+
+                    string deleteQuery = "DELETE FROM TiposConsulta WHERE Id = @Id";
+                    using (SqlCommand deleteCmd = new SqlCommand(deleteQuery, connection))
                     {
-                        // Eliminar el tipo de consulta
-                        queryTypeExists = true;
-                        queryTypes[i] = null;
-                        response.Success = true;
-                        return response;
+                        deleteCmd.Parameters.AddWithValue("@Id", id);
+
+                        int rows = deleteCmd.ExecuteNonQuery();
+                        if (rows > 0)
+                        {
+                            response.Success = true;
+                            response.Message = "Tipo de consulta eliminado correctamente.";
+                        }
+                        else
+                        {
+                            response.Message = "No se pudo eliminar el tipo de consulta.";
+                        }
                     }
                 }
-                if (!queryTypeExists)
-                {
-                    throw new InvalidOperationException("El tipo de consulta no existe.");
-                }
+            }
+            catch (Exception ex)
+            {
+                response.Message = ex.Message;
+            }
 
-                throw new InvalidOperationException("No se pudo eliminar el tipo de consulta.");
-            }
-            catch (ArgumentException ae)
-            {
-                response.Message = ae.Message;
-                return response;
-            }
-            catch (InvalidOperationException ioe)
-            {
-                response.Message = ioe.Message;
-                return response;
-            }
-            catch (Exception e)
-            {
-                response.Message = e.Message;
-                return response;
-            }
+            return response;
         }
 
 
@@ -672,26 +585,26 @@ namespace BusinessLogic
         }
 
         // Eliminar cliente
-        public static Response DeleteClient()
+       public static Response DeleteClient()
         {
-            for (int i = 0; i < clients.Length; i++)
+            var client = clients.FirstOrDefault(c => c != null && c.Id == selectedClientId);
+            if (client != null)
             {
-                if (clients[i] != null && clients[i].Id == selectedClientId)
+                clients.Remove(client);
+                selectedClientId = 0;
+                return new Response
                 {
-                    clients[i] = null;
-                    selectedClientId = 0;
-                    return new Response
-                    {
-                        Success = true
-                    };
-                }
+                    Success = true
+                };
             }
+
             return new Response
             {
                 Success = false,
                 Message = "No se pudo eliminar el cliente"
             };
         }
+
 
 
 
@@ -865,14 +778,12 @@ namespace BusinessLogic
                     throw new ArgumentException("El ID de consulta debe ser un número positivo mayor que cero.");
                 }
 
-                for (int i = 0; i < appointments.Length; i++)
+                var appointment = appointments.FirstOrDefault(a => a != null && a.Id == id);
+                if (appointment != null)
                 {
-                    if (appointments[i] != null && appointments[i].Id == id)
-                    {
-                        appointments[i] = null;
-                        response.Success = true;
-                        return response;
-                    }
+                    appointments.Remove(appointment);
+                    response.Success = true;
+                    return response;
                 }
 
                 throw new InvalidOperationException("No se pudo eliminar la cita.");

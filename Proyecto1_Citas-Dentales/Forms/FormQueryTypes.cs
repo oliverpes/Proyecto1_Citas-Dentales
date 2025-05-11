@@ -1,22 +1,10 @@
 ﻿using BusinessLogic;
 using Entities;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data.SqlClient;
+using System.IO;
 using System.Windows.Forms;
 
-/* UNED: Proyecto III Cuatrimestre
- * Proyecto #1: Aplicacion para gestionar citas de una clinica dental
- * Estidiante: Marco Fernando Agüero Barboza
- * Fecha: 11/10/2023
- * 
- * Clase de formulario para gestionar los tipos de consulta
- */
 
 namespace Proyecto1_Citas_Dentales.Forms
 {
@@ -44,37 +32,37 @@ namespace Proyecto1_Citas_Dentales.Forms
             UpdateData();
         }
 
-        // Boton para agregar un nuevo tipo de consulta
+        // Botón para agregar un nuevo tipo de consulta
         private void ButtonAddQueryType_Click(object sender, EventArgs e)
         {
-            if (Business.queryTypes[9] != null)
-            {
-                MessageBox.Show("No se pueden agregar mas tipos de consulta", "Nuevo tipo de consulta", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            FormNewQueryType formNewQueryType = new FormNewQueryType();
-            formNewQueryType.Owner = this;
+            
+            FormNewQueryType formNewQueryType = new FormNewQueryType(this); // Pasa el formulario actual
             formNewQueryType.ShowDialog();
-
         }
 
         // Actualiza los datos del DataGridView
         public void UpdateData()
         {
             dataGridView1.Rows.Clear();
+            string connectionString = File.ReadAllText("config.txt").Trim();
 
-            foreach (QueryType queryType in Business.queryTypes)
+            using (SqlConnection conn = new SqlConnection(connectionString))
             {
-                if (queryType != null)
+                conn.Open();
+
+                string query = @"SELECT Id, Descripcion, Estado FROM TiposConsulta";
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                using (SqlDataReader reader = cmd.ExecuteReader())
                 {
-                    // Agrega una nueva fila al DataGridView con los datos de cada QueryType
-                    string state = queryType.State == 'A' ? "Activo" : "Inactivo";
-                    string id = queryType.Id.ToString();
-                    string description = queryType.Description;
+                    while (reader.Read())
+                    {
+                        int id = reader.GetInt32(0);
+                        string description = reader.GetString(1);
+                        bool estado = reader.GetBoolean(2);
+                        string estadoTexto = estado ? "Activo" : "Inactivo";
 
-                    string[] row = { id, description, state };
-
-                    dataGridView1.Rows.Add(row);
+                        dataGridView1.Rows.Add(id.ToString(), description, estadoTexto);
+                    }
                 }
             }
         }
@@ -82,10 +70,8 @@ namespace Proyecto1_Citas_Dentales.Forms
         // Selecciona el ID de la fila seleccionada
         private void dataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            // Verificar que se hizo clic en la tercera columna y que haya al menos una fila seleccionada
             if (e.RowIndex >= 0)
             {
-                // Obtener el valor de la primera columna (columna 0)
                 selectedId = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells[0].Value);
             }
             else
@@ -94,7 +80,7 @@ namespace Proyecto1_Citas_Dentales.Forms
             }
         }
 
-        // Boton para modificar el estado de un tipo de consulta
+        // Botón para modificar el estado de un tipo de consulta
         private void ChangeState(object sender, EventArgs e)
         {
             if (selectedId != 0)
@@ -105,7 +91,6 @@ namespace Proyecto1_Citas_Dentales.Forms
                 {
                     UpdateData();
                     selectedId = 0;
-                    return;
                 }
                 else
                 {
@@ -118,7 +103,7 @@ namespace Proyecto1_Citas_Dentales.Forms
             }
         }
 
-        // Boton para eliminar un tipo de consulta
+        // Botón para eliminar un tipo de consulta
         private void DeleteQueryType(object sender, EventArgs e)
         {
             if (selectedId != 0)
@@ -131,7 +116,6 @@ namespace Proyecto1_Citas_Dentales.Forms
                     {
                         UpdateData();
                         selectedId = 0;
-                        return;
                     }
                     else
                     {

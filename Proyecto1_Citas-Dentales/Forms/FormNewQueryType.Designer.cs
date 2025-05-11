@@ -36,11 +36,8 @@
             stateQueryType = new ComboBox();
             descriptionQueryType = new TextBox();
             label3 = new Label();
-            label2 = new Label();
-            idQueryType = new NumericUpDown();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)idQueryType).BeginInit();
             SuspendLayout();
             // 
             // panel1
@@ -73,8 +70,6 @@
             panel2.Controls.Add(stateQueryType);
             panel2.Controls.Add(descriptionQueryType);
             panel2.Controls.Add(label3);
-            panel2.Controls.Add(label2);
-            panel2.Controls.Add(idQueryType);
             panel2.Dock = DockStyle.Top;
             panel2.Location = new Point(0, 93);
             panel2.Margin = new Padding(3, 4, 3, 4);
@@ -148,29 +143,6 @@
             label3.TabIndex = 3;
             label3.Text = "Ingrese la descripción:";
             // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI", 12F);
-            label2.ForeColor = Color.LightGray;
-            label2.Location = new Point(282, 41);
-            label2.Name = "label2";
-            label2.Size = new Size(389, 28);
-            label2.TabIndex = 1;
-            label2.Text = "Ingrese un numero para el tipo de consulta:";
-            // 
-            // idQueryType
-            // 
-            idQueryType.BackColor = Color.FromArgb(17, 17, 34);
-            idQueryType.BorderStyle = BorderStyle.FixedSingle;
-            idQueryType.Font = new Font("Segoe UI", 12F);
-            idQueryType.ForeColor = Color.White;
-            idQueryType.Location = new Point(282, 79);
-            idQueryType.Margin = new Padding(3, 4, 3, 4);
-            idQueryType.Name = "idQueryType";
-            idQueryType.Size = new Size(354, 34);
-            idQueryType.TabIndex = 2;
-            // 
             // FormNewQueryType
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -186,7 +158,6 @@
             panel1.PerformLayout();
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)idQueryType).EndInit();
             ResumeLayout(false);
         }
 
@@ -199,8 +170,6 @@
         private ComboBox stateQueryType;
         private TextBox descriptionQueryType;
         private Label label3;
-        private Label label2;
-        private NumericUpDown idQueryType;
         private Button buttonAddNewType;
 
     }

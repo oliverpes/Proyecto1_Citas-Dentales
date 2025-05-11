@@ -80,11 +80,7 @@ namespace Proyecto1_Citas_Dentales.Forms
         // Boton para agregar un nuevo doctor
         private void buttonNewDoctor_Click(object sender, EventArgs e)
         {
-            if (Business.doctors[19] != null)
-            {
-                MessageBox.Show("No se pueden agregar mas de 20 doctores", "Nuevo doctor", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
+            
             FormNewDoctor formNewDoctor = new FormNewDoctor();
             formNewDoctor.Owner = this;
             formNewDoctor.ShowDialog();

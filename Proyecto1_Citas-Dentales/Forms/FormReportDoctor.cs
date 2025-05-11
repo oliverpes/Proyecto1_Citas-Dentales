@@ -10,13 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-/* UNED: Proyecto III Cuatrimestre
- * Proyecto #1: Aplicacion para gestionar citas de una clinica dental
- * Estidiante: Marco Fernando Agüero Barboza
- * Fecha: 11/10/2023
- * 
- * Clase de la interfaz grafica para generar un reporte de citas por doctor
- */
+
 
 namespace Proyecto1_Citas_Dentales.Forms
 {
@@ -46,18 +40,18 @@ namespace Proyecto1_Citas_Dentales.Forms
             resultsView.Columns.Add(columnClient);
 
             // Agregar los doctores al ComboBox
-            for (int i = 0; i < Business.doctors.Length; i++)
+            foreach (var doctor in Business.doctors)
             {
-                if (Business.doctors[i] != null)
+                if (doctor != null)
                 {
-                    Doctor doctor = Business.doctors[i];
                     string doctorData = doctor.Id.ToString() + " - " + doctor.Name + " " + doctor.LastName;
                     inputDoctors.Items.Add(doctorData);
                 }
             }
         }
 
-        // Boton para generar el reporte
+
+        // Boton para generar el reporte doctor
         private void searchButton_Click(object sender, EventArgs e)
         {
             resultsView.Rows.Clear();
@@ -66,29 +60,25 @@ namespace Proyecto1_Citas_Dentales.Forms
             string[] doctorData = doctorInput.Split('-');
             int doctorId;
 
-            if (int.TryParse(doctorData[0], out doctorId) == false)
+            if (!int.TryParse(doctorData[0].Trim(), out doctorId))
             {
                 MessageBox.Show("Seleccione un doctor.", "Reporte doctores", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            for (int i = 0; i < Business.appointments.Length; i++)
+            foreach (Appointment appointment in Business.appointments)
             {
-                if (Business.appointments[i] != null)
+                if (appointment != null && appointment.Doctor.Id == doctorId)
                 {
-                    Appointment appointment = Business.appointments[i];
-                    if (appointment.Doctor.Id == doctorId)
+                    string[] row = new string[]
                     {
-                        string[] row = new string[]
-                        {
-                            appointment.Id.ToString(),
-                            appointment.Date.ToString(),
-                            appointment.QueryType.Description,
-                            appointment.Doctor.Name + " " + appointment.Doctor.LastName,
-                            appointment.Client.Name + " " + appointment.Client.LastName
-                        };
-                        resultsView.Rows.Add(row);
-                    }
+                appointment.Id.ToString(),
+                appointment.Date.ToString(),
+                appointment.QueryType.Description,
+                appointment.Doctor.Name + " " + appointment.Doctor.LastName,
+                appointment.Client.Name + " " + appointment.Client.LastName
+                    };
+                    resultsView.Rows.Add(row);
                 }
             }
         }

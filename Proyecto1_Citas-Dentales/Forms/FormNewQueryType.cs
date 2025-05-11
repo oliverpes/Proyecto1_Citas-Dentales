@@ -1,50 +1,60 @@
 ﻿using BusinessLogic;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-
-
 
 namespace Proyecto1_Citas_Dentales.Forms
 {
     public partial class FormNewQueryType : Form
     {
+        private readonly FormQueryTypes parentForm;
 
-        public FormNewQueryType()
+        public FormNewQueryType(FormQueryTypes parent)
         {
             InitializeComponent();
+            parentForm = parent;
+
+            // Cargar opciones en el combo si aún no están
+            if (stateQueryType.Items.Count == 0)
+            {
+                stateQueryType.Items.Add("Activo");
+                stateQueryType.Items.Add("Inactivo");
+                stateQueryType.SelectedIndex = 0;
+            }
         }
 
-        // Boton para agregar un nuevo tipo de consulta
+        // Botón para guardar un nuevo tipo de consulta
         private void ButtonAddQueryType_Click(object sender, EventArgs e)
         {
-            char state = stateQueryType.Text.Length > 0 ? stateQueryType.Text[0] : 'N';
-            Response res = Business.SaveQueryType((int)idQueryType.Value, descriptionQueryType.Text, state);
+            int estado = stateQueryType.Text == "Activo" ? 1 : 0;
+            string descripcion = descriptionQueryType.Text.Trim();
+
+            Response res = Business.SaveQueryType(descripcion, estado);
 
             if (res.Success)
             {
-                if (MessageBox.Show("Se ha agregado el nuevo tipo de consulta. ¿Desea agregar otro?", "Nuevo tipo de consulta", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                parentForm.UpdateData(); // Refresca el DataGridView principal
+
+                DialogResult result = MessageBox.Show(
+                    "Tipo de consulta guardado correctamente.\n¿Desea agregar otro?",
+                    "Confirmación",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question
+                );
+
+                if (result == DialogResult.No)
                 {
-                    idQueryType.Value = 0;
-                    descriptionQueryType.Text = "";
-                    stateQueryType.Text = "Inactivo";
-                    return;
+                    this.Close();
                 }
-                if (Owner is FormQueryTypes formQueryTypes)
+                else
                 {
-                    formQueryTypes.UpdateData();
+                    descriptionQueryType.Clear();
+                    stateQueryType.SelectedIndex = 0;
+                    descriptionQueryType.Focus();
                 }
-                this.Close();
             }
             else
             {
-                MessageBox.Show(res.Message, "Nuevo tipo de consulta", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error al guardar: " + res.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

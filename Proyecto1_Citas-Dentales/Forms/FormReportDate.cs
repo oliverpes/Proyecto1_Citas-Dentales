@@ -10,13 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-/* UNED: Proyecto III Cuatrimestre
- * Proyecto #1: Aplicacion para gestionar citas de una clinica dental
- * Estidiante: Marco Fernando Agüero Barboza
- * Fecha: 11/10/2023
- * 
- * Clase de la interfaz grafica para generar un reporte de citas por fecha
- */
+
 
 namespace Proyecto1_Citas_Dentales.Forms
 {
@@ -46,37 +40,29 @@ namespace Proyecto1_Citas_Dentales.Forms
             resultsView.Columns.Add(columnClient);
         }
 
-        // Boton para generar el reporte
+        // Boton para generar el reporte fecha
         private void searchButton_Click(object sender, EventArgs e)
         {
             resultsView.Rows.Clear();
 
-            DateTime date = inputDateSearch.Value;
+            DateTime selectedDate = inputDateSearch.Value.Date;
 
-            for (int i = 0; i < Business.appointments.Length; i++)
+            foreach (Appointment appointment in Business.appointments)
             {
-                if (Business.appointments[i] != null)
+                if (appointment != null && appointment.Date.Date == selectedDate)
                 {
-                    if (Business.appointments[i].Date.Date == date.Date)
+                    string[] row = new string[]
                     {
-                        // Agrega una nueva fila al DataGridView con los datos de cada Doctor
-                        string id = Business.appointments[i].Id.ToString();
-                        string dateStr = Business.appointments[i].Date.ToString();
-
-                        QueryType qt = Business.appointments[i].QueryType;
-                        Client client = Business.appointments[i].Client;
-                        Doctor doctor = Business.appointments[i].Doctor;
-
-                        string type = qt.Description;
-                        string doctorName = doctor.Name;
-                        string clientName = client.Name;
-
-                        string[] row = { id, dateStr, type, doctorName, clientName };
-
-                        resultsView.Rows.Add(row);
-                    }
+                appointment.Id.ToString(),
+                appointment.Date.ToString(),
+                appointment.QueryType.Description,
+                appointment.Doctor.Name + " " + appointment.Doctor.LastName,
+                appointment.Client.Name + " " + appointment.Client.LastName
+                    };
+                    resultsView.Rows.Add(row);
                 }
             }
         }
+
     }
 }
