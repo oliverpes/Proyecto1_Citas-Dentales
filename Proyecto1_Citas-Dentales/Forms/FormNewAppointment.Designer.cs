@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             panel1 = new Panel();
-            button1 = new Button();
+            label7 = new Label();
             label1 = new Label();
             panel2 = new Panel();
             inputClient = new ComboBox();
@@ -50,7 +50,7 @@
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(17, 17, 34);
-            panel1.Controls.Add(button1);
+            panel1.Controls.Add(label7);
             panel1.Controls.Add(label1);
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
@@ -59,33 +59,24 @@
             panel1.Size = new Size(914, 93);
             panel1.TabIndex = 1;
             // 
-            // button1
+            // label7
             // 
-            button1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
-            button1.AutoSize = true;
-            button1.BackColor = Color.FromArgb(25, 25, 50);
-            button1.FlatStyle = FlatStyle.Flat;
-            button1.ForeColor = Color.White;
-            button1.Location = new Point(1450, 23);
-            button1.Margin = new Padding(3, 4, 3, 4);
-            button1.Name = "button1";
-            button1.Padding = new Padding(9, 5, 9, 5);
-            button1.Size = new Size(125, 53);
-            button1.TabIndex = 1;
-            button1.Text = "Nueva Cita";
-            button1.UseVisualStyleBackColor = false;
+            label7.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
+            label7.AutoSize = true;
+            label7.Font = new Font("Segoe UI", 24F, FontStyle.Bold);
+            label7.ForeColor = Color.White;
+            label7.Location = new Point(25, 23);
+            label7.Name = "label7";
+            label7.Size = new Size(406, 54);
+            label7.TabIndex = 2;
+            label7.Text = "Agendar Cita Dental";
             // 
             // label1
             // 
-            label1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 24F, FontStyle.Bold, GraphicsUnit.Point);
-            label1.ForeColor = Color.White;
-            label1.Location = new Point(14, 15);
+            label1.Location = new Point(0, 0);
             label1.Name = "label1";
-            label1.Size = new Size(223, 54);
+            label1.Size = new Size(100, 23);
             label1.TabIndex = 0;
-            label1.Text = "Nueva cita";
             // 
             // panel2
             // 
@@ -110,7 +101,7 @@
             inputClient.BackColor = Color.FromArgb(17, 17, 34);
             inputClient.Dock = DockStyle.Top;
             inputClient.FlatStyle = FlatStyle.Flat;
-            inputClient.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
+            inputClient.Font = new Font("Segoe UI", 10F);
             inputClient.ForeColor = Color.White;
             inputClient.FormattingEnabled = true;
             inputClient.Location = new Point(0, 337);
@@ -123,7 +114,7 @@
             // 
             label6.AutoSize = true;
             label6.Dock = DockStyle.Top;
-            label6.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            label6.Font = new Font("Segoe UI", 12F);
             label6.ForeColor = Color.White;
             label6.Location = new Point(0, 293);
             label6.Name = "label6";
@@ -137,7 +128,7 @@
             inputDoctor.BackColor = Color.FromArgb(17, 17, 34);
             inputDoctor.Dock = DockStyle.Top;
             inputDoctor.FlatStyle = FlatStyle.Flat;
-            inputDoctor.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
+            inputDoctor.Font = new Font("Segoe UI", 10F);
             inputDoctor.ForeColor = Color.White;
             inputDoctor.FormattingEnabled = true;
             inputDoctor.Location = new Point(0, 262);
@@ -150,7 +141,7 @@
             // 
             label5.AutoSize = true;
             label5.Dock = DockStyle.Top;
-            label5.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            label5.Font = new Font("Segoe UI", 12F);
             label5.ForeColor = Color.White;
             label5.Location = new Point(0, 218);
             label5.Name = "label5";
@@ -164,7 +155,7 @@
             inputType.BackColor = Color.FromArgb(17, 17, 34);
             inputType.Dock = DockStyle.Top;
             inputType.FlatStyle = FlatStyle.Flat;
-            inputType.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
+            inputType.Font = new Font("Segoe UI", 10F);
             inputType.ForeColor = Color.White;
             inputType.FormattingEnabled = true;
             inputType.Location = new Point(0, 187);
@@ -177,7 +168,7 @@
             // 
             label4.AutoSize = true;
             label4.Dock = DockStyle.Top;
-            label4.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            label4.Font = new Font("Segoe UI", 12F);
             label4.ForeColor = Color.White;
             label4.Location = new Point(0, 143);
             label4.Name = "label4";
@@ -195,7 +186,7 @@
             inputDate.CalendarTrailingForeColor = Color.Silver;
             inputDate.CustomFormat = "dd/MM/yyyy HH:mm";
             inputDate.Dock = DockStyle.Top;
-            inputDate.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
+            inputDate.Font = new Font("Segoe UI", 10F);
             inputDate.Format = DateTimePickerFormat.Custom;
             inputDate.Location = new Point(0, 113);
             inputDate.Margin = new Padding(3, 4, 3, 4);
@@ -209,7 +200,7 @@
             // 
             label3.AutoSize = true;
             label3.Dock = DockStyle.Top;
-            label3.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            label3.Font = new Font("Segoe UI", 12F);
             label3.ForeColor = Color.White;
             label3.Location = new Point(0, 69);
             label3.Name = "label3";
@@ -223,7 +214,7 @@
             inputID.BackColor = Color.FromArgb(17, 17, 34);
             inputID.BorderStyle = BorderStyle.FixedSingle;
             inputID.Dock = DockStyle.Top;
-            inputID.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
+            inputID.Font = new Font("Segoe UI", 10F);
             inputID.ForeColor = Color.White;
             inputID.Location = new Point(0, 39);
             inputID.Margin = new Padding(3, 4, 3, 4);
@@ -235,7 +226,7 @@
             // 
             label2.AutoSize = true;
             label2.Dock = DockStyle.Top;
-            label2.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            label2.Font = new Font("Segoe UI", 12F);
             label2.ForeColor = Color.White;
             label2.Location = new Point(0, 0);
             label2.Name = "label2";
@@ -250,7 +241,7 @@
             buttonSaveAppointment.AutoSize = true;
             buttonSaveAppointment.FlatAppearance.BorderColor = Color.DimGray;
             buttonSaveAppointment.FlatStyle = FlatStyle.Flat;
-            buttonSaveAppointment.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            buttonSaveAppointment.Font = new Font("Segoe UI", 12F);
             buttonSaveAppointment.ForeColor = Color.White;
             buttonSaveAppointment.Location = new Point(586, 504);
             buttonSaveAppointment.Margin = new Padding(3, 4, 3, 4);
@@ -284,7 +275,7 @@
         #endregion
 
         private Panel panel1;
-        private Button button1;
+        //private Button button1;
         private Label label1;
         private Panel panel2;
         private Label label2;
@@ -298,5 +289,6 @@
         private Label label5;
         private ComboBox inputType;
         private Button buttonSaveAppointment;
+        private Label label7;
     }
 }

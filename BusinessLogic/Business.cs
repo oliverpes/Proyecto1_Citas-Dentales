@@ -11,11 +11,6 @@ namespace BusinessLogic
 {
     public static class Business
     {
-        //// Variables globales
-        //public static QueryType[] queryTypes = new QueryType[1];
-        //public static Client[] clients = new Client[2];
-        //public static Doctor[] doctors = new Doctor[2];
-        //public static Appointment[] appointments = new Appointment[2];
 
         //nuevas cadenas de variables globales
         public static List<QueryType> queryTypes = new List<QueryType>();
@@ -278,16 +273,173 @@ namespace BusinessLogic
                 return response;
             }
         }
+       
 
-
-
-        //Metodo para guardar una cita
-        public static Response SaveAppointment(string id, DateTime date, string queryTypeData, string clientData, string doctorData)
+        // Método para cargar citas desde la base de datos
+        public static void LoadAppointmentsFromDatabase()
         {
-            Response response = new()
+            appointments.Clear(); // Limpiar lista actual
+
+            string connectionString = File.ReadAllText("config.txt").Trim();
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
             {
-                Success = false
-            };
+                conn.Open();
+
+                string query = @"
+            SELECT 
+                c.Id AS CitaId, c.Fecha, 
+                tc.Id AS TipoId, tc.Descripcion,
+                cl.Id AS ClienteId, cl.Nombre AS ClienteNombre, 
+                cl.ApellidoPaterno AS ClienteApellidoPaterno, cl.ApellidoMaterno AS ClienteApellidoMaterno, cl.FechaNacimiento, cl.Genero, cl.EstadoId AS ClienteEstadoId,
+                d.Id AS DoctorId, d.Nombre AS DoctorNombre, 
+                d.ApellidoPaterno AS DoctorApellidoPaterno, d.ApellidoMaterno AS DoctorApellidoMaterno, d.EstadoId AS DoctorEstadoId
+            FROM Citas c
+            JOIN TiposConsulta tc ON c.TipoConsultaId = tc.Id
+            JOIN Clientes cl ON c.ClienteId = cl.Id
+            JOIN Doctores d ON c.DoctorId = d.Id
+        ";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        int id = reader.GetInt32(reader.GetOrdinal("CitaId"));
+                        DateTime fecha = reader.GetDateTime(reader.GetOrdinal("Fecha"));
+
+                        // Tipo de consulta
+                        int tipoId = reader.GetInt32(reader.GetOrdinal("TipoId"));
+                        string tipoDesc = reader.GetString(reader.GetOrdinal("Descripcion"));
+                        QueryType tipo = new QueryType(tipoId, tipoDesc, 'A'); // Asumimos 'A' como activo
+
+                        // Cliente
+                        int clientId = reader.GetInt32(reader.GetOrdinal("ClienteId"));
+                        string clientName = reader.GetString(reader.GetOrdinal("ClienteNombre"));
+                        string clientLast1 = reader.GetString(reader.GetOrdinal("ClienteApellidoPaterno"));
+                        string clientLast2 = reader.GetString(reader.GetOrdinal("ClienteApellidoMaterno"));
+                        DateTime clientBirth = reader.GetDateTime(reader.GetOrdinal("FechaNacimiento"));
+                        char clientGender = reader.GetString(reader.GetOrdinal("Genero"))[0];
+                        int clientState = reader.GetInt32(reader.GetOrdinal("ClienteEstadoId"));
+                        Client client = new Client(clientId, clientName, clientLast1, clientLast2, clientBirth, clientGender, clientState);
+
+                        // Doctor
+                        int doctorId = reader.GetInt32(reader.GetOrdinal("DoctorId"));
+                        string doctorName = reader.GetString(reader.GetOrdinal("DoctorNombre"));
+                        string doctorLast1 = reader.GetString(reader.GetOrdinal("DoctorApellidoPaterno"));
+                        string doctorLast2 = reader.GetString(reader.GetOrdinal("DoctorApellidoMaterno"));
+                        int doctorState = reader.GetInt32(reader.GetOrdinal("DoctorEstadoId"));
+                        Doctor doctor = new Doctor(doctorId, doctorName, doctorLast1, doctorLast2, doctorState);
+
+                        // Agregar a la lista
+                        appointments.Add(new Appointment(id, fecha, tipo, client, doctor));
+                    }
+                }
+            }
+        }
+
+
+        //metodo para recargar datos desde la base de datos
+        public static void LoadQueryTypes()
+        {
+            queryTypes.Clear();
+            string connectionString = File.ReadAllText("config.txt").Trim();
+
+            using SqlConnection conn = new(connectionString);
+            conn.Open();
+            using SqlCommand cmd = new("SELECT Id, Descripcion FROM TiposConsulta WHERE Estado = 1", conn);
+            using SqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                queryTypes.Add(new QueryType
+                {
+                    Id = reader.GetInt32(0),
+                    Description = reader.GetString(1)
+                });
+            }
+        }
+
+        public static void LoadClients()
+        {
+            clients.Clear();
+            string connectionString = File.ReadAllText("config.txt").Trim();
+
+            using SqlConnection conn = new(connectionString);
+            conn.Open();
+            using SqlCommand cmd = new("SELECT Id, Nombre, Apellido FROM Clientes", conn);
+            using SqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                clients.Add(new Client
+                {
+                    Id = reader.GetInt32(0),
+                    Name = reader.GetString(1),
+                    LastName = reader.GetString(2)
+                });
+            }
+        }
+
+        public static void LoadDoctors()
+        {
+            doctors.Clear();
+            string connectionString = File.ReadAllText("config.txt").Trim();
+
+            using SqlConnection conn = new(connectionString);
+            conn.Open();
+            using SqlCommand cmd = new("SELECT Id, Nombre, Apellido FROM Doctores WHERE EstadoId = 1", conn);
+            using SqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                doctors.Add(new Doctor
+                {
+                    Id = reader.GetInt32(0),
+                    Name = reader.GetString(1),
+                    LastName = reader.GetString(2)
+                });
+            }
+        }
+
+        public static void LoadAppointments()
+        {
+            appointments.Clear();
+            string connectionString = File.ReadAllText("config.txt").Trim();
+
+            using SqlConnection conn = new(connectionString);
+            conn.Open();
+            using SqlCommand cmd = new(
+                @"SELECT c.Id, c.Fecha, c.TipoConsultaId, c.ClienteId, c.DoctorId
+          FROM Citas c", conn);
+            using SqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                int id = reader.GetInt32(0);
+                DateTime fecha = reader.GetDateTime(1);
+                int tipoId = reader.GetInt32(2);
+                int clienteId = reader.GetInt32(3);
+                int doctorId = reader.GetInt32(4);
+
+                QueryType qt = queryTypes.FirstOrDefault(q => q.Id == tipoId);
+                Client cl = clients.FirstOrDefault(c => c.Id == clienteId);
+                Doctor dr = doctors.FirstOrDefault(d => d.Id == doctorId);
+
+                if (qt == null || cl == null || dr == null) continue;
+
+                appointments.Add(new Appointment
+                {
+                    Id = id,
+                    Date = fecha,
+                    QueryType = qt,
+                    Client = cl,
+                    Doctor = dr
+                });
+            }
+        }
+
+
+        // Metodo para guardar una cita
+        public static Response SaveAppointment(DateTime date, string queryTypeData, string clientData, string doctorData)
+        {
+            Response response = new() { Success = false };
 
             try
             {
@@ -295,57 +447,82 @@ namespace BusinessLogic
                 string[] infoclient = clientData.Split('-');
                 string[] infodoctor = doctorData.Split('-');
 
-                int queryTypeId = int.Parse(infotype[0]);
-                int clientId = int.Parse(infoclient[0]);
-                int doctorId = int.Parse(infodoctor[0]);
-
-                if (!int.TryParse(id, out int idInt) || idInt <= 0)
-                    throw new ArgumentException("El ID de consulta debe ser un número positivo mayor que cero.");
+                int queryTypeId = int.Parse(infotype[0].Trim());
+                int clientId = int.Parse(infoclient[0].Trim());
+                int doctorId = int.Parse(infodoctor[0].Trim());
 
                 if (date < DateTime.Now)
                     throw new ArgumentException("La fecha de la cita no puede ser menor a la fecha actual.");
 
-                var queryType = queryTypes.FirstOrDefault(q => q != null && q.Id == queryTypeId)
-                                ?? throw new InvalidOperationException("El tipo de consulta no existe.");
+                string connectionString = File.ReadAllText("config.txt").Trim();
 
-                var client = clients.FirstOrDefault(c => c != null && c.Id == clientId)
-                             ?? throw new InvalidOperationException("El cliente no existe.");
-
-                var doctor = doctors.FirstOrDefault(d => d != null && d.Id == doctorId)
-                             ?? throw new InvalidOperationException("El doctor no existe.");
-
-                if (appointments.Any(a => a != null && a.Id == idInt))
-                    throw new InvalidOperationException("El ID de cita ya existe.");
-
-                TimeSpan margen = TimeSpan.FromMinutes(59);
-                DateTime fechaHoraSeleccionada = date;
-
-                if (appointments.Any(a => a != null && a.Client.Id == clientId && a.Doctor.Id == doctorId &&
-                                          Math.Abs((fechaHoraSeleccionada - a.Date).TotalMinutes) <= margen.TotalMinutes))
+                using (SqlConnection conn = new SqlConnection(connectionString))
                 {
-                    throw new InvalidOperationException("El cliente ya tiene una cita con el mismo doctor en un rango de 59 minutos de diferencia.");
+                    conn.Open();
+
+                    // Verificar existencia de tipo de consulta activo
+                    using (SqlCommand cmd = new SqlCommand("SELECT COUNT(*) FROM TiposConsulta WHERE Id = @Id AND Estado = 1", conn))
+                    {
+                        cmd.Parameters.AddWithValue("@Id", queryTypeId);
+                        if ((int)cmd.ExecuteScalar() == 0)
+                            throw new InvalidOperationException("El tipo de consulta no existe.");
+                    }
+
+                    // Verificar existencia de cliente
+                    using (SqlCommand cmd = new SqlCommand("SELECT COUNT(*) FROM Clientes WHERE Id = @Id", conn))
+                    {
+                        cmd.Parameters.AddWithValue("@Id", clientId);
+                        if ((int)cmd.ExecuteScalar() == 0)
+                            throw new InvalidOperationException("El cliente no existe.");
+                    }
+
+                    // Verificar existencia de doctor activo
+                    using (SqlCommand cmd = new SqlCommand("SELECT COUNT(*) FROM Doctores WHERE Id = @Id AND EstadoId = 1", conn))
+                    {
+                        cmd.Parameters.AddWithValue("@Id", doctorId);
+                        if ((int)cmd.ExecuteScalar() == 0)
+                            throw new InvalidOperationException("El doctor no existe.");
+                    }
+
+                    // Validar que no haya conflicto de hora entre mismo doctor y cliente
+                    using (SqlCommand cmd = new SqlCommand(
+                        @"SELECT COUNT(*) FROM Citas 
+                  WHERE ClienteId = @ClienteId AND DoctorId = @DoctorId 
+                  AND ABS(DATEDIFF(MINUTE, Fecha, @Fecha)) <= 59", conn))
+                    {
+                        cmd.Parameters.AddWithValue("@ClienteId", clientId);
+                        cmd.Parameters.AddWithValue("@DoctorId", doctorId);
+                        cmd.Parameters.AddWithValue("@Fecha", date);
+                        if ((int)cmd.ExecuteScalar() > 0)
+                            throw new InvalidOperationException("El cliente ya tiene una cita con el mismo doctor en un rango de 59 minutos.");
+                    }
+
+                    // Insertar cita (sin especificar el ID)
+                    using (SqlCommand cmd = new SqlCommand(
+                        @"INSERT INTO Citas (Fecha, TipoConsultaId, ClienteId, DoctorId)
+                  VALUES (@Fecha, @TipoConsultaId, @ClienteId, @DoctorId)", conn))
+                    {
+                        cmd.Parameters.AddWithValue("@Fecha", date);
+                        cmd.Parameters.AddWithValue("@TipoConsultaId", queryTypeId);
+                        cmd.Parameters.AddWithValue("@ClienteId", clientId);
+                        cmd.Parameters.AddWithValue("@DoctorId", doctorId);
+                        cmd.ExecuteNonQuery();
+                    }
                 }
 
-                appointments.Add(new Appointment(idInt, date, queryType, client, doctor));
                 response.Success = true;
-                return response;
+                response.Message = "Cita guardada correctamente.";
             }
-            catch (ArgumentException ae)
+            catch (Exception ex)
             {
-                response.Message = ae.Message;
-                return response;
+                response.Message = ex.Message;
             }
-            catch (InvalidOperationException ioe)
-            {
-                response.Message = ioe.Message;
-                return response;
-            }
-            catch (Exception e)
-            {
-                response.Message = e.Message;
-                return response;
-            }
+
+            return response;
         }
+
+
+        
 
 
 

@@ -16,6 +16,8 @@ namespace Entities
         public Client Client { get; set; }
         public Doctor Doctor { get; set; }
 
+        // Contructor vacio 
+        public Appointment() { }
         // Constructor
         public Appointment(int id, DateTime date, QueryType queryType, Client client, Doctor doctor)
         {

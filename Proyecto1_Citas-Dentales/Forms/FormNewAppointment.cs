@@ -9,14 +9,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Data.SqlClient;
 
-/* UNED: Proyecto III Cuatrimestre
- * Proyecto #1: Aplicacion para gestionar citas de una clinica dental
- * Estidiante: Marco Fernando Agüero Barboza
- * Fecha: 11/10/2023
- * 
- * Clase de la interfaz de creacion de citas
- */
+
 
 namespace Proyecto1_Citas_Dentales.Forms
 {
@@ -27,45 +22,61 @@ namespace Proyecto1_Citas_Dentales.Forms
         {
             InitializeComponent();
 
-            // Cargar datos en los combobox
-            foreach (QueryType qt in Business.queryTypes)
-            {
-                if (qt != null && qt.State == 'A')
-                {
-                    string id = qt.Id.ToString();
-                    string description = qt.Description;
+            string connectionString = File.ReadAllText("config.txt").Trim();
 
-                    string info = id + " - " + description;
-                    inputType.Items.Add(info);
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    // Tipos de Consulta
+                    using (SqlCommand cmd = new SqlCommand("SELECT Id, Descripcion FROM TiposConsulta WHERE Estado = 1", conn))
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            int id = reader.GetInt32(0);
+                            string description = reader.GetString(1);
+                            string info = $"{id} - {description}";
+                            inputType.Items.Add(info);
+                        }
+                    }
+
+                    // Clientes
+                    using (SqlCommand cmd = new SqlCommand("SELECT Id, Nombre, ApellidoPaterno, ApellidoMaterno FROM Clientes WHERE EstadoId = 1", conn))
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            int id = reader.GetInt32(0);
+                            string nombre = reader.GetString(1);
+                            string apellido1 = reader.GetString(2);
+                            string apellido2 = reader.GetString(3);
+                            string info = $"{id} - {nombre} {apellido1} {apellido2}";
+                            inputClient.Items.Add(info);
+                        }
+                    }
+
+                    // Doctores
+                    using (SqlCommand cmd = new SqlCommand("SELECT Id, Nombre, ApellidoPaterno, ApellidoMaterno FROM Doctores WHERE EstadoId = 1", conn))
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            int id = reader.GetInt32(0);
+                            string nombre = reader.GetString(1);
+                            string apellido1 = reader.GetString(2);
+                            string apellido2 = reader.GetString(3);
+                            string info = $"{id} - {nombre} {apellido1} {apellido2}";
+                            inputDoctor.Items.Add(info);
+                        }
+                    }
                 }
             }
-
-            foreach (Client client in Business.clients)
+            catch (Exception ex)
             {
-                if (client != null)
-                {
-                    string id = client.Id.ToString();
-                    string name = client.Name;
-                    string firstLastName = client.LastName;
-                    string secondLastName = client.SecondLastName;
-
-                    string info = id + " - " + name + " " + firstLastName + " " + secondLastName;
-                    inputClient.Items.Add(info);
-                }
-            }
-
-            foreach (Doctor doctor in Business.doctors)
-            {
-                if (doctor != null && doctor.State == 'A')
-                {
-                    string id = doctor.Id.ToString();
-                    string name = doctor.Name;
-                    string firstLastName = doctor.LastName;
-                    string secondLastName = doctor.SecondLastName;
-
-                    string info = id + " - " + name + " " + firstLastName + " " + secondLastName;
-                    inputDoctor.Items.Add(info);
-                }
+                MessageBox.Show("Error al cargar datos desde la base de datos: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
         }
@@ -73,7 +84,7 @@ namespace Proyecto1_Citas_Dentales.Forms
         // Boton para guardar la cita
         private void buttonSaveAppointment_Click(object sender, EventArgs e)
         {
-            Response response = Business.SaveAppointment(inputID.Text, inputDate.Value, inputType.Text, inputClient.Text, inputDoctor.Text);
+            Response response = Business.SaveAppointment(inputDate.Value, inputType.Text, inputClient.Text, inputDoctor.Text);
 
             if (response.Success)
             {
@@ -88,5 +99,6 @@ namespace Proyecto1_Citas_Dentales.Forms
                 MessageBox.Show(response.Message, "Nueva cita", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
     }
 }

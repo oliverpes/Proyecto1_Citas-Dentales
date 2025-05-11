@@ -9,14 +9,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Data.SqlClient;
 
-/* UNED: Proyecto III Cuatrimestre
- * Proyecto #1: Aplicacion para gestionar citas de una clinica dental
- * Estidiante: Marco Fernando Agüero Barboza
- * Fecha: 11/10/2023
- * 
- * Clase de la interfaz de administracion de citas
- */
+
 
 namespace Proyecto1_Citas_Dentales.Forms
 {
@@ -54,13 +49,15 @@ namespace Proyecto1_Citas_Dentales.Forms
         // Actualizar datos del DataGridView
         public void UpdateData()
         {
+            // Cargar los datos desde la base
+            Business.LoadAppointmentsFromDatabase();
+
             appointmentsView.Rows.Clear();
 
             foreach (Appointment appointment in Business.appointments)
             {
                 if (appointment != null)
                 {
-                    // Agrega una nueva fila al DataGridView con los datos de cada Doctor
                     string id = appointment.Id.ToString();
                     string date = appointment.Date.ToString();
 
@@ -68,9 +65,9 @@ namespace Proyecto1_Citas_Dentales.Forms
                     Client client = appointment.Client;
                     Doctor doctor = appointment.Doctor;
 
-                    string type = qt != null ? qt.Id.ToString() + " - " + qt.Description : "N/A";
-                    string doctorName = doctor != null ? doctor.Id.ToString() + " - " + doctor.Name + " " + doctor.LastName : "N/A";
-                    string clientName = client != null ? client.Id.ToString() + " - " + client.Name + " " + client.LastName : "N/A";
+                    string type = qt != null ? qt.Id + " - " + qt.Description : "N/A";
+                    string doctorName = doctor != null ? doctor.Id + " - " + doctor.Name + " " + doctor.LastName : "N/A";
+                    string clientName = client != null ? client.Id + " - " + client.Name + " " + client.LastName : "N/A";
 
                     string[] row = { id, date, type, doctorName, clientName };
 
@@ -79,60 +76,57 @@ namespace Proyecto1_Citas_Dentales.Forms
             }
         }
 
+
         // Boton para crear una nueva cita
         private void HandleNewAppoiment(object sender, EventArgs e)
         {
-            // Variables para saber si existe el cliente, doctor y tipo de consulta
-            bool foundClient = false;
-            bool foundDoctor = false;
-            bool foundQueryType = false;
+            try
+            {
+                string connectionString = File.ReadAllText("config.txt").Trim();
 
-            // Verificar si existen clientes, doctores y tipos de consulta
-            foreach (Client client in Business.clients)
-            {
-                if (client != null)
+                using (SqlConnection conn = new SqlConnection(connectionString))
                 {
-                    foundClient = true;
-                    break;
-                }
-            }
-            foreach (Doctor doctor in Business.doctors)
-            {
-                if (doctor != null && doctor.State == 'A')
-                {
-                    foundDoctor = true;
-                    break;
-                }
-            }
-            foreach (QueryType queryType in Business.queryTypes)
-            {
-                if (queryType != null && queryType.State == 'A')
-                {
-                    foundQueryType = true;
-                    break;
-                }
-            }
-            if (!foundClient)
-            {
-                MessageBox.Show("No hay clientes registrados");
-                return;
-            }
-            if (!foundDoctor)
-            {
-                MessageBox.Show("No hay doctores registrados");
-                return;
-            }
-            if (!foundQueryType)
-            {
-                MessageBox.Show("No hay tipos de consulta registrados");
-                return;
-            }
+                    conn.Open();
 
-            // Abrir formulario para crear una nueva cita
-            FormNewAppointment formNewAppointment = new FormNewAppointment();
-            formNewAppointment.Owner = this;
-            formNewAppointment.ShowDialog();
+                    using (SqlCommand cmd = new SqlCommand("SELECT COUNT(*) FROM Clientes WHERE EstadoId = 1", conn))
+                    {
+                        if ((int)cmd.ExecuteScalar() == 0)
+                        {
+                            MessageBox.Show("No hay clientes activos registrados");
+                            return;
+                        }
+                    }
+
+                    using (SqlCommand cmd = new SqlCommand("SELECT COUNT(*) FROM Doctores WHERE EstadoId = 1", conn))
+                    {
+                        if ((int)cmd.ExecuteScalar() == 0)
+                        {
+                            MessageBox.Show("No hay doctores activos registrados");
+                            return;
+                        }
+                    }
+
+                    using (SqlCommand cmd = new SqlCommand("SELECT COUNT(*) FROM TiposConsulta WHERE Estado = 1", conn))
+                    {
+                        if ((int)cmd.ExecuteScalar() == 0)
+                        {
+                            MessageBox.Show("No hay tipos de consulta activos registrados");
+                            return;
+                        }
+                    }
+                }
+
+                // Abrir formulario si pasa la validación
+                FormNewAppointment formNewAppointment = new FormNewAppointment();
+                formNewAppointment.Owner = this;
+                formNewAppointment.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al validar los datos desde la base de datos: " + ex.Message);
+            }
         }
+
 
         // Seleccionar una cita
         private void HandleClickCell(object sender, DataGridViewCellEventArgs e)

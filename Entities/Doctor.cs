@@ -12,14 +12,23 @@ namespace Entities
     {
         public int State { get; set; }
 
-        public Doctor(int id, string name, string lastName, string secondLastName, int state)
+        //constructor vacio
+        public Doctor() { }
+
+        //constructores para el data grid 
+
+
+        //Constructor con parametros
+
+        public Doctor(int id, string name, string lastName, string secondLastName, int stateId)
         {
             Id = id;
             Name = name;
             LastName = lastName;
             SecondLastName = secondLastName;
-            State = state;
+            State = stateId;
         }
+
     }
     
     
