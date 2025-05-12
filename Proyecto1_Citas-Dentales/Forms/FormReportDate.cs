@@ -1,16 +1,10 @@
-﻿using Entities;
-using BusinessLogic;
+﻿using BusinessLogic;
+using Entities;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data.SqlClient;
+using System.IO;
 using System.Windows.Forms;
-
-
 
 namespace Proyecto1_Citas_Dentales.Forms
 {
@@ -20,49 +14,43 @@ namespace Proyecto1_Citas_Dentales.Forms
         {
             InitializeComponent();
 
-            // Crear las columnas del DataGridView
-            DataGridViewTextBoxColumn columnId = new DataGridViewTextBoxColumn();
-            DataGridViewTextBoxColumn columnDate = new DataGridViewTextBoxColumn();
-            DataGridViewTextBoxColumn columnType = new DataGridViewTextBoxColumn();
-            DataGridViewTextBoxColumn columnDoctor = new DataGridViewTextBoxColumn();
-            DataGridViewTextBoxColumn columnClient = new DataGridViewTextBoxColumn();
-
-            columnId.HeaderText = "ID";
-            columnDate.HeaderText = "Fecha";
-            columnType.HeaderText = "Tipo";
-            columnDoctor.HeaderText = "Doctor";
-            columnClient.HeaderText = "Cliente";
-
-            resultsView.Columns.Add(columnId);
-            resultsView.Columns.Add(columnDate);
-            resultsView.Columns.Add(columnType);
-            resultsView.Columns.Add(columnDoctor);
-            resultsView.Columns.Add(columnClient);
+            resultsView.Columns.Add("ID", "ID");
+            resultsView.Columns.Add("Fecha", "Fecha");
+            resultsView.Columns.Add("Tipo", "Tipo");
+            resultsView.Columns.Add("Doctor", "Doctor");
+            resultsView.Columns.Add("Cliente", "Cliente");
         }
 
-        // Boton para generar el reporte fecha
         private void searchButton_Click(object sender, EventArgs e)
         {
             resultsView.Rows.Clear();
 
             DateTime selectedDate = inputDateSearch.Value.Date;
+            string connectionString = File.ReadAllText("config.txt").Trim();
 
-            foreach (Appointment appointment in Business.appointments)
+            using SqlConnection conn = new(connectionString);
+            conn.Open();
+            string query = @"SELECT c.Id, c.Fecha, t.Descripcion, 
+                            d.Nombre + ' ' + d.ApellidoPaterno + ' ' + d.ApellidoMaterno AS DoctorNombre,
+                            cl.Nombre + ' ' + cl.ApellidoPaterno + ' ' + cl.ApellidoMaterno AS ClienteNombre
+                            FROM Citas c
+                            JOIN Doctores d ON c.DoctorId = d.Id
+                            JOIN Clientes cl ON c.ClienteId = cl.Id
+                            JOIN TiposConsulta t ON c.TipoConsultaId = t.Id
+                            WHERE CAST(c.Fecha AS DATE) = @Fecha";
+            using SqlCommand cmd = new(query, conn);
+            cmd.Parameters.AddWithValue("@Fecha", selectedDate);
+            using SqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
             {
-                if (appointment != null && appointment.Date.Date == selectedDate)
-                {
-                    string[] row = new string[]
-                    {
-                appointment.Id.ToString(),
-                appointment.Date.ToString(),
-                appointment.QueryType.Description,
-                appointment.Doctor.Name + " " + appointment.Doctor.LastName,
-                appointment.Client.Name + " " + appointment.Client.LastName
-                    };
-                    resultsView.Rows.Add(row);
-                }
+                resultsView.Rows.Add(
+                    reader["Id"],
+                    reader["Fecha"],
+                    reader["Descripcion"],
+                    reader["DoctorNombre"],
+                    reader["ClienteNombre"]
+                );
             }
         }
-
     }
 }

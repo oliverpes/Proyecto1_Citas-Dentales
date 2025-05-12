@@ -1,16 +1,11 @@
 ﻿using BusinessLogic;
 using Entities;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 using System.Windows.Forms;
-
-
 
 namespace Proyecto1_Citas_Dentales.Forms
 {
@@ -20,66 +15,69 @@ namespace Proyecto1_Citas_Dentales.Forms
         {
             InitializeComponent();
 
-            // Crear las columnas del DataGridView
-            DataGridViewTextBoxColumn columnId = new DataGridViewTextBoxColumn();
-            DataGridViewTextBoxColumn columnDate = new DataGridViewTextBoxColumn();
-            DataGridViewTextBoxColumn columnType = new DataGridViewTextBoxColumn();
-            DataGridViewTextBoxColumn columnDoctor = new DataGridViewTextBoxColumn();
-            DataGridViewTextBoxColumn columnClient = new DataGridViewTextBoxColumn();
+            // Crear columnas
+            resultsView.Columns.Add("ID", "ID");
+            resultsView.Columns.Add("Fecha", "Fecha");
+            resultsView.Columns.Add("Tipo", "Tipo");
+            resultsView.Columns.Add("Doctor", "Doctor");
+            resultsView.Columns.Add("Cliente", "Cliente");
 
-            columnId.HeaderText = "ID";
-            columnDate.HeaderText = "Fecha";
-            columnType.HeaderText = "Tipo";
-            columnDoctor.HeaderText = "Doctor";
-            columnClient.HeaderText = "Cliente";
+            LoadDoctors();
+        }
 
-            resultsView.Columns.Add(columnId);
-            resultsView.Columns.Add(columnDate);
-            resultsView.Columns.Add(columnType);
-            resultsView.Columns.Add(columnDoctor);
-            resultsView.Columns.Add(columnClient);
+        private void LoadDoctors()
+        {
+            inputDoctors.Items.Clear();
+            string connectionString = File.ReadAllText("config.txt").Trim();
 
-            // Agregar los doctores al ComboBox
-            foreach (var doctor in Business.doctors)
+            using SqlConnection conn = new(connectionString);
+            conn.Open();
+            string query = "SELECT Id, Nombre, ApellidoPaterno, ApellidoMaterno FROM Doctores WHERE EstadoId = 1";
+            using SqlCommand cmd = new(query, conn);
+            using SqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
             {
-                if (doctor != null)
-                {
-                    string doctorData = doctor.Id.ToString() + " - " + doctor.Name + " " + doctor.LastName;
-                    inputDoctors.Items.Add(doctorData);
-                }
+                int id = reader.GetInt32(0);
+                string fullName = $"{reader.GetString(1)} {reader.GetString(2)} {reader.GetString(3)}";
+                inputDoctors.Items.Add($"{id} - {fullName}");
             }
         }
 
-
-        // Boton para generar el reporte doctor
         private void searchButton_Click(object sender, EventArgs e)
         {
             resultsView.Rows.Clear();
 
-            string doctorInput = inputDoctors.Text;
-            string[] doctorData = doctorInput.Split('-');
-            int doctorId;
-
-            if (!int.TryParse(doctorData[0].Trim(), out doctorId))
+            if (inputDoctors.SelectedItem == null)
             {
-                MessageBox.Show("Seleccione un doctor.", "Reporte doctores", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Seleccione un doctor.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            foreach (Appointment appointment in Business.appointments)
+            int doctorId = int.Parse(inputDoctors.Text.Split('-')[0].Trim());
+            string connectionString = File.ReadAllText("config.txt").Trim();
+
+            using SqlConnection conn = new(connectionString);
+            conn.Open();
+            string query = @"SELECT c.Id, c.Fecha, t.Descripcion, 
+                            d.Nombre + ' ' + d.ApellidoPaterno + ' ' + d.ApellidoMaterno AS DoctorNombre,
+                            cl.Nombre + ' ' + cl.ApellidoPaterno + ' ' + cl.ApellidoMaterno AS ClienteNombre
+                            FROM Citas c
+                            JOIN Doctores d ON c.DoctorId = d.Id
+                            JOIN Clientes cl ON c.ClienteId = cl.Id
+                            JOIN TiposConsulta t ON c.TipoConsultaId = t.Id
+                            WHERE c.DoctorId = @DoctorId";
+            using SqlCommand cmd = new(query, conn);
+            cmd.Parameters.AddWithValue("@DoctorId", doctorId);
+            using SqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
             {
-                if (appointment != null && appointment.Doctor.Id == doctorId)
-                {
-                    string[] row = new string[]
-                    {
-                appointment.Id.ToString(),
-                appointment.Date.ToString(),
-                appointment.QueryType.Description,
-                appointment.Doctor.Name + " " + appointment.Doctor.LastName,
-                appointment.Client.Name + " " + appointment.Client.LastName
-                    };
-                    resultsView.Rows.Add(row);
-                }
+                resultsView.Rows.Add(
+                    reader["Id"],
+                    reader["Fecha"],
+                    reader["Descripcion"],
+                    reader["DoctorNombre"],
+                    reader["ClienteNombre"]
+                );
             }
         }
     }
