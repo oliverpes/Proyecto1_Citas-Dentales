@@ -15,7 +15,7 @@ namespace Proyecto1_Citas_Dentales
             // Crear una instancia de login
             login loginForm = new login();
             loginForm.StartPosition = FormStartPosition.CenterScreen;
-            loginForm.Size = new Size(1000, 700);
+            loginForm.Size = new Size(610, 700);
             Application.Run(loginForm);
         }
     }

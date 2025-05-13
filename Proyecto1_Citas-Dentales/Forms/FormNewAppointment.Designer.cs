@@ -32,6 +32,8 @@
             label7 = new Label();
             label1 = new Label();
             panel2 = new Panel();
+            inputAvailableTimes = new ComboBox();
+            label8 = new Label();
             inputClient = new ComboBox();
             label6 = new Label();
             inputDoctor = new ComboBox();
@@ -56,7 +58,7 @@
             panel1.Location = new Point(0, 0);
             panel1.Margin = new Padding(3, 4, 3, 4);
             panel1.Name = "panel1";
-            panel1.Size = new Size(914, 93);
+            panel1.Size = new Size(973, 93);
             panel1.TabIndex = 1;
             // 
             // label7
@@ -80,6 +82,8 @@
             // 
             // panel2
             // 
+            panel2.Controls.Add(inputAvailableTimes);
+            panel2.Controls.Add(label8);
             panel2.Controls.Add(inputClient);
             panel2.Controls.Add(label6);
             panel2.Controls.Add(inputDoctor);
@@ -93,8 +97,35 @@
             panel2.Location = new Point(105, 129);
             panel2.Margin = new Padding(3, 4, 3, 4);
             panel2.Name = "panel2";
-            panel2.Size = new Size(406, 419);
+            panel2.Size = new Size(411, 514);
             panel2.TabIndex = 2;
+            // 
+            // inputAvailableTimes
+            // 
+            inputAvailableTimes.BackColor = Color.FromArgb(17, 17, 34);
+            inputAvailableTimes.Dock = DockStyle.Top;
+            inputAvailableTimes.FlatStyle = FlatStyle.Flat;
+            inputAvailableTimes.Font = new Font("Segoe UI", 10F);
+            inputAvailableTimes.ForeColor = Color.White;
+            inputAvailableTimes.FormattingEnabled = true;
+            inputAvailableTimes.Location = new Point(0, 412);
+            inputAvailableTimes.Margin = new Padding(3, 4, 3, 4);
+            inputAvailableTimes.Name = "inputAvailableTimes";
+            inputAvailableTimes.Size = new Size(411, 31);
+            inputAvailableTimes.TabIndex = 11;
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Dock = DockStyle.Top;
+            label8.Font = new Font("Segoe UI", 12F);
+            label8.ForeColor = Color.White;
+            label8.Location = new Point(0, 368);
+            label8.Name = "label8";
+            label8.Padding = new Padding(0, 5, 0, 11);
+            label8.Size = new Size(208, 44);
+            label8.TabIndex = 10;
+            label8.Text = "Revisar disponibilidad:";
             // 
             // inputClient
             // 
@@ -107,7 +138,7 @@
             inputClient.Location = new Point(0, 337);
             inputClient.Margin = new Padding(3, 4, 3, 4);
             inputClient.Name = "inputClient";
-            inputClient.Size = new Size(406, 31);
+            inputClient.Size = new Size(411, 31);
             inputClient.TabIndex = 9;
             // 
             // label6
@@ -134,7 +165,7 @@
             inputDoctor.Location = new Point(0, 262);
             inputDoctor.Margin = new Padding(3, 4, 3, 4);
             inputDoctor.Name = "inputDoctor";
-            inputDoctor.Size = new Size(406, 31);
+            inputDoctor.Size = new Size(411, 31);
             inputDoctor.TabIndex = 7;
             // 
             // label5
@@ -161,7 +192,7 @@
             inputType.Location = new Point(0, 187);
             inputType.Margin = new Padding(3, 4, 3, 4);
             inputType.Name = "inputType";
-            inputType.Size = new Size(406, 31);
+            inputType.Size = new Size(411, 31);
             inputType.TabIndex = 5;
             // 
             // label4
@@ -193,7 +224,7 @@
             inputDate.MaxDate = new DateTime(2025, 9, 29, 0, 0, 0, 0);
             inputDate.MinDate = new DateTime(2023, 1, 1, 0, 0, 0, 0);
             inputDate.Name = "inputDate";
-            inputDate.Size = new Size(406, 30);
+            inputDate.Size = new Size(411, 30);
             inputDate.TabIndex = 3;
             // 
             // label3
@@ -219,7 +250,7 @@
             inputID.Location = new Point(0, 39);
             inputID.Margin = new Padding(3, 4, 3, 4);
             inputID.Name = "inputID";
-            inputID.Size = new Size(406, 30);
+            inputID.Size = new Size(411, 30);
             inputID.TabIndex = 1;
             // 
             // label2
@@ -243,7 +274,7 @@
             buttonSaveAppointment.FlatStyle = FlatStyle.Flat;
             buttonSaveAppointment.Font = new Font("Segoe UI", 12F);
             buttonSaveAppointment.ForeColor = Color.White;
-            buttonSaveAppointment.Location = new Point(586, 504);
+            buttonSaveAppointment.Location = new Point(645, 586);
             buttonSaveAppointment.Margin = new Padding(3, 4, 3, 4);
             buttonSaveAppointment.Name = "buttonSaveAppointment";
             buttonSaveAppointment.Size = new Size(218, 44);
@@ -257,7 +288,7 @@
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(25, 25, 50);
-            ClientSize = new Size(914, 600);
+            ClientSize = new Size(973, 682);
             Controls.Add(buttonSaveAppointment);
             Controls.Add(panel2);
             Controls.Add(panel1);
@@ -290,5 +321,7 @@
         private ComboBox inputType;
         private Button buttonSaveAppointment;
         private Label label7;
+        private ComboBox inputAvailableTimes;
+        private Label label8;
     }
 }

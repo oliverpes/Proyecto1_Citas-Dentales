@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             panelSideMenu = new Panel();
+            button1 = new Button();
             buttonReportDoctor = new Button();
             buttonReportClient = new Button();
             buttonReportDate = new Button();
@@ -54,6 +55,7 @@
             panelSideMenu.AccessibleName = "PanelSideMenu";
             panelSideMenu.AutoScroll = true;
             panelSideMenu.BackColor = Color.FromArgb(17, 17, 34);
+            panelSideMenu.Controls.Add(button1);
             panelSideMenu.Controls.Add(buttonReportDoctor);
             panelSideMenu.Controls.Add(buttonReportClient);
             panelSideMenu.Controls.Add(buttonReportDate);
@@ -69,9 +71,27 @@
             panelSideMenu.Location = new Point(0, 0);
             panelSideMenu.Margin = new Padding(3, 4, 3, 4);
             panelSideMenu.Name = "panelSideMenu";
-            panelSideMenu.Size = new Size(251, 615);
+            panelSideMenu.Size = new Size(251, 669);
             panelSideMenu.TabIndex = 0;
             panelSideMenu.Paint += panel1_Paint;
+            // 
+            // button1
+            // 
+            button1.Cursor = Cursors.Hand;
+            button1.Dock = DockStyle.Top;
+            button1.FlatAppearance.BorderSize = 0;
+            button1.FlatStyle = FlatStyle.Flat;
+            button1.Font = new Font("Segoe UI", 10F);
+            button1.ForeColor = Color.LightGray;
+            button1.Location = new Point(0, 597);
+            button1.Margin = new Padding(3, 4, 3, 4);
+            button1.Name = "button1";
+            button1.Padding = new Padding(18, 0, 0, 0);
+            button1.Size = new Size(251, 60);
+            button1.TabIndex = 10;
+            button1.Text = "Cerrar Sesion";
+            button1.TextAlign = ContentAlignment.MiddleLeft;
+            button1.UseVisualStyleBackColor = true;
             // 
             // buttonReportDoctor
             // 
@@ -277,14 +297,14 @@
             panelDesktopPanel.Location = new Point(251, 0);
             panelDesktopPanel.Margin = new Padding(3, 4, 3, 4);
             panelDesktopPanel.Name = "panelDesktopPanel";
-            panelDesktopPanel.Size = new Size(645, 615);
+            panelDesktopPanel.Size = new Size(790, 669);
             panelDesktopPanel.TabIndex = 1;
             // 
             // pictureBox1
             // 
             pictureBox1.Anchor = AnchorStyles.None;
             pictureBox1.Image = Properties.Resources.home_image;
-            pictureBox1.Location = new Point(153, 157);
+            pictureBox1.Location = new Point(226, 184);
             pictureBox1.Margin = new Padding(3, 4, 3, 4);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(300, 211);
@@ -297,7 +317,7 @@
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Control;
-            ClientSize = new Size(896, 615);
+            ClientSize = new Size(1041, 669);
             Controls.Add(panelDesktopPanel);
             Controls.Add(panelSideMenu);
             Margin = new Padding(3, 4, 3, 4);
@@ -331,5 +351,6 @@
         private Label label4;
         private Panel panelDesktopPanel;
         private PictureBox pictureBox1;
+        private Button button1;
     }
 }

@@ -35,7 +35,7 @@ namespace Proyecto1_Citas_Dentales.Forms
 
         private void searchButton_Click(object sender, EventArgs e)
         {
-            
+
             /*codigo de prueba para abrir la trancision*/
             string usuario = txtUsuario.Text.Trim();
             string contraseña = txtContraseña.Text;
@@ -49,7 +49,7 @@ namespace Proyecto1_Citas_Dentales.Forms
                 FormMainMenu mainMenu = new FormMainMenu();
                 mainMenu.StartPosition = FormStartPosition.CenterScreen;
                 mainMenu.Location = this.Location; // Misma posición que el login
-                mainMenu.Size = this.Size;         // Misma dimensión (opcional)
+                //mainMenu.Size = this.Size;         // Misma dimensión (opcional)
 
                 mainMenu.Show();
                 this.Hide(); // O this.Close() si quieres cerrarlo
@@ -67,5 +67,56 @@ namespace Proyecto1_Citas_Dentales.Forms
 
 
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void txtUsuario_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+        private void txtUsuario_Enter(object sender, EventArgs e)
+        {
+            if (txtUsuario.Text == "Usuario")
+            {
+                txtUsuario.Text = "";
+                txtUsuario.ForeColor = Color.White;
+            }
+        }
+
+        private void txtUsuario_Leave(object sender, EventArgs e)
+        {
+            if (txtUsuario.Text == "")
+            {
+                txtUsuario.Text = "Usuario";
+                txtUsuario.ForeColor = Color.Gray;
+            }
+   
+        }
+        private void txContraseña_Leave(object sender, EventArgs e)
+        {
+            if (txtContraseña.Text == "")
+            {
+                txtContraseña.Text = "Contraseña";
+                txtContraseña.ForeColor = Color.Gray;
+            }
+        }
+        private void txtContraseña_Enter(object sender, EventArgs e)
+        {
+            
+            if (txtContraseña.Text == "Contraseña")
+            {
+                txtContraseña.Text = "";
+                txtContraseña.ForeColor = Color.White;
+            }
+        }
+
+        private void txtContraseña_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
     }
 }

@@ -100,5 +100,9 @@ namespace Proyecto1_Citas_Dentales.Forms
             }
         }
 
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -436,6 +436,59 @@ namespace BusinessLogic
             }
         }
 
+        //cargar de la base de datos los horarios de los doctores 
+        public static List<TimeSpan> GetAvailableHours(int doctorId, DateTime selectedDate)
+        {
+            var availableHours = new List<TimeSpan>();
+            string connectionString = File.ReadAllText("config.txt").Trim();
+
+            using SqlConnection conn = new(connectionString);
+            conn.Open();
+
+            // 1. Obtener disponibilidad para ese día
+            string queryHorario = @"
+            SELECT HoraInicio, HoraFin 
+            FROM HorariosDisponibles 
+            WHERE DoctorId = @DoctorId AND DiaSemana = @DiaSemana";
+
+            using SqlCommand cmdHorario = new(queryHorario, conn);
+            cmdHorario.Parameters.AddWithValue("@DoctorId", doctorId);
+            cmdHorario.Parameters.AddWithValue("@DiaSemana", (int)selectedDate.DayOfWeek);
+
+            using SqlDataReader readerHorario = cmdHorario.ExecuteReader();
+
+            if (!readerHorario.Read())
+                return availableHours; // No hay disponibilidad
+
+            TimeSpan horaInicio = readerHorario.GetTimeSpan(0);
+            TimeSpan horaFin = readerHorario.GetTimeSpan(1);
+            readerHorario.Close();
+
+            // 2. Obtener horas ya ocupadas por citas
+            string queryCitas = @"
+            SELECT CONVERT(time, Fecha) 
+            FROM Citas 
+            WHERE DoctorId = @DoctorId AND CONVERT(date, Fecha) = @Fecha";
+
+            var horasOcupadas = new List<TimeSpan>();
+            using SqlCommand cmdCitas = new(queryCitas, conn);
+            cmdCitas.Parameters.AddWithValue("@DoctorId", doctorId);
+            cmdCitas.Parameters.AddWithValue("@Fecha", selectedDate.Date);
+
+            using SqlDataReader readerCitas = cmdCitas.ExecuteReader();
+            while (readerCitas.Read())
+                horasOcupadas.Add(readerCitas.GetTimeSpan(0));
+
+            // 3. Generar lista de horas disponibles (cada 30 min)
+            for (TimeSpan hora = horaInicio; hora < horaFin; hora = hora.Add(TimeSpan.FromMinutes(30)))
+            {
+                if (!horasOcupadas.Contains(hora))
+                    availableHours.Add(hora);
+            }
+
+            return availableHours;
+        }
+
 
         // Metodo para guardar una cita
         public static Response SaveAppointment(DateTime date, string queryTypeData, string clientData, string doctorData)
