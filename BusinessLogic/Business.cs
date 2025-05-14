@@ -6,6 +6,8 @@ using System.Data.SqlClient;
 using System.Collections.Generic;
 
 using System.Linq;
+using System.Data;
+using System.ComponentModel.DataAnnotations;
 
 
 namespace BusinessLogic
@@ -488,6 +490,36 @@ namespace BusinessLogic
 
             return availableHours;
         }
+
+        //validar conexion a la base de datos
+        // Dentro de tu archivo en la capa BusinessLogic
+        public static class ConnectionManager
+        {
+            public static SqlConnection Connection { get; private set; }
+
+            public static void OpenConnection()
+            {
+                if (Connection == null)
+                {
+                    string connString = File.ReadAllText("config.txt").Trim();
+                    Connection = new SqlConnection(connString);
+                }
+
+                if (Connection.State != ConnectionState.Open)
+                {
+                    Connection.Open();
+                }
+            }
+
+            public static void CloseConnection()
+            {
+                if (Connection != null && Connection.State == ConnectionState.Open)
+                {
+                    Connection.Close();
+                }
+            }
+        }
+
 
 
         // Metodo para guardar una cita

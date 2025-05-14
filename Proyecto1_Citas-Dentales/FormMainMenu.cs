@@ -1,9 +1,32 @@
+﻿using Proyecto1_Citas_Dentales.Forms;
 using System.ComponentModel;
+using BusinessLogic;
+using System.IO;
+using System.Data.SqlClient;
+using System.Data;
+using System.Runtime.InteropServices;
+
 
 namespace Proyecto1_Citas_Dentales
 {
     public partial class FormMainMenu : Form
     {
+        //mover el formulario sin la barra general
+        [DllImport("user32.dll")]
+        public static extern bool ReleaseCapture();
+
+        [DllImport("user32.dll")]
+        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+
+        public const int WM_NCLBUTTONDOWN = 0xA1;
+        public const int HTCAPTION = 0x2;
+
+        //evento para mover el windows form usando un panel
+        private void panelSuperior_MouseDown(object sender, MouseEventArgs e)
+        {
+            ReleaseCapture();
+            SendMessage(this.Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0);
+        }
 
         // variables para manejar los botones y los formularios
         private Button currentButton;
@@ -18,6 +41,7 @@ namespace Proyecto1_Citas_Dentales
         { }
         private void panel1_Paint(object sender, PaintEventArgs e)
         { }
+
 
         // Dar formato al boton seleccionado
         private void ActivateButton(object btnSender)
@@ -117,5 +141,71 @@ namespace Proyecto1_Citas_Dentales
                 activeForm.Close();
             }
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            if (this.WindowState == FormWindowState.Normal)
+            {
+                this.WindowState = FormWindowState.Maximized;
+                // button3.Text = "🗗"; // opcional: ícono de restaurar
+            }
+            else
+            {
+                this.WindowState = FormWindowState.Normal;
+                // button3.Text = "🗖"; // opcional: ícono de maximizar
+            }
+        }
+
+        private void btnMinimizar_Click(object sender, EventArgs e)
+        {
+
+            this.WindowState = FormWindowState.Minimized;
+
+            //btnMaximizar.Text = "◰"; // ícono de restaurar
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panelLogo_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void button3_Click_1(object sender, EventArgs e)
+        {
+            try
+            {
+                // Leer la cadena de conexión desde config.txt
+                string connectionString = File.ReadAllText("config.txt").Trim();
+
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    if (connection.State == ConnectionState.Open)
+                        connection.Close(); // Por si acaso está abierta
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cerrar la conexión: " + ex.Message);
+            }
+
+            // Mostrar el formulario de login
+            login loginForm = new login();
+            loginForm.Show();
+
+            // Ocultar el formulario actual (cerrar sesión) 
+            this.Hide();
+        }
+
+
     }
 }
