@@ -35,6 +35,14 @@ namespace Proyecto1_Citas_Dentales
         public FormMainMenu()
         {
             InitializeComponent();
+
+            guna2ComboBox1.BorderRadius = 10;
+            //guna2ComboBox1.FillColor = Color.FromArgb(20, 30, 48);
+            guna2ComboBox1.Font = new Font("Segoe UI", 10);
+            guna2ComboBox1.ForeColor = Color.Black;
+            guna2ComboBox1.ItemHeight = 35;
+
+            guna2ComboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -206,6 +214,32 @@ namespace Proyecto1_Citas_Dentales
             this.Hide();
         }
 
+        private void inputAvailableTimes_SelectedIndexChanged(object sender, EventArgs e)
+        {
 
+        }
+        //evento para hacer grande el combobox de ver disponibilidad
+        private void cmbInputAvailableTimes_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            if (e.Index < 0) return;
+
+            ComboBox cmb = sender as ComboBox;
+            e.DrawBackground();
+            using (Brush brush = new SolidBrush(e.ForeColor))
+            {
+                e.Graphics.DrawString(cmb.Items[e.Index].ToString(), e.Font, brush, e.Bounds);
+            }
+            e.DrawFocusRectangle();
+        }
+
+        private void panel3_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void guna2ComboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
