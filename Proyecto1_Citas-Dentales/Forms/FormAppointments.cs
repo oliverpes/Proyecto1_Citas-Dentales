@@ -163,5 +163,10 @@ namespace Proyecto1_Citas_Dentales.Forms
                 }
             }
         }
+
+        private void FormAppointments_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

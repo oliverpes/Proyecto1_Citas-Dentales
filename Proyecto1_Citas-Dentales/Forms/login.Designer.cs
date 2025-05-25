@@ -2,15 +2,8 @@
 {
     partial class login
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -22,146 +15,148 @@
 
         #region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
-            txtUsuario = new TextBox();
-            txtContraseña = new TextBox();
-            label2 = new Label();
-            label1 = new Label();
-            loginButton = new Button();
-            button1 = new Button();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges4 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges5 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges6 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            labelTitulo = new Label();
+            labelMarca = new Label();
+            buttonCerrar = new Button();
+            UsuarioTxt = new Guna.UI2.WinForms.Guna2TextBox();
+            ContraseñaTxt = new Guna.UI2.WinForms.Guna2TextBox();
+            ButtonLogin = new Guna.UI2.WinForms.Guna2Button();
+            labelNota = new Label();
             SuspendLayout();
             // 
-            // txtUsuario
+            // labelTitulo
             // 
-            txtUsuario.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            txtUsuario.BackColor = Color.FromArgb(17, 17, 34);
-            txtUsuario.BorderStyle = BorderStyle.None;
-            txtUsuario.Font = new Font("Segoe UI", 12F);
-            txtUsuario.ForeColor = Color.Gray;
-            txtUsuario.Location = new Point(97, 301);
-            txtUsuario.Margin = new Padding(3, 4, 3, 4);
-            txtUsuario.Multiline = true;
-            txtUsuario.Name = "txtUsuario";
-            txtUsuario.Size = new Size(443, 35);
-            txtUsuario.TabIndex = 18;
-            txtUsuario.Text = "Usuario";
-            txtUsuario.TextChanged += txtUsuario_TextChanged;
-            txtUsuario.Enter += txtUsuario_Enter;
-            txtUsuario.Leave += txtUsuario_Leave;
+            labelTitulo.Anchor = AnchorStyles.None;
+            labelTitulo.AutoSize = true;
+            labelTitulo.Font = new Font("Segoe UI", 24F, FontStyle.Bold);
+            labelTitulo.ForeColor = Color.White;
+            labelTitulo.Location = new Point(218, 180);
+            labelTitulo.Name = "labelTitulo";
+            labelTitulo.Size = new Size(151, 54);
+            labelTitulo.TabIndex = 0;
+            labelTitulo.Text = "Sign in";
             // 
-            // txtContraseña
+            // labelMarca
             // 
-            txtContraseña.Anchor = AnchorStyles.None;
-            txtContraseña.BackColor = Color.FromArgb(17, 17, 34);
-            txtContraseña.BorderStyle = BorderStyle.None;
-            txtContraseña.Font = new Font("Segoe UI", 12F);
-            txtContraseña.ForeColor = Color.Gray;
-            txtContraseña.Location = new Point(97, 388);
-            txtContraseña.Margin = new Padding(3, 4, 3, 4);
-            txtContraseña.Multiline = true;
-            txtContraseña.Name = "txtContraseña";
-            txtContraseña.Size = new Size(443, 35);
-            txtContraseña.TabIndex = 13;
-            txtContraseña.Text = "Contraseña";
-            txtContraseña.TextChanged += txtContraseña_TextChanged;
-            txtContraseña.Enter += txtContraseña_Enter;
-            txtContraseña.Leave += txContraseña_Leave;
+            labelMarca.AutoSize = true;
+            labelMarca.Font = new Font("Segoe UI", 20F, FontStyle.Bold);
+            labelMarca.ForeColor = Color.White;
+            labelMarca.Location = new Point(12, 9);
+            labelMarca.Name = "labelMarca";
+            labelMarca.Size = new Size(151, 46);
+            labelMarca.TabIndex = 1;
+            labelMarca.Text = "Cdental.";
             // 
-            // label2
+            // buttonCerrar
             // 
-            label2.Anchor = AnchorStyles.None;
-            label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI", 24F, FontStyle.Bold);
-            label2.ForeColor = Color.Transparent;
-            label2.Location = new Point(216, 176);
-            label2.Name = "label2";
-            label2.Padding = new Padding(0, 0, 0, 5);
-            label2.Size = new Size(151, 59);
-            label2.TabIndex = 15;
-            label2.Text = "Sign in";
+            buttonCerrar.Anchor = AnchorStyles.None;
+            buttonCerrar.AutoSize = true;
+            buttonCerrar.BackColor = Color.DarkRed;
+            buttonCerrar.FlatStyle = FlatStyle.Flat;
+            buttonCerrar.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold);
+            buttonCerrar.ForeColor = Color.White;
+            buttonCerrar.Location = new Point(564, 0);
+            buttonCerrar.Name = "buttonCerrar";
+            buttonCerrar.Size = new Size(46, 37);
+            buttonCerrar.TabIndex = 2;
+            buttonCerrar.Text = "X";
+            buttonCerrar.UseVisualStyleBackColor = false;
+            buttonCerrar.Click += buttonCerrar_Click;
             // 
-            // label1
+            // UsuarioTxt
             // 
-            label1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 20F, FontStyle.Bold);
-            label1.ForeColor = Color.Transparent;
-            label1.Location = new Point(12, 9);
-            label1.Name = "label1";
-            label1.Padding = new Padding(0, 0, 0, 5);
-            label1.Size = new Size(146, 51);
-            label1.TabIndex = 16;
-            label1.Text = "CDental";
+            UsuarioTxt.CustomizableEdges = customizableEdges1;
+            UsuarioTxt.DefaultText = "";
+            UsuarioTxt.FillColor = SystemColors.Window;
+            UsuarioTxt.Font = new Font("Segoe UI", 9F);
+            UsuarioTxt.Location = new Point(110, 280);
+            UsuarioTxt.Margin = new Padding(3, 4, 3, 4);
+            UsuarioTxt.Name = "UsuarioTxt";
+            UsuarioTxt.PlaceholderText = "Correo electrónico";
+            UsuarioTxt.SelectedText = "";
+            UsuarioTxt.ShadowDecoration.CustomizableEdges = customizableEdges2;
+            UsuarioTxt.Size = new Size(370, 50);
+            UsuarioTxt.TabIndex = 3;
+            UsuarioTxt.TextChanged += UsuarioTxt_TextChanged;
             // 
-            // loginButton
+            // ContraseñaTxt
             // 
-            loginButton.Anchor = AnchorStyles.None;
-            loginButton.AutoSize = true;
-            loginButton.BackColor = Color.DodgerBlue;
-            loginButton.FlatAppearance.BorderColor = Color.DimGray;
-            loginButton.FlatStyle = FlatStyle.Flat;
-            loginButton.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            loginButton.ForeColor = Color.White;
-            loginButton.Location = new Point(239, 490);
-            loginButton.Margin = new Padding(3, 8, 3, 8);
-            loginButton.Name = "loginButton";
-            loginButton.Size = new Size(141, 50);
-            loginButton.TabIndex = 17;
-            loginButton.Text = "Login";
-            loginButton.UseVisualStyleBackColor = false;
-            loginButton.Click += searchButton_Click;
+            ContraseñaTxt.CustomizableEdges = customizableEdges3;
+            ContraseñaTxt.DefaultText = "";
+            ContraseñaTxt.Font = new Font("Segoe UI", 9F);
+            ContraseñaTxt.Location = new Point(110, 361);
+            ContraseñaTxt.Margin = new Padding(3, 4, 3, 4);
+            ContraseñaTxt.Name = "ContraseñaTxt";
+            ContraseñaTxt.PlaceholderText = "Contraseña";
+            ContraseñaTxt.SelectedText = "";
+            ContraseñaTxt.ShadowDecoration.CustomizableEdges = customizableEdges4;
+            ContraseñaTxt.Size = new Size(370, 50);
+            ContraseñaTxt.TabIndex = 4;
+            ContraseñaTxt.UseSystemPasswordChar = true;
+            ContraseñaTxt.TextChanged += ContraseñaTxt_TextChanged;
             // 
-            // button1
+            // ButtonLogin
             // 
-            button1.Anchor = AnchorStyles.None;
-            button1.AutoSize = true;
-            button1.BackColor = Color.DarkRed;
-            button1.FlatAppearance.BorderColor = Color.DimGray;
-            button1.FlatStyle = FlatStyle.Flat;
-            button1.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button1.ForeColor = Color.White;
-            button1.Location = new Point(556, -4);
-            button1.Margin = new Padding(3, 8, 3, 8);
-            button1.Name = "button1";
-            button1.Size = new Size(60, 37);
-            button1.TabIndex = 19;
-            button1.Text = "x";
-            button1.UseVisualStyleBackColor = false;
-            button1.Click += button1_Click;
+            ButtonLogin.CustomizableEdges = customizableEdges5;
+            ButtonLogin.FillColor = Color.FromArgb(93, 95, 238);
+            ButtonLogin.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            ButtonLogin.ForeColor = Color.White;
+            ButtonLogin.Location = new Point(178, 449);
+            ButtonLogin.Name = "ButtonLogin";
+            ButtonLogin.ShadowDecoration.CustomizableEdges = customizableEdges6;
+            ButtonLogin.Size = new Size(230, 50);
+            ButtonLogin.TabIndex = 5;
+            ButtonLogin.Text = "Iniciar Sesión";
+            ButtonLogin.Click += ButtonLogin_Click;
+            // 
+            // labelNota
+            // 
+            labelNota.AutoSize = true;
+            labelNota.Font = new Font("Segoe UI", 10F);
+            labelNota.ForeColor = Color.White;
+            labelNota.Location = new Point(125, 524);
+            labelNota.Name = "labelNota";
+            labelNota.Size = new Size(384, 23);
+            labelNota.TabIndex = 6;
+            labelNota.Text = "¿No tienes cuenta? Descárgala y únete a Cdental";
             // 
             // login
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.FromArgb(20, 30, 48);
-            ClientSize = new Size(614, 701);
-            Controls.Add(button1);
-            Controls.Add(loginButton);
-            Controls.Add(label1);
-            Controls.Add(label2);
-            Controls.Add(txtContraseña);
-            Controls.Add(txtUsuario);
+            BackColor = Color.SteelBlue;
+            ClientSize = new Size(610, 700);
+            Controls.Add(labelNota);
+            Controls.Add(ButtonLogin);
+            Controls.Add(ContraseñaTxt);
+            Controls.Add(UsuarioTxt);
+            Controls.Add(buttonCerrar);
+            Controls.Add(labelMarca);
+            Controls.Add(labelTitulo);
             FormBorderStyle = FormBorderStyle.None;
             Name = "login";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "login";
+            Text = "s";
             ResumeLayout(false);
             PerformLayout();
-
-
         }
 
         #endregion
-        private TextBox txtUsuario;
-        private TextBox txtContraseña;
-        private Label label2;
-        private Label label1;
-        private Button loginButton;
-        private Button button1;
+
+        private System.Windows.Forms.Label labelTitulo;
+        private System.Windows.Forms.Label labelMarca;
+        private System.Windows.Forms.Button buttonCerrar;
+        private Guna.UI2.WinForms.Guna2TextBox UsuarioTxt;
+        private Guna.UI2.WinForms.Guna2TextBox ContraseñaTxt;
+        private Guna.UI2.WinForms.Guna2Button ButtonLogin;
+        private System.Windows.Forms.Label labelNota;
     }
 }

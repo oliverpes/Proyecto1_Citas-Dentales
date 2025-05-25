@@ -30,11 +30,9 @@ namespace Proyecto1_Citas_Dentales
         /// </summary>
         private void InitializeComponent()
         {
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges4 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             panelSideMenu = new Panel();
-            button3 = new Button();
             button1 = new Button();
             buttonReportDoctor = new Button();
             buttonReportClient = new Button();
@@ -47,6 +45,7 @@ namespace Proyecto1_Citas_Dentales
             buttonNewDates = new Button();
             label2 = new Label();
             panelLogo = new Panel();
+            button3 = new Button();
             label5 = new Label();
             label1 = new Label();
             panelDesktopPanel = new Panel();
@@ -58,11 +57,12 @@ namespace Proyecto1_Citas_Dentales
             panel1 = new Panel();
             panel3 = new Panel();
             guna2ComboBox1 = new Guna2ComboBox();
-            guna2CircleButton1 = new Guna2CircleButton();
+            panel2 = new Panel();
             panelSideMenu.SuspendLayout();
             panelDesktopPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panel3.SuspendLayout();
+            panel2.SuspendLayout();
             SuspendLayout();
             // 
             // panelSideMenu
@@ -70,8 +70,7 @@ namespace Proyecto1_Citas_Dentales
             panelSideMenu.AccessibleName = "PanelSideMenu";
             panelSideMenu.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
             panelSideMenu.AutoScroll = true;
-            panelSideMenu.BackColor = Color.FromArgb(20, 30, 48);
-            panelSideMenu.Controls.Add(button3);
+            panelSideMenu.BackColor = Color.SteelBlue;
             panelSideMenu.Controls.Add(button1);
             panelSideMenu.Controls.Add(buttonReportDoctor);
             panelSideMenu.Controls.Add(buttonReportClient);
@@ -87,28 +86,9 @@ namespace Proyecto1_Citas_Dentales
             panelSideMenu.Location = new Point(0, 226);
             panelSideMenu.Margin = new Padding(3, 4, 3, 4);
             panelSideMenu.Name = "panelSideMenu";
-            panelSideMenu.Size = new Size(328, 703);
+            panelSideMenu.Size = new Size(328, 565);
             panelSideMenu.TabIndex = 0;
             panelSideMenu.Paint += panel1_Paint;
-            // 
-            // button3
-            // 
-            button3.Anchor = AnchorStyles.None;
-            button3.BackColor = Color.Maroon;
-            button3.Cursor = Cursors.Hand;
-            button3.FlatAppearance.BorderSize = 0;
-            button3.FlatStyle = FlatStyle.Flat;
-            button3.Font = new Font("Segoe UI", 10F);
-            button3.ForeColor = Color.LightGray;
-            button3.Location = new Point(53, 631);
-            button3.Margin = new Padding(3, 4, 3, 4);
-            button3.Name = "button3";
-            button3.Padding = new Padding(18, 0, 0, 0);
-            button3.Size = new Size(214, 45);
-            button3.TabIndex = 11;
-            button3.Text = "Cerrar Sesion";
-            button3.UseVisualStyleBackColor = false;
-            button3.Click += button3_Click_1;
             // 
             // button1
             // 
@@ -310,6 +290,25 @@ namespace Proyecto1_Citas_Dentales
             panelLogo.TabIndex = 0;
             panelLogo.Paint += panelLogo_Paint;
             // 
+            // button3
+            // 
+            button3.Anchor = AnchorStyles.None;
+            button3.BackColor = Color.Maroon;
+            button3.Cursor = Cursors.Hand;
+            button3.FlatAppearance.BorderSize = 0;
+            button3.FlatStyle = FlatStyle.Flat;
+            button3.Font = new Font("Segoe UI", 10F);
+            button3.ForeColor = Color.Transparent;
+            button3.Location = new Point(51, 99);
+            button3.Margin = new Padding(3, 4, 3, 4);
+            button3.Name = "button3";
+            button3.Padding = new Padding(18, 0, 0, 0);
+            button3.Size = new Size(214, 45);
+            button3.TabIndex = 11;
+            button3.Text = "Cerrar Sesion";
+            button3.UseVisualStyleBackColor = false;
+            button3.Click += button3_Click_1;
+            // 
             // label5
             // 
             label5.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
@@ -329,7 +328,7 @@ namespace Proyecto1_Citas_Dentales
             label1.Cursor = Cursors.Hand;
             label1.Font = new Font("Microsoft Sans Serif", 15.75F, FontStyle.Bold);
             label1.ForeColor = Color.White;
-            label1.Location = new Point(96, 176);
+            label1.Location = new Point(101, 55);
             label1.Name = "label1";
             label1.Size = new Size(98, 31);
             label1.TabIndex = 0;
@@ -343,19 +342,20 @@ namespace Proyecto1_Citas_Dentales
             panelDesktopPanel.Controls.Add(label6);
             panelDesktopPanel.Controls.Add(pictureBox1);
             panelDesktopPanel.Controls.Add(label5);
-            panelDesktopPanel.Location = new Point(376, 113);
+            panelDesktopPanel.Location = new Point(351, 113);
             panelDesktopPanel.Margin = new Padding(3, 4, 3, 4);
             panelDesktopPanel.Name = "panelDesktopPanel";
-            panelDesktopPanel.Size = new Size(1383, 732);
+            panelDesktopPanel.Size = new Size(1346, 846);
             panelDesktopPanel.TabIndex = 1;
+            panelDesktopPanel.Paint += panelDesktopPanel_Paint;
             // 
             // label6
             // 
-            label6.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            label6.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             label6.AutoSize = true;
             label6.Font = new Font("Segoe UI", 20F, FontStyle.Bold);
             label6.ForeColor = Color.Black;
-            label6.Location = new Point(1199, 654);
+            label6.Location = new Point(1197, 781);
             label6.Name = "label6";
             label6.Padding = new Padding(0, 0, 0, 5);
             label6.Size = new Size(146, 51);
@@ -366,7 +366,7 @@ namespace Proyecto1_Citas_Dentales
             // 
             pictureBox1.Anchor = AnchorStyles.None;
             pictureBox1.Image = Properties.Resources.home_image;
-            pictureBox1.Location = new Point(522, 216);
+            pictureBox1.Location = new Point(525, 270);
             pictureBox1.Margin = new Padding(3, 4, 3, 4);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(300, 211);
@@ -384,7 +384,7 @@ namespace Proyecto1_Citas_Dentales
             btnMinimizar.FlatStyle = FlatStyle.Flat;
             btnMinimizar.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnMinimizar.ForeColor = Color.Black;
-            btnMinimizar.Location = new Point(1699, -4);
+            btnMinimizar.Location = new Point(1596, 0);
             btnMinimizar.Margin = new Padding(3, 8, 3, 8);
             btnMinimizar.Name = "btnMinimizar";
             btnMinimizar.Size = new Size(44, 37);
@@ -403,7 +403,7 @@ namespace Proyecto1_Citas_Dentales
             btnMaximizar.FlatStyle = FlatStyle.Flat;
             btnMaximizar.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnMaximizar.ForeColor = Color.Black;
-            btnMaximizar.Location = new Point(1740, -4);
+            btnMaximizar.Location = new Point(1633, 0);
             btnMaximizar.Margin = new Padding(3, 8, 3, 8);
             btnMaximizar.Name = "btnMaximizar";
             btnMaximizar.Size = new Size(43, 37);
@@ -421,7 +421,7 @@ namespace Proyecto1_Citas_Dentales
             button2.FlatStyle = FlatStyle.Flat;
             button2.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button2.ForeColor = Color.White;
-            button2.Location = new Point(1782, -4);
+            button2.Location = new Point(1675, 0);
             button2.Margin = new Padding(3, 8, 3, 8);
             button2.Name = "button2";
             button2.Size = new Size(48, 37);
@@ -437,25 +437,26 @@ namespace Proyecto1_Citas_Dentales
             panel1.Location = new Point(323, -4);
             panel1.Margin = new Padding(3, 4, 3, 4);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1497, 37);
+            panel1.Size = new Size(1304, 37);
             panel1.TabIndex = 24;
+            panel1.Paint += panel1_Paint_1;
             panel1.MouseDown += panelSuperior_MouseDown;
             // 
             // panel3
             // 
-            panel3.BackColor = Color.FromArgb(20, 30, 48);
+            panel3.BackColor = Color.SteelBlue;
             panel3.Controls.Add(label1);
-            panel3.Location = new Point(0, -4);
+            panel3.Location = new Point(0, 0);
             panel3.Margin = new Padding(3, 4, 3, 4);
             panel3.Name = "panel3";
-            panel3.Size = new Size(328, 232);
+            panel3.Size = new Size(328, 228);
             panel3.TabIndex = 26;
             panel3.Paint += panel3_Paint;
             // 
             // guna2ComboBox1
             // 
             guna2ComboBox1.BackColor = Color.Transparent;
-            guna2ComboBox1.CustomizableEdges = customizableEdges1;
+            guna2ComboBox1.CustomizableEdges = customizableEdges3;
             guna2ComboBox1.DrawMode = DrawMode.OwnerDrawFixed;
             guna2ComboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
             guna2ComboBox1.FocusedColor = Color.FromArgb(94, 148, 255);
@@ -465,27 +466,20 @@ namespace Proyecto1_Citas_Dentales
             guna2ComboBox1.ItemHeight = 30;
             guna2ComboBox1.Location = new Point(376, 50);
             guna2ComboBox1.Name = "guna2ComboBox1";
-            guna2ComboBox1.ShadowDecoration.CustomizableEdges = customizableEdges2;
-            guna2ComboBox1.Size = new Size(468, 36);
+            guna2ComboBox1.ShadowDecoration.CustomizableEdges = customizableEdges4;
+            guna2ComboBox1.Size = new Size(592, 36);
             guna2ComboBox1.TabIndex = 25;
             guna2ComboBox1.SelectedIndexChanged += guna2ComboBox1_SelectedIndexChanged;
             // 
-            // guna2CircleButton1
+            // panel2
             // 
-            guna2CircleButton1.Anchor = AnchorStyles.None;
-            guna2CircleButton1.DisabledState.BorderColor = Color.DarkGray;
-            guna2CircleButton1.DisabledState.CustomBorderColor = Color.DarkGray;
-            guna2CircleButton1.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
-            guna2CircleButton1.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
-            guna2CircleButton1.Font = new Font("Segoe UI", 9F);
-            guna2CircleButton1.ForeColor = Color.White;
-            guna2CircleButton1.Location = new Point(1683, 40);
-            guna2CircleButton1.Name = "guna2CircleButton1";
-            guna2CircleButton1.ShadowDecoration.CustomizableEdges = customizableEdges3;
-            guna2CircleButton1.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
-            guna2CircleButton1.Size = new Size(60, 60);
-            guna2CircleButton1.TabIndex = 29;
-            guna2CircleButton1.Text = "A";
+            panel2.BackColor = Color.SteelBlue;
+            panel2.Controls.Add(button3);
+            panel2.Location = new Point(0, 790);
+            panel2.Margin = new Padding(3, 4, 3, 4);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(328, 155);
+            panel2.TabIndex = 27;
             // 
             // FormMainMenu
             // 
@@ -493,12 +487,12 @@ namespace Proyecto1_Citas_Dentales
             AutoScaleMode = AutoScaleMode.Font;
             AutoScroll = true;
             BackColor = SystemColors.Control;
-            ClientSize = new Size(1830, 930);
-            Controls.Add(guna2CircleButton1);
-            Controls.Add(guna2ComboBox1);
-            Controls.Add(panel3);
+            ClientSize = new Size(1723, 947);
+            Controls.Add(panel2);
             Controls.Add(btnMinimizar);
             Controls.Add(btnMaximizar);
+            Controls.Add(guna2ComboBox1);
+            Controls.Add(panel3);
             Controls.Add(button2);
             Controls.Add(panel1);
             Controls.Add(panelDesktopPanel);
@@ -515,6 +509,7 @@ namespace Proyecto1_Citas_Dentales
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             panel3.ResumeLayout(false);
             panel3.PerformLayout();
+            panel2.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -546,6 +541,6 @@ namespace Proyecto1_Citas_Dentales
         private Panel panel3;
         private Label label6;
         private Guna2ComboBox guna2ComboBox1;
-        private Guna2CircleButton guna2CircleButton1;
+        private Panel panel2;
     }
 }

@@ -6,12 +6,11 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Runtime.InteropServices;
 
-
 namespace Proyecto1_Citas_Dentales
 {
     public partial class FormMainMenu : Form
     {
-        //mover el formulario sin la barra general
+        // Mover el formulario sin la barra general
         [DllImport("user32.dll")]
         public static extern bool ReleaseCapture();
 
@@ -21,37 +20,56 @@ namespace Proyecto1_Citas_Dentales
         public const int WM_NCLBUTTONDOWN = 0xA1;
         public const int HTCAPTION = 0x2;
 
-        //evento para mover el windows form usando un panel
+        // Constantes para el redimensionamiento
+        private const int HTLEFT = 10;
+        private const int HTRIGHT = 11;
+        private const int HTTOP = 12;
+        private const int HTTOPLEFT = 13;
+        private const int HTTOPRIGHT = 14;
+        private const int HTBOTTOM = 15;
+        private const int HTBOTTOMLEFT = 16;
+        private const int HTBOTTOMRIGHT = 17;
+        private const int WM_NCHITTEST = 0x84;
+        private const int resizeAreaSize = 10;
+
+        // Variables para botones y formularios
+        private Button currentButton;
+        private Form activeForm;
+
+        // Variables para maximizar sin cubrir la barra de tareas
+        private bool isMaximized = false;
+        private Rectangle previousBounds;
+
+        public FormMainMenu()
+        {
+            InitializeComponent();
+
+            this.FormBorderStyle = FormBorderStyle.None;
+            this.DoubleBuffered = true;
+            this.MinimumSize = new Size(600, 400);
+
+            guna2ComboBox1.BorderRadius = 10;
+            guna2ComboBox1.Font = new Font("Segoe UI", 10);
+            guna2ComboBox1.ForeColor = Color.Black;
+            guna2ComboBox1.ItemHeight = 35;
+            guna2ComboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            // Forzar el enfoque para que se activen los bordes desde el inicio
+            this.Activate();
+        }
+
+
+        private void panel1_Paint(object sender, PaintEventArgs e) { }
+
         private void panelSuperior_MouseDown(object sender, MouseEventArgs e)
         {
             ReleaseCapture();
             SendMessage(this.Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0);
         }
 
-        // variables para manejar los botones y los formularios
-        private Button currentButton;
-        private Form activeForm;
-
-        public FormMainMenu()
-        {
-            InitializeComponent();
-
-            guna2ComboBox1.BorderRadius = 10;
-            //guna2ComboBox1.FillColor = Color.FromArgb(20, 30, 48);
-            guna2ComboBox1.Font = new Font("Segoe UI", 10);
-            guna2ComboBox1.ForeColor = Color.Black;
-            guna2ComboBox1.ItemHeight = 35;
-
-            guna2ComboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        { }
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        { }
-
-
-        // Dar formato al boton seleccionado
         private void ActivateButton(object btnSender)
         {
             if (btnSender != null)
@@ -59,7 +77,7 @@ namespace Proyecto1_Citas_Dentales
                 if (currentButton != (Button)btnSender)
                 {
                     DisableButton();
-                    Color color = Color.FromArgb(25, 25, 50);
+                    Color color = Color.FromArgb(135, 206, 250);
                     currentButton = (Button)btnSender;
                     currentButton.BackColor = color;
                     currentButton.ForeColor = Color.White;
@@ -68,14 +86,13 @@ namespace Proyecto1_Citas_Dentales
             }
         }
 
-        // Dar formato por defecto a todos los botones
         private void DisableButton()
         {
             foreach (Control previousBtn in panelSideMenu.Controls)
             {
                 if (previousBtn.GetType() == typeof(Button))
                 {
-                    Color color = Color.FromArgb(17, 17, 34);
+                    Color color = Color.FromArgb(70, 130, 180);
                     previousBtn.BackColor = color;
                     previousBtn.ForeColor = Color.LightGray;
                     previousBtn.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
@@ -83,7 +100,6 @@ namespace Proyecto1_Citas_Dentales
             }
         }
 
-        // abrir el formulario seleccionado
         private void OpenChildForm(Form childForm, object btnSender)
         {
             if (activeForm != null)
@@ -104,8 +120,6 @@ namespace Proyecto1_Citas_Dentales
             childForm.Show();
         }
 
-
-        // Eventos de los botones del side menu
         private void buttonNewDates_Click(object sender, EventArgs e)
         {
             OpenChildForm(new Forms.FormAppointments(), sender);
@@ -141,7 +155,6 @@ namespace Proyecto1_Citas_Dentales
             OpenChildForm(new Forms.FormReportDoctor(), sender);
         }
 
-        // Cerrar formulario activo para regresar el principal
         private void label1_Click(object sender, EventArgs e)
         {
             if (activeForm != null)
@@ -157,48 +170,38 @@ namespace Proyecto1_Citas_Dentales
 
         private void button3_Click(object sender, EventArgs e)
         {
-            if (this.WindowState == FormWindowState.Normal)
+            if (!isMaximized)
             {
-                this.WindowState = FormWindowState.Maximized;
-                // button3.Text = "🗗"; // opcional: ícono de restaurar
+                previousBounds = this.Bounds;
+                Rectangle workingArea = Screen.FromHandle(this.Handle).WorkingArea;
+                this.Bounds = workingArea;
+                isMaximized = true;
             }
             else
             {
-                this.WindowState = FormWindowState.Normal;
-                // button3.Text = "🗖"; // opcional: ícono de maximizar
+                this.Bounds = previousBounds;
+                isMaximized = false;
             }
         }
 
         private void btnMinimizar_Click(object sender, EventArgs e)
         {
-
             this.WindowState = FormWindowState.Minimized;
-
-            //btnMaximizar.Text = "◰"; // ícono de restaurar
-
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
+        private void button1_Click(object sender, EventArgs e) { }
 
-        }
-
-        private void panelLogo_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
+        private void panelLogo_Paint(object sender, PaintEventArgs e) { }
 
         private void button3_Click_1(object sender, EventArgs e)
         {
             try
             {
-                // Leer la cadena de conexión desde config.txt
                 string connectionString = File.ReadAllText("config.txt").Trim();
-
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     if (connection.State == ConnectionState.Open)
-                        connection.Close(); // Por si acaso está abierta
+                        connection.Close();
                 }
             }
             catch (Exception ex)
@@ -206,19 +209,13 @@ namespace Proyecto1_Citas_Dentales
                 MessageBox.Show("Error al cerrar la conexión: " + ex.Message);
             }
 
-            // Mostrar el formulario de login
             login loginForm = new login();
             loginForm.Show();
-
-            // Ocultar el formulario actual (cerrar sesión) 
             this.Hide();
         }
 
-        private void inputAvailableTimes_SelectedIndexChanged(object sender, EventArgs e)
-        {
+        private void inputAvailableTimes_SelectedIndexChanged(object sender, EventArgs e) { }
 
-        }
-        //evento para hacer grande el combobox de ver disponibilidad
         private void cmbInputAvailableTimes_DrawItem(object sender, DrawItemEventArgs e)
         {
             if (e.Index < 0) return;
@@ -232,12 +229,52 @@ namespace Proyecto1_Citas_Dentales
             e.DrawFocusRectangle();
         }
 
-        private void panel3_Paint(object sender, PaintEventArgs e)
-        {
+        private void panel3_Paint(object sender, PaintEventArgs e) { }
 
+        private void guna2ComboBox1_SelectedIndexChanged(object sender, EventArgs e) { }
+
+        private void panel1_Paint_1(object sender, PaintEventArgs e) { }
+
+        // Redimensionar bordes y esquinas del formulario sin bordes
+        protected override void WndProc(ref Message m)
+        {
+            base.WndProc(ref m);
+
+            if (m.Msg == WM_NCHITTEST)
+            {
+                Point pos = new Point(m.LParam.ToInt32());
+                pos = this.PointToClient(pos);
+
+                if (pos.X <= resizeAreaSize)
+                {
+                    if (pos.Y <= resizeAreaSize)
+                        m.Result = (IntPtr)HTTOPLEFT;
+                    else if (pos.Y >= this.ClientSize.Height - resizeAreaSize)
+                        m.Result = (IntPtr)HTBOTTOMLEFT;
+                    else
+                        m.Result = (IntPtr)HTLEFT;
+                }
+                else if (pos.X >= this.ClientSize.Width - resizeAreaSize)
+                {
+                    if (pos.Y <= resizeAreaSize)
+                        m.Result = (IntPtr)HTTOPRIGHT;
+                    else if (pos.Y >= this.ClientSize.Height - resizeAreaSize)
+                        m.Result = (IntPtr)HTBOTTOMRIGHT;
+                    else
+                        m.Result = (IntPtr)HTRIGHT;
+                }
+                else if (pos.Y <= resizeAreaSize)
+                {
+                    m.Result = (IntPtr)HTTOP;
+                }
+                else if (pos.Y >= this.ClientSize.Height - resizeAreaSize)
+                {
+                    m.Result = (IntPtr)HTBOTTOM;
+                }
+            }
         }
 
-        private void guna2ComboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        private void panelDesktopPanel_Paint(object sender, PaintEventArgs e)
         {
 
         }
