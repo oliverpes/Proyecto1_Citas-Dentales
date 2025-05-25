@@ -1,57 +1,68 @@
 ﻿using Entities;
 using BusinessLogic;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 using System.Windows.Forms;
 using System.Data.SqlClient;
-
-
 
 namespace Proyecto1_Citas_Dentales.Forms
 {
     public partial class FormAppointments : Form
     {
-        // Variable para guardar el id de la fila seleccionada
         private int selectedId;
 
         public FormAppointments()
         {
             InitializeComponent();
-
-            // Agregar columnas al DataGridView
-            DataGridViewTextBoxColumn columnId = new DataGridViewTextBoxColumn();
-            DataGridViewTextBoxColumn columnDate = new DataGridViewTextBoxColumn();
-            DataGridViewTextBoxColumn columnType = new DataGridViewTextBoxColumn();
-            DataGridViewTextBoxColumn columnDoctor = new DataGridViewTextBoxColumn();
-            DataGridViewTextBoxColumn columnClient = new DataGridViewTextBoxColumn();
-
-            columnId.HeaderText = "ID";
-            columnDate.HeaderText = "Fecha";
-            columnType.HeaderText = "Tipo";
-            columnDoctor.HeaderText = "Doctor";
-            columnClient.HeaderText = "Cliente";
-
-            appointmentsView.Columns.Add(columnId);
-            appointmentsView.Columns.Add(columnDate);
-            appointmentsView.Columns.Add(columnType);
-            appointmentsView.Columns.Add(columnDoctor);
-            appointmentsView.Columns.Add(columnClient);
-
+            ConfigureDataGridView();
+            AddColumns();
             UpdateData();
         }
 
-        // Actualizar datos del DataGridView
+        // Estilo moderno sin librerías externas
+        private void ConfigureDataGridView()
+        {
+            appointmentsView.BorderStyle = BorderStyle.None;
+            appointmentsView.BackgroundColor = Color.White;
+            appointmentsView.GridColor = Color.LightGray;
+            appointmentsView.EnableHeadersVisualStyles = false;
+            appointmentsView.RowHeadersVisible = false;
+            appointmentsView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            appointmentsView.Font = new Font("Segoe UI", 11F, FontStyle.Regular);
+            appointmentsView.DefaultCellStyle.BackColor = Color.White;
+            appointmentsView.DefaultCellStyle.ForeColor = Color.Black;
+            appointmentsView.DefaultCellStyle.SelectionBackColor = Color.LightSkyBlue;
+            appointmentsView.DefaultCellStyle.SelectionForeColor = Color.Black;
+            appointmentsView.AlternatingRowsDefaultCellStyle.BackColor = Color.Gainsboro;
+
+            // Encabezado
+            appointmentsView.ColumnHeadersDefaultCellStyle.BackColor = Color.LightSteelBlue;
+            appointmentsView.ColumnHeadersDefaultCellStyle.ForeColor = Color.Black;
+            appointmentsView.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            appointmentsView.ColumnHeadersHeight = 60;
+
+            // Redondear con panel si deseas (opcional)
+            this.BackColor = Color.White;
+            appointmentsView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+        }
+
+        // Agregar columnas
+        private void AddColumns()
+        {
+            appointmentsView.Columns.Clear();
+
+            appointmentsView.Columns.Add(new DataGridViewTextBoxColumn() { HeaderText = "ID" });
+            appointmentsView.Columns.Add(new DataGridViewTextBoxColumn() { HeaderText = "Fecha" });
+            appointmentsView.Columns.Add(new DataGridViewTextBoxColumn() { HeaderText = "Tipo de Consulta" });
+            appointmentsView.Columns.Add(new DataGridViewTextBoxColumn() { HeaderText = "Doctor" });
+            appointmentsView.Columns.Add(new DataGridViewTextBoxColumn() { HeaderText = "Cliente" });
+        }
+
+        // Cargar datos
         public void UpdateData()
         {
-            // Cargar los datos desde la base
             Business.LoadAppointmentsFromDatabase();
-
             appointmentsView.Rows.Clear();
 
             foreach (Appointment appointment in Business.appointments)
@@ -59,25 +70,17 @@ namespace Proyecto1_Citas_Dentales.Forms
                 if (appointment != null)
                 {
                     string id = appointment.Id.ToString();
-                    string date = appointment.Date.ToString();
+                    string date = appointment.Date.ToString("dd/MM/yyyy HH:mm");
+                    string type = appointment.QueryType != null ? $"{appointment.QueryType.Id} - {appointment.QueryType.Description}" : "N/A";
+                    string doctor = appointment.Doctor != null ? $"{appointment.Doctor.Id} - {appointment.Doctor.Name} {appointment.Doctor.LastName}" : "N/A";
+                    string client = appointment.Client != null ? $"{appointment.Client.Id} - {appointment.Client.Name} {appointment.Client.LastName}" : "N/A";
 
-                    QueryType qt = appointment.QueryType;
-                    Client client = appointment.Client;
-                    Doctor doctor = appointment.Doctor;
-
-                    string type = qt != null ? qt.Id + " - " + qt.Description : "N/A";
-                    string doctorName = doctor != null ? doctor.Id + " - " + doctor.Name + " " + doctor.LastName : "N/A";
-                    string clientName = client != null ? client.Id + " - " + client.Name + " " + client.LastName : "N/A";
-
-                    string[] row = { id, date, type, doctorName, clientName };
-
-                    appointmentsView.Rows.Add(row);
+                    appointmentsView.Rows.Add(id, date, type, doctor, client);
                 }
             }
         }
 
-
-        // Boton para crear una nueva cita
+        // Nueva cita
         private void HandleNewAppoiment(object sender, EventArgs e)
         {
             try
@@ -89,59 +92,47 @@ namespace Proyecto1_Citas_Dentales.Forms
                     conn.Open();
 
                     using (SqlCommand cmd = new SqlCommand("SELECT COUNT(*) FROM Clientes WHERE EstadoId = 1", conn))
-                    {
                         if ((int)cmd.ExecuteScalar() == 0)
                         {
                             MessageBox.Show("No hay clientes activos registrados");
                             return;
                         }
-                    }
 
                     using (SqlCommand cmd = new SqlCommand("SELECT COUNT(*) FROM Doctores WHERE EstadoId = 1", conn))
-                    {
                         if ((int)cmd.ExecuteScalar() == 0)
                         {
                             MessageBox.Show("No hay doctores activos registrados");
                             return;
                         }
-                    }
 
                     using (SqlCommand cmd = new SqlCommand("SELECT COUNT(*) FROM TiposConsulta WHERE Estado = 1", conn))
-                    {
                         if ((int)cmd.ExecuteScalar() == 0)
                         {
                             MessageBox.Show("No hay tipos de consulta activos registrados");
                             return;
                         }
-                    }
                 }
 
-                // Abrir formulario si pasa la validación
                 FormNewAppointment formNewAppointment = new FormNewAppointment();
                 formNewAppointment.Owner = this;
                 formNewAppointment.ShowDialog();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al validar los datos desde la base de datos: " + ex.Message);
+                MessageBox.Show("Error al validar los datos: " + ex.Message);
             }
         }
 
-
-        // Seleccionar una cita
+        // Selección
         private void HandleClickCell(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
-            {
                 selectedId = Convert.ToInt32(appointmentsView.Rows[e.RowIndex].Cells[0].Value);
-            }
             else
-            {
                 selectedId = 0;
-            }
         }
 
-        // Boton para eliminar una cita
+        // Eliminar cita
         private void DeleteAppointment(object sender, EventArgs e)
         {
             if (selectedId <= 0)
@@ -149,22 +140,24 @@ namespace Proyecto1_Citas_Dentales.Forms
                 MessageBox.Show("Seleccione la fila a eliminar", "Eliminar cita", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+
             if (MessageBox.Show("¿Está seguro que desea eliminar la cita?", "Eliminar cita", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 Response response = Business.DeleteAppointment(selectedId);
 
                 if (response.Success)
-                {
                     UpdateData();
-                }
                 else
-                {
                     MessageBox.Show(response.Message, "Eliminar cita", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
             }
         }
 
         private void FormAppointments_Load(object sender, EventArgs e)
+        {
+            // Si necesitas hacer algo al cargar el formulario
+        }
+
+        private void appointmentsView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
         }

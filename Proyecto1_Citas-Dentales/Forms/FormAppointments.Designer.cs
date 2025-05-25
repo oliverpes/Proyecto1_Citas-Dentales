@@ -39,10 +39,10 @@
             // 
             // panel1
             // 
+            panel1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panel1.BackColor = Color.SteelBlue;
             panel1.Controls.Add(button1);
             panel1.Controls.Add(label1);
-            panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
             panel1.Margin = new Padding(3, 4, 3, 4);
             panel1.Name = "panel1";
@@ -80,19 +80,20 @@
             // 
             // appointmentsView
             // 
+            appointmentsView.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             appointmentsView.BackgroundColor = Color.SteelBlue;
             appointmentsView.BorderStyle = BorderStyle.None;
             appointmentsView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            appointmentsView.Dock = DockStyle.Top;
             appointmentsView.Location = new Point(0, 93);
             appointmentsView.Margin = new Padding(3, 4, 3, 4);
             appointmentsView.Name = "appointmentsView";
             appointmentsView.ReadOnly = true;
             appointmentsView.RowHeadersWidth = 51;
             appointmentsView.RowTemplate.Height = 25;
-            appointmentsView.Size = new Size(914, 368);
+            appointmentsView.Size = new Size(914, 505);
             appointmentsView.TabIndex = 1;
             appointmentsView.CellClick += HandleClickCell;
+            appointmentsView.CellContentClick += appointmentsView_CellContentClick;
             // 
             // buttonDelete
             // 
@@ -100,7 +101,7 @@
             buttonDelete.BackColor = Color.FromArgb(25, 25, 50);
             buttonDelete.FlatStyle = FlatStyle.Flat;
             buttonDelete.ForeColor = Color.White;
-            buttonDelete.Location = new Point(26, 489);
+            buttonDelete.Location = new Point(21, 618);
             buttonDelete.Margin = new Padding(3, 4, 3, 4);
             buttonDelete.Name = "buttonDelete";
             buttonDelete.Padding = new Padding(9, 5, 9, 5);
@@ -115,7 +116,7 @@
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.SteelBlue;
-            ClientSize = new Size(914, 600);
+            ClientSize = new Size(914, 678);
             Controls.Add(buttonDelete);
             Controls.Add(appointmentsView);
             Controls.Add(panel1);

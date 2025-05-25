@@ -30,8 +30,8 @@ namespace Proyecto1_Citas_Dentales
         /// </summary>
         private void InitializeComponent()
         {
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges4 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             panelSideMenu = new Panel();
             button1 = new Button();
             buttonReportDoctor = new Button();
@@ -58,6 +58,7 @@ namespace Proyecto1_Citas_Dentales
             panel3 = new Panel();
             guna2ComboBox1 = new Guna2ComboBox();
             panel2 = new Panel();
+            button4 = new Button();
             panelSideMenu.SuspendLayout();
             panelDesktopPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
@@ -456,7 +457,7 @@ namespace Proyecto1_Citas_Dentales
             // guna2ComboBox1
             // 
             guna2ComboBox1.BackColor = Color.Transparent;
-            guna2ComboBox1.CustomizableEdges = customizableEdges3;
+            guna2ComboBox1.CustomizableEdges = customizableEdges1;
             guna2ComboBox1.DrawMode = DrawMode.OwnerDrawFixed;
             guna2ComboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
             guna2ComboBox1.FocusedColor = Color.FromArgb(94, 148, 255);
@@ -466,13 +467,14 @@ namespace Proyecto1_Citas_Dentales
             guna2ComboBox1.ItemHeight = 30;
             guna2ComboBox1.Location = new Point(376, 50);
             guna2ComboBox1.Name = "guna2ComboBox1";
-            guna2ComboBox1.ShadowDecoration.CustomizableEdges = customizableEdges4;
+            guna2ComboBox1.ShadowDecoration.CustomizableEdges = customizableEdges2;
             guna2ComboBox1.Size = new Size(592, 36);
             guna2ComboBox1.TabIndex = 25;
             guna2ComboBox1.SelectedIndexChanged += guna2ComboBox1_SelectedIndexChanged;
             // 
             // panel2
             // 
+            panel2.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
             panel2.BackColor = Color.SteelBlue;
             panel2.Controls.Add(button3);
             panel2.Location = new Point(0, 790);
@@ -481,6 +483,24 @@ namespace Proyecto1_Citas_Dentales
             panel2.Size = new Size(328, 155);
             panel2.TabIndex = 27;
             // 
+            // button4
+            // 
+            button4.Anchor = AnchorStyles.None;
+            button4.BackColor = Color.Navy;
+            button4.Cursor = Cursors.Hand;
+            button4.FlatAppearance.BorderSize = 0;
+            button4.FlatStyle = FlatStyle.Flat;
+            button4.Font = new Font("Segoe UI", 10F);
+            button4.ForeColor = Color.Transparent;
+            button4.Location = new Point(1506, 55);
+            button4.Margin = new Padding(3, 4, 3, 4);
+            button4.Name = "button4";
+            button4.Padding = new Padding(18, 0, 0, 0);
+            button4.Size = new Size(170, 45);
+            button4.TabIndex = 12;
+            button4.Text = "Backup General";
+            button4.UseVisualStyleBackColor = false;
+            // 
             // FormMainMenu
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -488,6 +508,7 @@ namespace Proyecto1_Citas_Dentales
             AutoScroll = true;
             BackColor = SystemColors.Control;
             ClientSize = new Size(1723, 947);
+            Controls.Add(button4);
             Controls.Add(panel2);
             Controls.Add(btnMinimizar);
             Controls.Add(btnMaximizar);
@@ -542,5 +563,6 @@ namespace Proyecto1_Citas_Dentales
         private Label label6;
         private Guna2ComboBox guna2ComboBox1;
         private Panel panel2;
+        private Button button4;
     }
 }

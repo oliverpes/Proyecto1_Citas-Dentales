@@ -108,7 +108,7 @@
             clientDataViewer.ReadOnly = true;
             clientDataViewer.RowHeadersWidth = 51;
             clientDataViewer.RowTemplate.Height = 25;
-            clientDataViewer.Size = new Size(914, 436);
+            clientDataViewer.Size = new Size(914, 500);
             clientDataViewer.TabIndex = 2;
             clientDataViewer.CellClick += HandleSelectId;
             // 
