@@ -30,6 +30,7 @@ namespace Proyecto1_Citas_Dentales
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMainMenu));
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             panelSideMenu = new Panel();
@@ -47,22 +48,25 @@ namespace Proyecto1_Citas_Dentales
             panelLogo = new Panel();
             button3 = new Button();
             label5 = new Label();
-            label1 = new Label();
             panelDesktopPanel = new Panel();
+            pictureBox4 = new PictureBox();
+            pictureBox3 = new PictureBox();
             label6 = new Label();
-            pictureBox1 = new PictureBox();
             btnMinimizar = new Button();
             btnMaximizar = new Button();
             button2 = new Button();
             panel1 = new Panel();
             panel3 = new Panel();
+            pictureBox2 = new PictureBox();
             guna2ComboBox1 = new Guna2ComboBox();
             panel2 = new Panel();
             button4 = new Button();
             panelSideMenu.SuspendLayout();
             panelDesktopPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             panel2.SuspendLayout();
             SuspendLayout();
             // 
@@ -316,32 +320,18 @@ namespace Proyecto1_Citas_Dentales
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI", 20F, FontStyle.Bold);
             label5.ForeColor = Color.Black;
-            label5.Location = new Point(1264, 791);
+            label5.Location = new Point(200, 779);
             label5.Name = "label5";
             label5.Padding = new Padding(0, 0, 0, 5);
             label5.Size = new Size(0, 51);
             label5.TabIndex = 23;
             // 
-            // label1
-            // 
-            label1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            label1.AutoSize = true;
-            label1.Cursor = Cursors.Hand;
-            label1.Font = new Font("Microsoft Sans Serif", 15.75F, FontStyle.Bold);
-            label1.ForeColor = Color.White;
-            label1.Location = new Point(101, 55);
-            label1.Name = "label1";
-            label1.Size = new Size(98, 31);
-            label1.TabIndex = 0;
-            label1.Text = "MENU";
-            label1.Click += label1_Click;
-            // 
             // panelDesktopPanel
             // 
             panelDesktopPanel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panelDesktopPanel.BackColor = Color.White;
-            panelDesktopPanel.Controls.Add(label6);
-            panelDesktopPanel.Controls.Add(pictureBox1);
+            panelDesktopPanel.Controls.Add(pictureBox4);
+            panelDesktopPanel.Controls.Add(pictureBox3);
             panelDesktopPanel.Controls.Add(label5);
             panelDesktopPanel.Location = new Point(351, 113);
             panelDesktopPanel.Margin = new Padding(3, 4, 3, 4);
@@ -350,30 +340,43 @@ namespace Proyecto1_Citas_Dentales
             panelDesktopPanel.TabIndex = 1;
             panelDesktopPanel.Paint += panelDesktopPanel_Paint;
             // 
+            // pictureBox4
+            // 
+            pictureBox4.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            pictureBox4.Image = (Image)resources.GetObject("pictureBox4.Image");
+            pictureBox4.Location = new Point(1198, 769);
+            pictureBox4.Margin = new Padding(3, 4, 3, 4);
+            pictureBox4.Name = "pictureBox4";
+            pictureBox4.Size = new Size(148, 68);
+            pictureBox4.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox4.TabIndex = 27;
+            pictureBox4.TabStop = false;
+            // 
+            // pictureBox3
+            // 
+            pictureBox3.Anchor = AnchorStyles.None;
+            pictureBox3.Image = (Image)resources.GetObject("pictureBox3.Image");
+            pictureBox3.Location = new Point(664, 320);
+            pictureBox3.Margin = new Padding(3, 4, 3, 4);
+            pictureBox3.Name = "pictureBox3";
+            pictureBox3.Size = new Size(124, 106);
+            pictureBox3.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox3.TabIndex = 26;
+            pictureBox3.TabStop = false;
+            // 
             // label6
             // 
             label6.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             label6.AutoSize = true;
             label6.Font = new Font("Segoe UI", 20F, FontStyle.Bold);
-            label6.ForeColor = Color.Black;
-            label6.Location = new Point(1197, 781);
+            label6.ForeColor = Color.White;
+            label6.Location = new Point(118, 76);
             label6.Name = "label6";
             label6.Padding = new Padding(0, 0, 0, 5);
             label6.Size = new Size(146, 51);
             label6.TabIndex = 24;
             label6.Text = "CDental";
-            // 
-            // pictureBox1
-            // 
-            pictureBox1.Anchor = AnchorStyles.None;
-            pictureBox1.Image = Properties.Resources.home_image;
-            pictureBox1.Location = new Point(525, 270);
-            pictureBox1.Margin = new Padding(3, 4, 3, 4);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(300, 211);
-            pictureBox1.SizeMode = PictureBoxSizeMode.AutoSize;
-            pictureBox1.TabIndex = 0;
-            pictureBox1.TabStop = false;
+            label6.Click += label6_Click;
             // 
             // btnMinimizar
             // 
@@ -446,13 +449,27 @@ namespace Proyecto1_Citas_Dentales
             // panel3
             // 
             panel3.BackColor = Color.SteelBlue;
-            panel3.Controls.Add(label1);
+            panel3.Controls.Add(pictureBox2);
+            panel3.Controls.Add(label6);
             panel3.Location = new Point(0, 0);
             panel3.Margin = new Padding(3, 4, 3, 4);
             panel3.Name = "panel3";
             panel3.Size = new Size(328, 228);
             panel3.TabIndex = 26;
             panel3.Paint += panel3_Paint;
+            // 
+            // pictureBox2
+            // 
+            pictureBox2.Anchor = AnchorStyles.None;
+            pictureBox2.Image = (Image)resources.GetObject("pictureBox2.Image");
+            pictureBox2.Location = new Point(42, 68);
+            pictureBox2.Margin = new Padding(3, 4, 3, 4);
+            pictureBox2.Name = "pictureBox2";
+            pictureBox2.Size = new Size(70, 59);
+            pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox2.TabIndex = 25;
+            pictureBox2.TabStop = false;
+            pictureBox2.Click += pictureBox2_Click;
             // 
             // guna2ComboBox1
             // 
@@ -485,7 +502,7 @@ namespace Proyecto1_Citas_Dentales
             // 
             // button4
             // 
-            button4.Anchor = AnchorStyles.None;
+            button4.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             button4.BackColor = Color.Navy;
             button4.Cursor = Cursors.Hand;
             button4.FlatAppearance.BorderSize = 0;
@@ -527,9 +544,11 @@ namespace Proyecto1_Citas_Dentales
             panelSideMenu.PerformLayout();
             panelDesktopPanel.ResumeLayout(false);
             panelDesktopPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
             panel3.ResumeLayout(false);
             panel3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             panel2.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
@@ -539,7 +558,6 @@ namespace Proyecto1_Citas_Dentales
 
         private Panel panelSideMenu;
         private Panel panelLogo;
-        private Label label1;
         private Button buttonNewDates;
         private Label label2;
         private Label label3;
@@ -551,7 +569,6 @@ namespace Proyecto1_Citas_Dentales
         private Button buttonReportDate;
         private Label label4;
         private Panel panelDesktopPanel;
-        private PictureBox pictureBox1;
         private Button button1;
         private Button button2;
         private Button btnMinimizar;
@@ -564,5 +581,8 @@ namespace Proyecto1_Citas_Dentales
         private Guna2ComboBox guna2ComboBox1;
         private Panel panel2;
         private Button button4;
+        private PictureBox pictureBox3;
+        private PictureBox pictureBox2;
+        private PictureBox pictureBox4;
     }
 }

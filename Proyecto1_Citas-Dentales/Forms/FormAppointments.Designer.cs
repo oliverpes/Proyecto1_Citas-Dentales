@@ -48,6 +48,7 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(914, 93);
             panel1.TabIndex = 0;
+            panel1.Paint += panel1_Paint;
             // 
             // button1
             // 
@@ -81,7 +82,7 @@
             // appointmentsView
             // 
             appointmentsView.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            appointmentsView.BackgroundColor = Color.SteelBlue;
+            appointmentsView.BackgroundColor = Color.White;
             appointmentsView.BorderStyle = BorderStyle.None;
             appointmentsView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             appointmentsView.Location = new Point(0, 93);
@@ -90,18 +91,19 @@
             appointmentsView.ReadOnly = true;
             appointmentsView.RowHeadersWidth = 51;
             appointmentsView.RowTemplate.Height = 25;
-            appointmentsView.Size = new Size(914, 505);
+            appointmentsView.Size = new Size(914, 494);
             appointmentsView.TabIndex = 1;
             appointmentsView.CellClick += HandleClickCell;
             appointmentsView.CellContentClick += appointmentsView_CellContentClick;
             // 
             // buttonDelete
             // 
+            buttonDelete.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             buttonDelete.AutoSize = true;
             buttonDelete.BackColor = Color.FromArgb(25, 25, 50);
             buttonDelete.FlatStyle = FlatStyle.Flat;
             buttonDelete.ForeColor = Color.White;
-            buttonDelete.Location = new Point(21, 618);
+            buttonDelete.Location = new Point(40, 595);
             buttonDelete.Margin = new Padding(3, 4, 3, 4);
             buttonDelete.Name = "buttonDelete";
             buttonDelete.Padding = new Padding(9, 5, 9, 5);
@@ -115,7 +117,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.SteelBlue;
+            BackColor = Color.White;
             ClientSize = new Size(914, 678);
             Controls.Add(buttonDelete);
             Controls.Add(appointmentsView);

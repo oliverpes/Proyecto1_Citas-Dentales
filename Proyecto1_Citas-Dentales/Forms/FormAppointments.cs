@@ -161,5 +161,10 @@ namespace Proyecto1_Citas_Dentales.Forms
         {
 
         }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

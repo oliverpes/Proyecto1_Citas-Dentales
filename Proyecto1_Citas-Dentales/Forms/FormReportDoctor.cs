@@ -15,6 +15,9 @@ namespace Proyecto1_Citas_Dentales.Forms
         {
             InitializeComponent();
 
+            // Estilizar el DataGridView
+            SetupDataGridView();
+
             // Crear columnas
             resultsView.Columns.Add("ID", "ID");
             resultsView.Columns.Add("Fecha", "Fecha");
@@ -23,6 +26,32 @@ namespace Proyecto1_Citas_Dentales.Forms
             resultsView.Columns.Add("Cliente", "Cliente");
 
             LoadDoctors();
+        }
+
+        private void SetupDataGridView()
+        {
+            resultsView.BorderStyle = BorderStyle.None;
+            resultsView.BackgroundColor = Color.White;
+            resultsView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            resultsView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            resultsView.EnableHeadersVisualStyles = false;
+
+            resultsView.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(33, 150, 243); // Azul moderno
+            resultsView.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+            resultsView.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10, FontStyle.Bold);
+            resultsView.DefaultCellStyle.Font = new Font("Segoe UI", 10);
+            resultsView.DefaultCellStyle.BackColor = Color.White;
+            resultsView.DefaultCellStyle.ForeColor = Color.Black;
+            resultsView.DefaultCellStyle.SelectionBackColor = Color.FromArgb(224, 224, 224);
+            resultsView.DefaultCellStyle.SelectionForeColor = Color.Black;
+
+            resultsView.RowTemplate.Height = 30;
+            resultsView.GridColor = Color.LightGray;
+            resultsView.AllowUserToAddRows = false;
+            resultsView.AllowUserToResizeRows = false;
+            resultsView.ReadOnly = true;
+            resultsView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            resultsView.MultiSelect = false;
         }
 
         private void LoadDoctors()
@@ -80,5 +109,15 @@ namespace Proyecto1_Citas_Dentales.Forms
                 );
             }
         }
+        private void resultsView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }
+

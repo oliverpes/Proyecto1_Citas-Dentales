@@ -58,7 +58,7 @@
             // 
             // panel1
             // 
-            panel1.BackColor = Color.FromArgb(17, 17, 34);
+            panel1.BackColor = Color.SteelBlue;
             panel1.Controls.Add(buttonNewClient);
             panel1.Controls.Add(button1);
             panel1.Controls.Add(label1);
@@ -71,6 +71,7 @@
             // 
             // buttonNewClient
             // 
+            buttonNewClient.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             buttonNewClient.AutoSize = true;
             buttonNewClient.BackColor = Color.FromArgb(25, 25, 50);
             buttonNewClient.FlatStyle = FlatStyle.Flat;
@@ -99,7 +100,7 @@
             // 
             // clientDataViewer
             // 
-            clientDataViewer.BackgroundColor = Color.FromArgb(25, 25, 50);
+            clientDataViewer.BackgroundColor = Color.White;
             clientDataViewer.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             clientDataViewer.Dock = DockStyle.Top;
             clientDataViewer.Location = new Point(0, 93);
@@ -108,17 +109,18 @@
             clientDataViewer.ReadOnly = true;
             clientDataViewer.RowHeadersWidth = 51;
             clientDataViewer.RowTemplate.Height = 25;
-            clientDataViewer.Size = new Size(914, 500);
+            clientDataViewer.Size = new Size(914, 400);
             clientDataViewer.TabIndex = 2;
             clientDataViewer.CellClick += HandleSelectId;
             // 
             // buttonDeleteClient
             // 
+            buttonDeleteClient.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             buttonDeleteClient.AutoSize = true;
             buttonDeleteClient.BackColor = Color.FromArgb(192, 0, 0);
             buttonDeleteClient.FlatStyle = FlatStyle.Flat;
             buttonDeleteClient.ForeColor = Color.White;
-            buttonDeleteClient.Location = new Point(741, 541);
+            buttonDeleteClient.Location = new Point(741, 511);
             buttonDeleteClient.Margin = new Padding(3, 4, 3, 4);
             buttonDeleteClient.Name = "buttonDeleteClient";
             buttonDeleteClient.Padding = new Padding(9, 5, 9, 5);
@@ -130,11 +132,12 @@
             // 
             // buttonEditClient
             // 
+            buttonEditClient.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             buttonEditClient.AutoSize = true;
             buttonEditClient.BackColor = Color.FromArgb(17, 17, 34);
             buttonEditClient.FlatStyle = FlatStyle.Flat;
             buttonEditClient.ForeColor = Color.White;
-            buttonEditClient.Location = new Point(14, 541);
+            buttonEditClient.Location = new Point(14, 511);
             buttonEditClient.Margin = new Padding(3, 4, 3, 4);
             buttonEditClient.Name = "buttonEditClient";
             buttonEditClient.Padding = new Padding(9, 5, 9, 5);
@@ -146,11 +149,12 @@
             // 
             // CambiarEstadoCliente
             // 
+            CambiarEstadoCliente.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             CambiarEstadoCliente.AutoSize = true;
             CambiarEstadoCliente.BackColor = Color.FromArgb(17, 17, 34);
             CambiarEstadoCliente.FlatStyle = FlatStyle.Flat;
             CambiarEstadoCliente.ForeColor = Color.White;
-            CambiarEstadoCliente.Location = new Point(164, 541);
+            CambiarEstadoCliente.Location = new Point(164, 511);
             CambiarEstadoCliente.Margin = new Padding(3, 4, 3, 4);
             CambiarEstadoCliente.Name = "CambiarEstadoCliente";
             CambiarEstadoCliente.Padding = new Padding(9, 5, 9, 5);

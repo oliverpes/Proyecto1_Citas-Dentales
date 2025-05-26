@@ -2,14 +2,8 @@
 using Entities;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-
 
 namespace Proyecto1_Citas_Dentales.Forms
 {
@@ -21,6 +15,8 @@ namespace Proyecto1_Citas_Dentales.Forms
         public FormAdminDoctors()
         {
             InitializeComponent();
+
+            ConfigureDataGridView();
 
             // Agregar columnas al DataGridView
             DataGridViewTextBoxColumn columnId = new DataGridViewTextBoxColumn();
@@ -41,8 +37,32 @@ namespace Proyecto1_Citas_Dentales.Forms
             doctorDataViewer.Columns.Add(columnSLName);
             doctorDataViewer.Columns.Add(columnState);
 
-            
             this.Load += FormAdminDoctors_Load;
+        }
+
+        // Aplica estilo moderno al DataGridView igual que en FormQueryTypes
+        private void ConfigureDataGridView()
+        {
+            doctorDataViewer.BorderStyle = BorderStyle.None;
+            doctorDataViewer.BackgroundColor = Color.White;
+            doctorDataViewer.GridColor = Color.LightGray;
+            doctorDataViewer.EnableHeadersVisualStyles = false;
+            doctorDataViewer.RowHeadersVisible = false;
+            doctorDataViewer.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            doctorDataViewer.Font = new Font("Segoe UI", 11F, FontStyle.Regular);
+            doctorDataViewer.DefaultCellStyle.BackColor = Color.White;
+            doctorDataViewer.DefaultCellStyle.ForeColor = Color.Black;
+            doctorDataViewer.DefaultCellStyle.SelectionBackColor = Color.LightSkyBlue;
+            doctorDataViewer.DefaultCellStyle.SelectionForeColor = Color.Black;
+            doctorDataViewer.AlternatingRowsDefaultCellStyle.BackColor = Color.Gainsboro;
+
+            doctorDataViewer.ColumnHeadersDefaultCellStyle.BackColor = Color.LightSteelBlue;
+            doctorDataViewer.ColumnHeadersDefaultCellStyle.ForeColor = Color.Black;
+            doctorDataViewer.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            doctorDataViewer.ColumnHeadersHeight = 60;
+            doctorDataViewer.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+
+            this.BackColor = Color.White;
         }
 
         //metodo que actualiza los doctores en el DataGrid
@@ -80,7 +100,7 @@ namespace Proyecto1_Citas_Dentales.Forms
         // Boton para agregar un nuevo doctor
         private void buttonNewDoctor_Click(object sender, EventArgs e)
         {
-            
+
             FormNewDoctor formNewDoctor = new FormNewDoctor();
             formNewDoctor.Owner = this;
             formNewDoctor.ShowDialog();

@@ -30,8 +30,6 @@
         {
             panel1 = new Panel();
             buttonNewDoctor = new Button();
-            //button2 = new Button();
-            //button1 = new Button();
             label1 = new Label();
             doctorDataViewer = new DataGridView();
             buttonDeleteDoctor = new Button();
@@ -44,10 +42,8 @@
             // 
             // panel1
             // 
-            panel1.BackColor = Color.FromArgb(17, 17, 34);
+            panel1.BackColor = Color.SteelBlue;
             panel1.Controls.Add(buttonNewDoctor);
-            //panel1.Controls.Add(button2);
-            //panel1.Controls.Add(button1);
             panel1.Controls.Add(label1);
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
@@ -58,7 +54,7 @@
             // 
             // buttonNewDoctor
             // 
-            buttonNewDoctor.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
+            buttonNewDoctor.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             buttonNewDoctor.AutoSize = true;
             buttonNewDoctor.BackColor = Color.FromArgb(25, 25, 50);
             buttonNewDoctor.FlatStyle = FlatStyle.Flat;
@@ -72,38 +68,6 @@
             buttonNewDoctor.Text = "Nuevo Doctor";
             buttonNewDoctor.UseVisualStyleBackColor = false;
             buttonNewDoctor.Click += buttonNewDoctor_Click;
-            // 
-            // button2
-            //// 
-            //button2.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
-            //button2.AutoSize = true;
-            //button2.BackColor = Color.FromArgb(25, 25, 50);
-            //button2.FlatStyle = FlatStyle.Flat;
-            //button2.ForeColor = Color.White;
-            //button2.Location = new Point(1426, 23);
-            //button2.Margin = new Padding(3, 4, 3, 4);
-            //button2.Name = "button2";
-            //button2.Padding = new Padding(9, 5, 9, 5);
-            //button2.Size = new Size(149, 53);
-            //button2.TabIndex = 3;
-            //button2.Text = "Nuevo Cliente";
-            //button2.UseVisualStyleBackColor = false;
-            //// 
-            //// button1
-            //// 
-            //button1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
-            //button1.AutoSize = true;
-            //button1.BackColor = Color.FromArgb(25, 25, 50);
-            //button1.FlatStyle = FlatStyle.Flat;
-            //button1.ForeColor = Color.White;
-            //button1.Location = new Point(2121, 23);
-            //button1.Margin = new Padding(3, 4, 3, 4);
-            //button1.Name = "button1";
-            //button1.Padding = new Padding(9, 5, 9, 5);
-            //button1.Size = new Size(139, 53);
-            //button1.TabIndex = 2;
-            //button1.Text = "Agregar tipo";
-            //button1.UseVisualStyleBackColor = false;
             // 
             // label1
             // 
@@ -119,7 +83,7 @@
             // 
             // doctorDataViewer
             // 
-            doctorDataViewer.BackgroundColor = Color.FromArgb(25, 25, 50);
+            doctorDataViewer.BackgroundColor = Color.White;
             doctorDataViewer.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             doctorDataViewer.Dock = DockStyle.Fill;
             doctorDataViewer.Location = new Point(9, 24);
@@ -135,11 +99,12 @@
             // 
             // buttonDeleteDoctor
             // 
+            buttonDeleteDoctor.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             buttonDeleteDoctor.AutoSize = true;
             buttonDeleteDoctor.BackColor = Color.FromArgb(192, 0, 0);
             buttonDeleteDoctor.FlatStyle = FlatStyle.Flat;
             buttonDeleteDoctor.ForeColor = Color.White;
-            buttonDeleteDoctor.Location = new Point(162, 539);
+            buttonDeleteDoctor.Location = new Point(167, 550);
             buttonDeleteDoctor.Margin = new Padding(3, 4, 3, 4);
             buttonDeleteDoctor.Name = "buttonDeleteDoctor";
             buttonDeleteDoctor.Padding = new Padding(9, 5, 9, 5);
@@ -151,11 +116,12 @@
             // 
             // buttonChangeState
             // 
+            buttonChangeState.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             buttonChangeState.AutoSize = true;
             buttonChangeState.BackColor = Color.FromArgb(17, 17, 34);
             buttonChangeState.FlatStyle = FlatStyle.Flat;
             buttonChangeState.ForeColor = Color.White;
-            buttonChangeState.Location = new Point(9, 539);
+            buttonChangeState.Location = new Point(14, 550);
             buttonChangeState.Margin = new Padding(3, 4, 3, 4);
             buttonChangeState.Name = "buttonChangeState";
             buttonChangeState.Padding = new Padding(9, 5, 9, 5);
@@ -167,6 +133,7 @@
             // 
             // panel2
             // 
+            panel2.BackColor = Color.White;
             panel2.Controls.Add(doctorDataViewer);
             panel2.Dock = DockStyle.Top;
             panel2.Location = new Point(0, 93);
@@ -181,7 +148,7 @@
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(25, 25, 50);
-            ClientSize = new Size(914, 600);
+            ClientSize = new Size(914, 634);
             Controls.Add(panel2);
             Controls.Add(buttonDeleteDoctor);
             Controls.Add(buttonChangeState);

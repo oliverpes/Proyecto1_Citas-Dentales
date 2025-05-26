@@ -278,5 +278,21 @@ namespace Proyecto1_Citas_Dentales
         {
 
         }
+
+        private void pictureBox2_Click(object sender, EventArgs e)
+        {
+            if (activeForm != null)
+            {
+                activeForm.Close();
+            }
+        }
+
+        private void label6_Click(object sender, EventArgs e)
+        {
+            if (activeForm != null)
+            {
+                activeForm.Close();
+            }
+        }
     }
 }
