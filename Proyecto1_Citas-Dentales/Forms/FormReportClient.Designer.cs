@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             panel1 = new Panel();
-            //button3 = new Button();
             button2 = new Button();
             button1 = new Button();
             label1 = new Label();
@@ -45,8 +44,7 @@
             // 
             // panel1
             // 
-            panel1.BackColor = Color.FromArgb(17, 17, 34);
-            //panel1.Controls.Add(button3);
+            panel1.BackColor = Color.SteelBlue;
             panel1.Controls.Add(button2);
             panel1.Controls.Add(button1);
             panel1.Controls.Add(label1);
@@ -56,22 +54,7 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(914, 93);
             panel1.TabIndex = 4;
-            // 
-            // button3
-            //// 
-            //button3.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
-            //button3.AutoSize = true;
-            //button3.BackColor = Color.FromArgb(25, 25, 50);
-            //button3.FlatStyle = FlatStyle.Flat;
-            //button3.ForeColor = Color.White;
-            //button3.Location = new Point(2112, 24);
-            //button3.Margin = new Padding(3, 4, 3, 4);
-            //button3.Name = "button3";
-            //button3.Padding = new Padding(9, 5, 9, 5);
-            //button3.Size = new Size(149, 53);
-            //button3.TabIndex = 4;
-            //button3.Text = "Nuevo Doctor";
-            //button3.UseVisualStyleBackColor = false;
+            panel1.Paint += panel1_Paint;
             // 
             // button2
             // 
@@ -121,7 +104,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 10F);
-            label2.ForeColor = Color.White;
+            label2.ForeColor = Color.Black;
             label2.Location = new Point(14, 107);
             label2.Name = "label2";
             label2.Size = new Size(325, 23);
@@ -140,37 +123,38 @@
             // searchButton
             // 
             searchButton.AutoSize = true;
+            searchButton.BackColor = Color.Black;
             searchButton.FlatAppearance.BorderColor = Color.DimGray;
             searchButton.FlatStyle = FlatStyle.Flat;
             searchButton.ForeColor = Color.White;
-            searchButton.Location = new Point(376, 133);
+            searchButton.Location = new Point(384, 125);
             searchButton.Margin = new Padding(3, 8, 3, 8);
             searchButton.Name = "searchButton";
-            searchButton.Size = new Size(86, 36);
+            searchButton.Size = new Size(107, 48);
             searchButton.TabIndex = 7;
             searchButton.Text = "Buscar";
-            searchButton.UseVisualStyleBackColor = true;
+            searchButton.UseVisualStyleBackColor = false;
             searchButton.Click += searchButton_Click;
             // 
             // resultsView
             // 
-            resultsView.Anchor = AnchorStyles.Top;
-            resultsView.BackgroundColor = Color.FromArgb(25, 25, 50);
+            resultsView.BackgroundColor = Color.White;
             resultsView.BorderStyle = BorderStyle.None;
             resultsView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            resultsView.Dock = DockStyle.Fill;
             resultsView.Location = new Point(9, 11);
             resultsView.Margin = new Padding(3, 4, 3, 4);
             resultsView.Name = "resultsView";
             resultsView.ReadOnly = true;
             resultsView.RowHeadersWidth = 51;
             resultsView.RowTemplate.Height = 25;
-            resultsView.Size = new Size(896, 399);
+            resultsView.Size = new Size(896, 398);
             resultsView.TabIndex = 7;
             // 
             // panel2
             // 
+            panel2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panel2.Controls.Add(resultsView);
-            panel2.Dock = DockStyle.Bottom;
             panel2.Location = new Point(0, 180);
             panel2.Margin = new Padding(3, 4, 3, 4);
             panel2.Name = "panel2";
@@ -182,7 +166,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.FromArgb(25, 25, 50);
+            BackColor = Color.White;
             ClientSize = new Size(914, 600);
             Controls.Add(panel2);
             Controls.Add(searchButton);

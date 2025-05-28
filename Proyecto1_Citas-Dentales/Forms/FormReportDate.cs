@@ -34,7 +34,7 @@ namespace Proyecto1_Citas_Dentales.Forms
             resultsView.ColumnHeadersDefaultCellStyle.BackColor = Color.LightSteelBlue;
             resultsView.ColumnHeadersDefaultCellStyle.ForeColor = Color.Black;
             resultsView.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            resultsView.ColumnHeadersHeight = 50;
+            resultsView.ColumnHeadersHeight = 30;
             resultsView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
 
             // Columnas

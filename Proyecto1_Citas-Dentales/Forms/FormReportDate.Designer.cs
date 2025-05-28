@@ -89,10 +89,10 @@
             resultsView.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             resultsView.BackgroundColor = Color.White;
             resultsView.ColumnHeadersHeight = 29;
-            resultsView.Location = new Point(0, 13);
+            resultsView.Location = new Point(12, 13);
             resultsView.Name = "resultsView";
             resultsView.RowHeadersWidth = 51;
-            resultsView.Size = new Size(914, 385);
+            resultsView.Size = new Size(890, 385);
             resultsView.TabIndex = 4;
             // 
             // panel2

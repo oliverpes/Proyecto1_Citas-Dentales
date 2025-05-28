@@ -24,6 +24,7 @@ namespace Proyecto1_Citas_Dentales.Forms
             resultsView.Columns.Add("Doctor", "Doctor");
             resultsView.Columns.Add("Cliente", "Cliente");
 
+
             LoadDoctors();
         }
 
@@ -49,10 +50,14 @@ namespace Proyecto1_Citas_Dentales.Forms
 
             resultsView.ColumnHeadersDefaultCellStyle.BackColor = Color.LightSteelBlue;
             resultsView.ColumnHeadersDefaultCellStyle.ForeColor = Color.Black;
-            resultsView.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            resultsView.ColumnHeadersHeight = 50;
+            resultsView.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            resultsView.ColumnHeadersHeight = 30;
             resultsView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+
+            // Altura uniforme para las filas
+            resultsView.RowTemplate.Height = 30;
         }
+
 
 
         private void LoadDoctors()

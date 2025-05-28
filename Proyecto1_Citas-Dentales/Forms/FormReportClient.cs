@@ -1,8 +1,8 @@
 ﻿using BusinessLogic;
 using Entities;
 using System;
-using System.Data;
 using System.Data.SqlClient;
+using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
@@ -14,6 +14,10 @@ namespace Proyecto1_Citas_Dentales.Forms
         {
             InitializeComponent();
 
+            // Estilizar el DataGridView
+            SetupDataGridView();
+
+            // Crear columnas
             resultsView.Columns.Add("ID", "ID");
             resultsView.Columns.Add("Fecha", "Fecha");
             resultsView.Columns.Add("Tipo", "Tipo");
@@ -21,6 +25,35 @@ namespace Proyecto1_Citas_Dentales.Forms
             resultsView.Columns.Add("Cliente", "Cliente");
 
             LoadClients();
+        }
+
+        private void SetupDataGridView()
+        {
+            resultsView.BorderStyle = BorderStyle.None;
+            resultsView.BackgroundColor = Color.White;
+            resultsView.GridColor = Color.LightGray;
+            resultsView.EnableHeadersVisualStyles = false;
+            resultsView.RowHeadersVisible = false;
+            resultsView.ReadOnly = true;
+            resultsView.AllowUserToAddRows = false;
+            resultsView.AllowUserToDeleteRows = false;
+            resultsView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            resultsView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+
+            resultsView.Font = new Font("Segoe UI", 11F, FontStyle.Regular);
+            resultsView.DefaultCellStyle.BackColor = Color.White;
+            resultsView.DefaultCellStyle.ForeColor = Color.Black;
+            resultsView.DefaultCellStyle.SelectionBackColor = Color.LightSkyBlue;
+            resultsView.DefaultCellStyle.SelectionForeColor = Color.Black;
+            resultsView.AlternatingRowsDefaultCellStyle.BackColor = Color.Gainsboro;
+
+            resultsView.ColumnHeadersDefaultCellStyle.BackColor = Color.LightSteelBlue;
+            resultsView.ColumnHeadersDefaultCellStyle.ForeColor = Color.Black;
+            resultsView.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            resultsView.ColumnHeadersHeight = 30;
+            resultsView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+
+            resultsView.RowTemplate.Height = 30;
         }
 
         private void LoadClients()
@@ -71,12 +104,17 @@ namespace Proyecto1_Citas_Dentales.Forms
             {
                 resultsView.Rows.Add(
                     reader["Id"],
-                    reader["Fecha"],
+                    Convert.ToDateTime(reader["Fecha"]).ToString("dd/MM/yyyy"),
                     reader["Descripcion"],
                     reader["DoctorNombre"],
                     reader["ClienteNombre"]
                 );
             }
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+            // Puedes dejar esto vacío si no es necesario
         }
     }
 }
