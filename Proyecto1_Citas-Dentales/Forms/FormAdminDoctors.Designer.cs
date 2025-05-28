@@ -83,16 +83,16 @@
             // 
             // doctorDataViewer
             // 
+            doctorDataViewer.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             doctorDataViewer.BackgroundColor = Color.White;
             doctorDataViewer.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            doctorDataViewer.Dock = DockStyle.Fill;
-            doctorDataViewer.Location = new Point(9, 24);
+            doctorDataViewer.Location = new Point(3, 0);
             doctorDataViewer.Margin = new Padding(3, 4, 3, 4);
             doctorDataViewer.Name = "doctorDataViewer";
             doctorDataViewer.ReadOnly = true;
             doctorDataViewer.RowHeadersWidth = 51;
             doctorDataViewer.RowTemplate.Height = 25;
-            doctorDataViewer.Size = new Size(896, 403);
+            doctorDataViewer.Size = new Size(911, 427);
             doctorDataViewer.TabIndex = 3;
             doctorDataViewer.CellClick += HandleCellClick;
             doctorDataViewer.CellContentClick += doctorDataViewer_CellContentClick;
@@ -147,7 +147,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.FromArgb(25, 25, 50);
+            BackColor = Color.White;
             ClientSize = new Size(914, 634);
             Controls.Add(panel2);
             Controls.Add(buttonDeleteDoctor);

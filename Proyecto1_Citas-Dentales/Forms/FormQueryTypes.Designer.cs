@@ -86,10 +86,11 @@ namespace Proyecto1_Citas_Dentales.Forms
             // 
             // panelList
             // 
+            panelList.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            panelList.BackColor = Color.White;
             panelList.Controls.Add(button2);
             panelList.Controls.Add(button1);
             panelList.Controls.Add(dataGridView1);
-            panelList.Dock = DockStyle.Fill;
             panelList.Location = new Point(0, 93);
             panelList.Margin = new Padding(3, 4, 3, 4);
             panelList.Name = "panelList";
@@ -134,17 +135,19 @@ namespace Proyecto1_Citas_Dentales.Forms
             // dataGridView1
             // 
             dataGridView1.AllowUserToDeleteRows = false;
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridView1.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             dataGridView1.BackgroundColor = Color.White;
             dataGridView1.BorderStyle = BorderStyle.None;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Dock = DockStyle.Top;
+            dataGridView1.Dock = DockStyle.Fill;
             dataGridView1.Location = new Point(9, 24);
             dataGridView1.Margin = new Padding(3, 4, 3, 4);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.ReadOnly = true;
             dataGridView1.RowHeadersWidth = 51;
             dataGridView1.RowTemplate.Height = 25;
-            dataGridView1.Size = new Size(896, 405);
+            dataGridView1.Size = new Size(896, 472);
             dataGridView1.TabIndex = 0;
             dataGridView1.CellClick += dataGridView_CellClick;
             // 

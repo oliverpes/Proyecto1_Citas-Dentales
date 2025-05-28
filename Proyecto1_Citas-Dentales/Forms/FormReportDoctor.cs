@@ -1,7 +1,6 @@
 ﻿using BusinessLogic;
 using Entities;
 using System;
-using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.IO;
@@ -32,27 +31,29 @@ namespace Proyecto1_Citas_Dentales.Forms
         {
             resultsView.BorderStyle = BorderStyle.None;
             resultsView.BackgroundColor = Color.White;
-            resultsView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
-            resultsView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            resultsView.GridColor = Color.LightGray;
             resultsView.EnableHeadersVisualStyles = false;
+            resultsView.RowHeadersVisible = false;
+            resultsView.ReadOnly = true;
+            resultsView.AllowUserToAddRows = false;
+            resultsView.AllowUserToDeleteRows = false;
+            resultsView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            resultsView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
 
-            resultsView.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(33, 150, 243); // Azul moderno
-            resultsView.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
-            resultsView.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10, FontStyle.Bold);
-            resultsView.DefaultCellStyle.Font = new Font("Segoe UI", 10);
+            resultsView.Font = new Font("Segoe UI", 11F, FontStyle.Regular);
             resultsView.DefaultCellStyle.BackColor = Color.White;
             resultsView.DefaultCellStyle.ForeColor = Color.Black;
-            resultsView.DefaultCellStyle.SelectionBackColor = Color.FromArgb(224, 224, 224);
+            resultsView.DefaultCellStyle.SelectionBackColor = Color.LightSkyBlue;
             resultsView.DefaultCellStyle.SelectionForeColor = Color.Black;
+            resultsView.AlternatingRowsDefaultCellStyle.BackColor = Color.Gainsboro;
 
-            resultsView.RowTemplate.Height = 30;
-            resultsView.GridColor = Color.LightGray;
-            resultsView.AllowUserToAddRows = false;
-            resultsView.AllowUserToResizeRows = false;
-            resultsView.ReadOnly = true;
-            resultsView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            resultsView.MultiSelect = false;
+            resultsView.ColumnHeadersDefaultCellStyle.BackColor = Color.LightSteelBlue;
+            resultsView.ColumnHeadersDefaultCellStyle.ForeColor = Color.Black;
+            resultsView.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            resultsView.ColumnHeadersHeight = 50;
+            resultsView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
         }
+
 
         private void LoadDoctors()
         {
@@ -102,22 +103,22 @@ namespace Proyecto1_Citas_Dentales.Forms
             {
                 resultsView.Rows.Add(
                     reader["Id"],
-                    reader["Fecha"],
+                    Convert.ToDateTime(reader["Fecha"]).ToString("dd/MM/yyyy"),
                     reader["Descripcion"],
                     reader["DoctorNombre"],
                     reader["ClienteNombre"]
                 );
             }
         }
+
         private void resultsView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-
+            // Puedes dejar esto vacío si no es necesario
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
-
+            // Puedes dejar esto vacío si no es necesario
         }
     }
 }
-
