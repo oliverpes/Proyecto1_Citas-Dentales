@@ -48,7 +48,7 @@
             // 
             // panel1
             // 
-            panel1.BackColor = Color.FromArgb(17, 17, 34);
+            panel1.BackColor = Color.SteelBlue;
             panel1.Controls.Add(label1);
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
@@ -86,6 +86,7 @@
             // buttonSaveDoctor
             // 
             buttonSaveDoctor.AutoSize = true;
+            buttonSaveDoctor.BackColor = Color.Navy;
             buttonSaveDoctor.Dock = DockStyle.Bottom;
             buttonSaveDoctor.FlatAppearance.BorderColor = Color.DimGray;
             buttonSaveDoctor.FlatStyle = FlatStyle.Flat;
@@ -97,16 +98,16 @@
             buttonSaveDoctor.Size = new Size(313, 53);
             buttonSaveDoctor.TabIndex = 4;
             buttonSaveDoctor.Text = "Guardar doctor";
-            buttonSaveDoctor.UseVisualStyleBackColor = true;
+            buttonSaveDoctor.UseVisualStyleBackColor = false;
             buttonSaveDoctor.Click += buttonSaveDoctor_Click;
             // 
             // inputState
             // 
-            inputState.BackColor = Color.FromArgb(17, 17, 34);
+            inputState.BackColor = Color.White;
             inputState.Dock = DockStyle.Top;
             inputState.FlatStyle = FlatStyle.Flat;
             inputState.Font = new Font("Segoe UI", 10F);
-            inputState.ForeColor = Color.White;
+            inputState.ForeColor = Color.Black;
             inputState.FormattingEnabled = true;
             inputState.Items.AddRange(new object[] { "Inactivo", "Activo" });
             inputState.Location = new Point(11, 59);
@@ -121,7 +122,7 @@
             label6.AutoSize = true;
             label6.Dock = DockStyle.Top;
             label6.Font = new Font("Segoe UI", 12F);
-            label6.ForeColor = Color.LightGray;
+            label6.ForeColor = Color.Black;
             label6.Location = new Point(11, 13);
             label6.Name = "label6";
             label6.Padding = new Padding(0, 13, 0, 5);
@@ -148,11 +149,11 @@
             // 
             // inputSecondLastName
             // 
-            inputSecondLastName.BackColor = Color.FromArgb(17, 17, 34);
+            inputSecondLastName.BackColor = Color.White;
             inputSecondLastName.BorderStyle = BorderStyle.FixedSingle;
             inputSecondLastName.Dock = DockStyle.Top;
             inputSecondLastName.Font = new Font("Segoe UI", 10F);
-            inputSecondLastName.ForeColor = Color.White;
+            inputSecondLastName.ForeColor = Color.Black;
             inputSecondLastName.Location = new Point(11, 211);
             inputSecondLastName.Margin = new Padding(3, 4, 3, 4);
             inputSecondLastName.Name = "inputSecondLastName";
@@ -164,7 +165,7 @@
             label5.AutoSize = true;
             label5.Dock = DockStyle.Top;
             label5.Font = new Font("Segoe UI", 12F);
-            label5.ForeColor = Color.LightGray;
+            label5.ForeColor = Color.Black;
             label5.Location = new Point(11, 165);
             label5.Name = "label5";
             label5.Padding = new Padding(0, 13, 0, 5);
@@ -174,11 +175,11 @@
             // 
             // inputFirstLastName
             // 
-            inputFirstLastName.BackColor = Color.FromArgb(17, 17, 34);
+            inputFirstLastName.BackColor = Color.White;
             inputFirstLastName.BorderStyle = BorderStyle.FixedSingle;
             inputFirstLastName.Dock = DockStyle.Top;
             inputFirstLastName.Font = new Font("Segoe UI", 10F);
-            inputFirstLastName.ForeColor = Color.White;
+            inputFirstLastName.ForeColor = Color.Black;
             inputFirstLastName.Location = new Point(11, 135);
             inputFirstLastName.Margin = new Padding(3, 4, 3, 4);
             inputFirstLastName.Name = "inputFirstLastName";
@@ -190,7 +191,7 @@
             label4.AutoSize = true;
             label4.Dock = DockStyle.Top;
             label4.Font = new Font("Segoe UI", 12F);
-            label4.ForeColor = Color.LightGray;
+            label4.ForeColor = Color.Black;
             label4.Location = new Point(11, 89);
             label4.Name = "label4";
             label4.Padding = new Padding(0, 13, 0, 5);
@@ -200,11 +201,11 @@
             // 
             // inputName
             // 
-            inputName.BackColor = Color.FromArgb(17, 17, 34);
+            inputName.BackColor = Color.White;
             inputName.BorderStyle = BorderStyle.FixedSingle;
             inputName.Dock = DockStyle.Top;
             inputName.Font = new Font("Segoe UI", 10F);
-            inputName.ForeColor = Color.White;
+            inputName.ForeColor = Color.Black;
             inputName.Location = new Point(11, 59);
             inputName.Margin = new Padding(3, 4, 3, 4);
             inputName.Name = "inputName";
@@ -216,7 +217,7 @@
             label3.AutoSize = true;
             label3.Dock = DockStyle.Top;
             label3.Font = new Font("Segoe UI", 12F);
-            label3.ForeColor = Color.LightGray;
+            label3.ForeColor = Color.Black;
             label3.Location = new Point(11, 13);
             label3.Name = "label3";
             label3.Padding = new Padding(0, 13, 0, 5);
@@ -228,7 +229,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.FromArgb(25, 25, 50);
+            BackColor = Color.AliceBlue;
             ClientSize = new Size(914, 600);
             Controls.Add(panel3);
             Controls.Add(panel2);

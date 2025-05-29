@@ -42,7 +42,7 @@
             // 
             // panel1
             // 
-            panel1.BackColor = Color.FromArgb(17, 17, 34);
+            panel1.BackColor = Color.SteelBlue;
             panel1.Controls.Add(label1);
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
@@ -65,6 +65,7 @@
             // 
             // panel2
             // 
+            panel2.BackColor = Color.AliceBlue;
             panel2.Controls.Add(buttonAddNewType);
             panel2.Controls.Add(label4);
             panel2.Controls.Add(stateQueryType);
@@ -80,7 +81,7 @@
             // buttonAddNewType
             // 
             buttonAddNewType.AutoSize = true;
-            buttonAddNewType.BackColor = Color.FromArgb(17, 17, 34);
+            buttonAddNewType.BackColor = Color.Navy;
             buttonAddNewType.FlatStyle = FlatStyle.Flat;
             buttonAddNewType.Font = new Font("Segoe UI", 12F);
             buttonAddNewType.ForeColor = Color.LightGray;
@@ -98,7 +99,7 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 12F);
-            label4.ForeColor = Color.LightGray;
+            label4.ForeColor = Color.Black;
             label4.Location = new Point(282, 223);
             label4.Name = "label4";
             label4.Size = new Size(192, 28);
@@ -107,10 +108,9 @@
             // 
             // stateQueryType
             // 
-            stateQueryType.BackColor = Color.FromArgb(17, 17, 34);
-            stateQueryType.FlatStyle = FlatStyle.Flat;
+            stateQueryType.BackColor = Color.White;
             stateQueryType.Font = new Font("Segoe UI", 12F);
-            stateQueryType.ForeColor = Color.White;
+            stateQueryType.ForeColor = Color.Black;
             stateQueryType.FormattingEnabled = true;
             stateQueryType.Items.AddRange(new object[] { "Activo", "Inactivo" });
             stateQueryType.Location = new Point(282, 260);
@@ -122,10 +122,10 @@
             // 
             // descriptionQueryType
             // 
-            descriptionQueryType.BackColor = Color.FromArgb(17, 17, 34);
+            descriptionQueryType.BackColor = Color.White;
             descriptionQueryType.BorderStyle = BorderStyle.FixedSingle;
             descriptionQueryType.Font = new Font("Segoe UI", 12F);
-            descriptionQueryType.ForeColor = Color.White;
+            descriptionQueryType.ForeColor = Color.Black;
             descriptionQueryType.Location = new Point(282, 169);
             descriptionQueryType.Margin = new Padding(3, 4, 3, 4);
             descriptionQueryType.Name = "descriptionQueryType";
@@ -136,7 +136,7 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 12F);
-            label3.ForeColor = Color.LightGray;
+            label3.ForeColor = Color.Black;
             label3.Location = new Point(282, 132);
             label3.Name = "label3";
             label3.Size = new Size(204, 28);

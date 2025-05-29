@@ -51,7 +51,7 @@
             // 
             // panel1
             // 
-            panel1.BackColor = Color.FromArgb(17, 17, 34);
+            panel1.BackColor = Color.SteelBlue;
             panel1.Controls.Add(label7);
             panel1.Controls.Add(label1);
             panel1.Dock = DockStyle.Top;
@@ -82,6 +82,7 @@
             // 
             // panel2
             // 
+            panel2.BackColor = Color.AliceBlue;
             panel2.Controls.Add(inputAvailableTimes);
             panel2.Controls.Add(label8);
             panel2.Controls.Add(inputClient);
@@ -102,11 +103,10 @@
             // 
             // inputAvailableTimes
             // 
-            inputAvailableTimes.BackColor = Color.FromArgb(17, 17, 34);
+            inputAvailableTimes.BackColor = Color.White;
             inputAvailableTimes.Dock = DockStyle.Top;
-            inputAvailableTimes.FlatStyle = FlatStyle.Flat;
             inputAvailableTimes.Font = new Font("Segoe UI", 10F);
-            inputAvailableTimes.ForeColor = Color.White;
+            inputAvailableTimes.ForeColor = Color.Black;
             inputAvailableTimes.FormattingEnabled = true;
             inputAvailableTimes.Location = new Point(0, 412);
             inputAvailableTimes.Margin = new Padding(3, 4, 3, 4);
@@ -119,7 +119,7 @@
             label8.AutoSize = true;
             label8.Dock = DockStyle.Top;
             label8.Font = new Font("Segoe UI", 12F);
-            label8.ForeColor = Color.White;
+            label8.ForeColor = Color.Black;
             label8.Location = new Point(0, 368);
             label8.Name = "label8";
             label8.Padding = new Padding(0, 5, 0, 11);
@@ -129,11 +129,10 @@
             // 
             // inputClient
             // 
-            inputClient.BackColor = Color.FromArgb(17, 17, 34);
+            inputClient.BackColor = Color.White;
             inputClient.Dock = DockStyle.Top;
-            inputClient.FlatStyle = FlatStyle.Flat;
             inputClient.Font = new Font("Segoe UI", 10F);
-            inputClient.ForeColor = Color.White;
+            inputClient.ForeColor = Color.Black;
             inputClient.FormattingEnabled = true;
             inputClient.Location = new Point(0, 337);
             inputClient.Margin = new Padding(3, 4, 3, 4);
@@ -146,7 +145,7 @@
             label6.AutoSize = true;
             label6.Dock = DockStyle.Top;
             label6.Font = new Font("Segoe UI", 12F);
-            label6.ForeColor = Color.White;
+            label6.ForeColor = Color.Black;
             label6.Location = new Point(0, 293);
             label6.Name = "label6";
             label6.Padding = new Padding(0, 5, 0, 11);
@@ -156,11 +155,10 @@
             // 
             // inputDoctor
             // 
-            inputDoctor.BackColor = Color.FromArgb(17, 17, 34);
+            inputDoctor.BackColor = Color.White;
             inputDoctor.Dock = DockStyle.Top;
-            inputDoctor.FlatStyle = FlatStyle.Flat;
             inputDoctor.Font = new Font("Segoe UI", 10F);
-            inputDoctor.ForeColor = Color.White;
+            inputDoctor.ForeColor = Color.Black;
             inputDoctor.FormattingEnabled = true;
             inputDoctor.Location = new Point(0, 262);
             inputDoctor.Margin = new Padding(3, 4, 3, 4);
@@ -173,7 +171,7 @@
             label5.AutoSize = true;
             label5.Dock = DockStyle.Top;
             label5.Font = new Font("Segoe UI", 12F);
-            label5.ForeColor = Color.White;
+            label5.ForeColor = Color.Black;
             label5.Location = new Point(0, 218);
             label5.Name = "label5";
             label5.Padding = new Padding(0, 5, 0, 11);
@@ -183,11 +181,10 @@
             // 
             // inputType
             // 
-            inputType.BackColor = Color.FromArgb(17, 17, 34);
+            inputType.BackColor = Color.White;
             inputType.Dock = DockStyle.Top;
-            inputType.FlatStyle = FlatStyle.Flat;
             inputType.Font = new Font("Segoe UI", 10F);
-            inputType.ForeColor = Color.White;
+            inputType.ForeColor = Color.Black;
             inputType.FormattingEnabled = true;
             inputType.Location = new Point(0, 187);
             inputType.Margin = new Padding(3, 4, 3, 4);
@@ -200,7 +197,7 @@
             label4.AutoSize = true;
             label4.Dock = DockStyle.Top;
             label4.Font = new Font("Segoe UI", 12F);
-            label4.ForeColor = Color.White;
+            label4.ForeColor = Color.Black;
             label4.Location = new Point(0, 143);
             label4.Name = "label4";
             label4.Padding = new Padding(0, 5, 0, 11);
@@ -232,7 +229,7 @@
             label3.AutoSize = true;
             label3.Dock = DockStyle.Top;
             label3.Font = new Font("Segoe UI", 12F);
-            label3.ForeColor = Color.White;
+            label3.ForeColor = Color.Black;
             label3.Location = new Point(0, 69);
             label3.Name = "label3";
             label3.Padding = new Padding(0, 5, 0, 11);
@@ -242,11 +239,11 @@
             // 
             // inputID
             // 
-            inputID.BackColor = Color.FromArgb(17, 17, 34);
+            inputID.BackColor = Color.White;
             inputID.BorderStyle = BorderStyle.FixedSingle;
             inputID.Dock = DockStyle.Top;
             inputID.Font = new Font("Segoe UI", 10F);
-            inputID.ForeColor = Color.White;
+            inputID.ForeColor = Color.Black;
             inputID.Location = new Point(0, 39);
             inputID.Margin = new Padding(3, 4, 3, 4);
             inputID.Name = "inputID";
@@ -258,7 +255,7 @@
             label2.AutoSize = true;
             label2.Dock = DockStyle.Top;
             label2.Font = new Font("Segoe UI", 12F);
-            label2.ForeColor = Color.White;
+            label2.ForeColor = Color.Black;
             label2.Location = new Point(0, 0);
             label2.Name = "label2";
             label2.Padding = new Padding(0, 0, 0, 11);
@@ -270,6 +267,7 @@
             // 
             buttonSaveAppointment.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             buttonSaveAppointment.AutoSize = true;
+            buttonSaveAppointment.BackColor = Color.Navy;
             buttonSaveAppointment.FlatAppearance.BorderColor = Color.DimGray;
             buttonSaveAppointment.FlatStyle = FlatStyle.Flat;
             buttonSaveAppointment.Font = new Font("Segoe UI", 12F);
@@ -280,14 +278,14 @@
             buttonSaveAppointment.Size = new Size(218, 44);
             buttonSaveAppointment.TabIndex = 5;
             buttonSaveAppointment.Text = "Crear cita";
-            buttonSaveAppointment.UseVisualStyleBackColor = true;
+            buttonSaveAppointment.UseVisualStyleBackColor = false;
             buttonSaveAppointment.Click += buttonSaveAppointment_Click;
             // 
             // FormNewAppointment
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.FromArgb(25, 25, 50);
+            BackColor = Color.AliceBlue;
             ClientSize = new Size(973, 682);
             Controls.Add(buttonSaveAppointment);
             Controls.Add(panel2);

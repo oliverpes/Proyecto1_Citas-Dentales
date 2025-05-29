@@ -191,7 +191,11 @@ namespace Proyecto1_Citas_Dentales
             this.WindowState = FormWindowState.Minimized;
         }
 
-        private void button1_Click(object sender, EventArgs e) { }
+        private void button1_Click(object sender, EventArgs e) {
+            //boton que muestra las politicas de privacidad
+            OpenChildForm(new Forms.privacyPolitics(), sender);
+        }
+
 
         private void panelLogo_Paint(object sender, PaintEventArgs e) { }
 
