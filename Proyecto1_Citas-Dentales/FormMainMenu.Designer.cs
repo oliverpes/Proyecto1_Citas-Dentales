@@ -517,6 +517,7 @@ namespace Proyecto1_Citas_Dentales
             button4.TabIndex = 12;
             button4.Text = "Backup General";
             button4.UseVisualStyleBackColor = false;
+            button4.Click += button4_Click;
             // 
             // FormMainMenu
             // 

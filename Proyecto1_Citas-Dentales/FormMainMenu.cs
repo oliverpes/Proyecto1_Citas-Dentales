@@ -5,6 +5,9 @@ using System.IO;
 using System.Data.SqlClient;
 using System.Data;
 using System.Runtime.InteropServices;
+using ClosedXML.Excel; // <-- Importante para Excel
+using System.Drawing;
+using System.Windows.Forms;
 
 namespace Proyecto1_Citas_Dentales
 {
@@ -60,7 +63,6 @@ namespace Proyecto1_Citas_Dentales
             // Forzar el enfoque para que se activen los bordes desde el inicio
             this.Activate();
         }
-
 
         private void panel1_Paint(object sender, PaintEventArgs e) { }
 
@@ -274,10 +276,7 @@ namespace Proyecto1_Citas_Dentales
             }
         }
 
-        private void panelDesktopPanel_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
+        private void panelDesktopPanel_Paint(object sender, PaintEventArgs e) { }
 
         private void pictureBox2_Click(object sender, EventArgs e)
         {
@@ -294,5 +293,83 @@ namespace Proyecto1_Citas_Dentales
                 activeForm.Close();
             }
         }
+
+        // Aquí el método que crea el backup en Excel
+        private void button4_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string connectionString = File.ReadAllText("config.txt").Trim();
+
+                // Tablas a respaldar
+                string[] tablas = new string[]
+                {
+            "Clientes",
+            "Doctores",
+            "EstadosDoctor",
+            "TiposConsulta",
+            "Citas",
+            "HorariosDisponibles",
+            "Usuarios"
+                };
+
+                DataSet ds = new DataSet();
+
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    foreach (string tabla in tablas)
+                    {
+                        string query = $"SELECT * FROM {tabla}";
+
+                        using (SqlDataAdapter adapter = new SqlDataAdapter(query, conn))
+                        {
+                            DataTable dt = new DataTable(tabla);
+                            adapter.Fill(dt);
+                            ds.Tables.Add(dt);
+                        }
+                    }
+                }
+
+                // Crear Excel con ClosedXML
+                using (XLWorkbook workbook = new XLWorkbook())
+                {
+                    foreach (DataTable table in ds.Tables)
+                    {
+                        var ws = workbook.Worksheets.Add(table);
+
+                        // Si es la hoja Usuarios, ocultar la columna Contraseña
+                        if (table.TableName == "Usuarios")
+                        {
+                            // Buscar columna "Contraseña" (o "Password", según esté en tu BD)
+                            var passwordColumn = table.Columns.IndexOf("Contraseña");
+                            if (passwordColumn >= 0)
+                            {
+                                // ClosedXML usa índice base 1 para columnas
+                                int colIndex = passwordColumn + 1;
+                                ws.Column(colIndex).Hide();
+                            }
+                        }
+                    }
+
+                    // Obtener carpeta Descargas del usuario actual
+                    string downloadsPath = Path.Combine(
+                        Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads");
+
+                    string fileName = $"Backup_CitasDentales_{DateTime.Now:yyyyMMdd_HHmmss}.xlsx";
+                    string fullPath = Path.Combine(downloadsPath, fileName);
+
+                    workbook.SaveAs(fullPath);
+
+                    MessageBox.Show($"Backup creado correctamente en:\n{fullPath}", "Backup exitoso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al crear el backup: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
     }
 }
