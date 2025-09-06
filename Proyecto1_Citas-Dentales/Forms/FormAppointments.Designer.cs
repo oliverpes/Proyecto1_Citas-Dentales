@@ -33,6 +33,7 @@
             label1 = new Label();
             appointmentsView = new DataGridView();
             buttonDelete = new Button();
+            CancelAppoiment = new Button();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)appointmentsView).BeginInit();
             SuspendLayout();
@@ -113,12 +114,30 @@
             buttonDelete.UseVisualStyleBackColor = false;
             buttonDelete.Click += DeleteAppointment;
             // 
+            // CancelAppoiment
+            // 
+            CancelAppoiment.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            CancelAppoiment.AutoSize = true;
+            CancelAppoiment.BackColor = Color.FromArgb(192, 0, 0);
+            CancelAppoiment.FlatStyle = FlatStyle.Flat;
+            CancelAppoiment.ForeColor = Color.White;
+            CancelAppoiment.Location = new Point(178, 595);
+            CancelAppoiment.Margin = new Padding(3, 4, 3, 4);
+            CancelAppoiment.Name = "CancelAppoiment";
+            CancelAppoiment.Padding = new Padding(9, 5, 9, 5);
+            CancelAppoiment.Size = new Size(124, 47);
+            CancelAppoiment.TabIndex = 3;
+            CancelAppoiment.Text = "Cancelar cita";
+            CancelAppoiment.UseVisualStyleBackColor = false;
+            CancelAppoiment.Click += CancelAppoiment_Click;
+            // 
             // FormAppointments
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             ClientSize = new Size(914, 678);
+            Controls.Add(CancelAppoiment);
             Controls.Add(buttonDelete);
             Controls.Add(appointmentsView);
             Controls.Add(panel1);
@@ -140,5 +159,6 @@
         private Button button1;
         private DataGridView appointmentsView;
         private Button buttonDelete;
+        private Button CancelAppoiment;
     }
 }

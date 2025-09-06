@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-
 namespace Entities
 {
     public class Appointment
@@ -15,10 +14,12 @@ namespace Entities
         public QueryType QueryType { get; set; }
         public Client Client { get; set; }
         public Doctor Doctor { get; set; }
+        public string State { get; set; } // <- Nueva propiedad
 
-        // Contructor vacio 
+        // Constructor vacío
         public Appointment() { }
-        // Constructor
+
+        // Constructor original sin estado
         public Appointment(int id, DateTime date, QueryType queryType, Client client, Doctor doctor)
         {
             Id = id;
@@ -26,6 +27,17 @@ namespace Entities
             QueryType = queryType;
             Client = client;
             Doctor = doctor;
+        }
+
+        // Nuevo constructor con estado
+        public Appointment(int id, DateTime date, QueryType queryType, Client client, Doctor doctor, string state)
+        {
+            Id = id;
+            Date = date;
+            QueryType = queryType;
+            Client = client;
+            Doctor = doctor;
+            State = state;
         }
     }
 }

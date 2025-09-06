@@ -57,6 +57,7 @@ namespace Proyecto1_Citas_Dentales.Forms
             appointmentsView.Columns.Add(new DataGridViewTextBoxColumn() { HeaderText = "Tipo de Consulta" });
             appointmentsView.Columns.Add(new DataGridViewTextBoxColumn() { HeaderText = "Doctor" });
             appointmentsView.Columns.Add(new DataGridViewTextBoxColumn() { HeaderText = "Cliente" });
+            appointmentsView.Columns.Add(new DataGridViewTextBoxColumn() { HeaderText = "Estado" });
         }
 
         // Cargar datos
@@ -65,20 +66,109 @@ namespace Proyecto1_Citas_Dentales.Forms
             Business.LoadAppointmentsFromDatabase();
             appointmentsView.Rows.Clear();
 
+            TimeSpan gracePeriod = TimeSpan.FromMinutes(15); // margen de llegada permitido
+
             foreach (Appointment appointment in Business.appointments)
             {
                 if (appointment != null)
                 {
                     string id = appointment.Id.ToString();
                     string date = appointment.Date.ToString("dd/MM/yyyy HH:mm");
-                    string type = appointment.QueryType != null ? $"{appointment.QueryType.Id} - {appointment.QueryType.Description}" : "N/A";
+
+                    // Duración aproximada de la cita (ejemplo: 30 min)
+                    string duration = "30 min";
+                    string type = appointment.QueryType != null ? $"{appointment.QueryType.Id} - {appointment.QueryType.Description} ({duration})" : "N/A";
+
                     string doctor = appointment.Doctor != null ? $"{appointment.Doctor.Id} - {appointment.Doctor.Name} {appointment.Doctor.LastName}" : "N/A";
                     string client = appointment.Client != null ? $"{appointment.Client.Id} - {appointment.Client.Name} {appointment.Client.LastName}" : "N/A";
+                    string estado = appointment.State ?? "N/A";
 
-                    appointmentsView.Rows.Add(id, date, type, doctor, client);
+                    // Verificación automática de estado según hora actual
+                    if (estado.Equals("Pendiente", StringComparison.OrdinalIgnoreCase))
+                    {
+                        if (DateTime.Now >= appointment.Date + gracePeriod)
+                        {
+                            // No asistió → actualizar DB automáticamente
+                            Response resp = Business.MarkAsNoShow(appointment.Id);
+                            if (resp.Success)
+                                estado = "No asistió";
+                        }
+                        else if (DateTime.Now >= appointment.Date && DateTime.Now < appointment.Date + gracePeriod)
+                        {
+                            // En margen → considerar como pendiente, pero se puede mostrar en color especial
+                            estado = "Pendiente (en margen)";
+                        }
+                    }
+                    else if (estado.Equals("Cancelada", StringComparison.OrdinalIgnoreCase))
+                    {
+                        // ya está cancelada
+                    }
+                    else if (estado.Equals("Completada", StringComparison.OrdinalIgnoreCase))
+                    {
+                        // ya completada
+                    }
+
+                    int rowIndex = appointmentsView.Rows.Add(id, date, type, doctor, client, estado);
+                    DataGridViewRow row = appointmentsView.Rows[rowIndex];
+
+                    // Colores según estado
+                    switch (estado.ToLower())
+                    {
+                        case "cancelada":
+                            row.DefaultCellStyle.ForeColor = Color.Red;
+                            break;
+                        case "no asistió":
+                            row.DefaultCellStyle.ForeColor = Color.Orange;
+                            break;
+                        case "pendiente (en margen)":
+                            row.DefaultCellStyle.ForeColor = Color.DarkBlue;
+                            break;
+                        case "completada":
+                            row.DefaultCellStyle.ForeColor = Color.Green;
+                            break;
+                        default:
+                            row.DefaultCellStyle.ForeColor = Color.Black;
+                            break;
+                    }
                 }
             }
         }
+
+
+
+        // Botón Cancelar Cita
+        private void CancelAppoiment_Click(object sender, EventArgs e)
+        {
+            if (selectedId <= 0)
+            {
+                MessageBox.Show("Seleccione la fila a cancelar", "Cancelar cita", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // Obtener el estado actual de la fila seleccionada
+            string currentState = appointmentsView.Rows
+                .Cast<DataGridViewRow>()
+                .FirstOrDefault(r => Convert.ToInt32(r.Cells[0].Value) == selectedId)?
+                .Cells[5].Value?.ToString() ?? "";
+
+            if (currentState.Equals("Cancelada", StringComparison.OrdinalIgnoreCase))
+            {
+                MessageBox.Show("La cita ya está cancelada.", "Cancelar cita", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            if (MessageBox.Show("¿Está seguro que desea cancelar la cita?", "Cancelar cita", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                Response response = Business.CancelAppointment(selectedId);
+
+                if (response.Success)
+                    UpdateData();
+                else
+                    MessageBox.Show(response.Message, "Cancelar cita", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+
 
         // Nueva cita
         private void HandleNewAppoiment(object sender, EventArgs e)
@@ -166,5 +256,7 @@ namespace Proyecto1_Citas_Dentales.Forms
         {
 
         }
+
+ 
     }
 }

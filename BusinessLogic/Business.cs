@@ -276,7 +276,7 @@ namespace BusinessLogic
                 return response;
             }
         }
-       
+
 
         // Método para cargar citas desde la base de datos
         public static void LoadAppointmentsFromDatabase()
@@ -290,18 +290,20 @@ namespace BusinessLogic
                 conn.Open();
 
                 string query = @"
-            SELECT 
-                c.Id AS CitaId, c.Fecha, 
-                tc.Id AS TipoId, tc.Descripcion,
-                cl.Id AS ClienteId, cl.Nombre AS ClienteNombre, 
-                cl.ApellidoPaterno AS ClienteApellidoPaterno, cl.ApellidoMaterno AS ClienteApellidoMaterno, cl.FechaNacimiento, cl.Genero, cl.EstadoId AS ClienteEstadoId,
-                d.Id AS DoctorId, d.Nombre AS DoctorNombre, 
-                d.ApellidoPaterno AS DoctorApellidoPaterno, d.ApellidoMaterno AS DoctorApellidoMaterno, d.EstadoId AS DoctorEstadoId
-            FROM Citas c
-            JOIN TiposConsulta tc ON c.TipoConsultaId = tc.Id
-            JOIN Clientes cl ON c.ClienteId = cl.Id
-            JOIN Doctores d ON c.DoctorId = d.Id
-        ";
+                    SELECT 
+                        c.Id AS CitaId, c.Fecha,
+                        tc.Id AS TipoId, tc.Descripcion,
+                        cl.Id AS ClienteId, cl.Nombre AS ClienteNombre, 
+                        cl.ApellidoPaterno AS ClienteApellidoPaterno, cl.ApellidoMaterno AS ClienteApellidoMaterno, cl.FechaNacimiento, cl.Genero, cl.EstadoId AS ClienteEstadoId,
+                        d.Id AS DoctorId, d.Nombre AS DoctorNombre, 
+                        d.ApellidoPaterno AS DoctorApellidoPaterno, d.ApellidoMaterno AS DoctorApellidoMaterno, d.EstadoId AS DoctorEstadoId,
+                        c.EstadoId AS CitaEstadoId, e.Nombre AS NombreEstado
+                    FROM Citas c
+                    JOIN TiposConsulta tc ON c.TipoConsultaId = tc.Id
+                    JOIN Clientes cl ON c.ClienteId = cl.Id
+                    JOIN Doctores d ON c.DoctorId = d.Id
+                    JOIN EstadosCita e ON c.EstadoId = e.Id
+                    ";
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 using (SqlDataReader reader = cmd.ExecuteReader())
@@ -314,7 +316,7 @@ namespace BusinessLogic
                         // Tipo de consulta
                         int tipoId = reader.GetInt32(reader.GetOrdinal("TipoId"));
                         string tipoDesc = reader.GetString(reader.GetOrdinal("Descripcion"));
-                        QueryType tipo = new QueryType(tipoId, tipoDesc, 'A'); // Asumimos 'A' como activo
+                        QueryType tipo = new QueryType(tipoId, tipoDesc, 'A');
 
                         // Cliente
                         int clientId = reader.GetInt32(reader.GetOrdinal("ClienteId"));
@@ -334,12 +336,74 @@ namespace BusinessLogic
                         int doctorState = reader.GetInt32(reader.GetOrdinal("DoctorEstadoId"));
                         Doctor doctor = new Doctor(doctorId, doctorName, doctorLast1, doctorLast2, doctorState);
 
-                        // Agregar a la lista
-                        appointments.Add(new Appointment(id, fecha, tipo, client, doctor));
+                        // Estado de la cita
+                        string stateName = reader.GetString(reader.GetOrdinal("NombreEstado"));
+
+                        // Agregar a la lista incluyendo el estado
+                        appointments.Add(new Appointment(id, fecha, tipo, client, doctor, stateName));
                     }
                 }
             }
         }
+        // Metodo para marcar que no asistio a su cita el paciente
+        public static Response MarkAsNoShow(int citaId)
+        {
+            try
+            {
+                string connectionString = File.ReadAllText("config.txt").Trim();
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    string query = "UPDATE Citas SET EstadoId = 3 WHERE Id = @Id"; // 3 = No asistió (nuevo estado)
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@Id", citaId);
+                        int rows = cmd.ExecuteNonQuery();
+
+                        if (rows > 0)
+                            return new Response { Success = true, Message = "Cita marcada como No asistió" };
+                        else
+                            return new Response { Success = false, Message = "No se encontró la cita" };
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return new Response { Success = false, Message = ex.Message };
+            }
+        }
+
+
+        // Nuevo método para cancelar cita
+        public static Response CancelAppointment(int citaId)
+        {
+            try
+            {
+                string connectionString = File.ReadAllText("config.txt").Trim();
+
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    string query = "UPDATE Citas SET EstadoId = 2 WHERE Id = @Id"; // 2 = Cancelada
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@Id", citaId);
+                        int rows = cmd.ExecuteNonQuery();
+
+                        if (rows > 0)
+                            return new Response { Success = true, Message = "Cita cancelada correctamente" };
+                        else
+                            return new Response { Success = false, Message = "No se encontró la cita a cancelar" };
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return new Response { Success = false, Message = "Error al cancelar la cita: " + ex.Message };
+            }
+        }
+
 
 
         //metodo para recargar datos desde la base de datos
