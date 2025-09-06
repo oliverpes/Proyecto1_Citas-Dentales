@@ -54,5 +54,9 @@ namespace Proyecto1_Citas_Dentales.Forms
             }
         }
 
+        private void FormNewClient_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

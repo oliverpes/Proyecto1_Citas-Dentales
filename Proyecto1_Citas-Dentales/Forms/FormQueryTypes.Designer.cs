@@ -105,7 +105,7 @@ namespace Proyecto1_Citas_Dentales.Forms
             button2.BackColor = Color.FromArgb(192, 0, 0);
             button2.FlatStyle = FlatStyle.Flat;
             button2.ForeColor = Color.White;
-            button2.Location = new Point(162, 445);
+            button2.Location = new Point(162, 436);
             button2.Margin = new Padding(3, 4, 3, 4);
             button2.Name = "button2";
             button2.Padding = new Padding(9, 5, 9, 5);
@@ -122,7 +122,7 @@ namespace Proyecto1_Citas_Dentales.Forms
             button1.BackColor = Color.FromArgb(17, 17, 34);
             button1.FlatStyle = FlatStyle.Flat;
             button1.ForeColor = Color.White;
-            button1.Location = new Point(9, 445);
+            button1.Location = new Point(9, 436);
             button1.Margin = new Padding(3, 4, 3, 4);
             button1.Name = "button1";
             button1.Padding = new Padding(9, 5, 9, 5);
@@ -140,16 +140,17 @@ namespace Proyecto1_Citas_Dentales.Forms
             dataGridView1.BackgroundColor = Color.White;
             dataGridView1.BorderStyle = BorderStyle.None;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Dock = DockStyle.Fill;
+            dataGridView1.Dock = DockStyle.Top;
             dataGridView1.Location = new Point(9, 24);
             dataGridView1.Margin = new Padding(3, 4, 3, 4);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.ReadOnly = true;
             dataGridView1.RowHeadersWidth = 51;
             dataGridView1.RowTemplate.Height = 25;
-            dataGridView1.Size = new Size(896, 472);
+            dataGridView1.Size = new Size(896, 404);
             dataGridView1.TabIndex = 0;
             dataGridView1.CellClick += dataGridView_CellClick;
+            dataGridView1.CellContentClick += dataGridView1_CellContentClick;
             // 
             // FormQueryTypes
             // 

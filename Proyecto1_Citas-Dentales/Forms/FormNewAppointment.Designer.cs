@@ -32,8 +32,6 @@
             label7 = new Label();
             label1 = new Label();
             panel2 = new Panel();
-            inputAvailableTimes = new ComboBox();
-            label8 = new Label();
             inputClient = new ComboBox();
             label6 = new Label();
             inputDoctor = new ComboBox();
@@ -83,8 +81,6 @@
             // panel2
             // 
             panel2.BackColor = Color.AliceBlue;
-            panel2.Controls.Add(inputAvailableTimes);
-            panel2.Controls.Add(label8);
             panel2.Controls.Add(inputClient);
             panel2.Controls.Add(label6);
             panel2.Controls.Add(inputDoctor);
@@ -100,32 +96,6 @@
             panel2.Name = "panel2";
             panel2.Size = new Size(411, 514);
             panel2.TabIndex = 2;
-            // 
-            // inputAvailableTimes
-            // 
-            inputAvailableTimes.BackColor = Color.White;
-            inputAvailableTimes.Dock = DockStyle.Top;
-            inputAvailableTimes.Font = new Font("Segoe UI", 10F);
-            inputAvailableTimes.ForeColor = Color.Black;
-            inputAvailableTimes.FormattingEnabled = true;
-            inputAvailableTimes.Location = new Point(0, 412);
-            inputAvailableTimes.Margin = new Padding(3, 4, 3, 4);
-            inputAvailableTimes.Name = "inputAvailableTimes";
-            inputAvailableTimes.Size = new Size(411, 31);
-            inputAvailableTimes.TabIndex = 11;
-            // 
-            // label8
-            // 
-            label8.AutoSize = true;
-            label8.Dock = DockStyle.Top;
-            label8.Font = new Font("Segoe UI", 12F);
-            label8.ForeColor = Color.Black;
-            label8.Location = new Point(0, 368);
-            label8.Name = "label8";
-            label8.Padding = new Padding(0, 5, 0, 11);
-            label8.Size = new Size(208, 44);
-            label8.TabIndex = 10;
-            label8.Text = "Revisar disponibilidad:";
             // 
             // inputClient
             // 
@@ -307,9 +277,7 @@
         //private Button button1;
         private Label label1;
         private Panel panel2;
-        private Label label2;
         private Label label3;
-        private TextBox inputID;
         private Label label4;
         private DateTimePicker inputDate;
         private ComboBox inputClient;
@@ -319,7 +287,7 @@
         private ComboBox inputType;
         private Button buttonSaveAppointment;
         private Label label7;
-        private ComboBox inputAvailableTimes;
-        private Label label8;
+        private TextBox inputID;
+        private Label label2;
     }
 }

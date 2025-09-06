@@ -311,6 +311,7 @@ namespace Proyecto1_Citas_Dentales.Forms
             Margin = new Padding(3, 4, 3, 4);
             Name = "FormNewClient";
             Text = "FormNewClient";
+            Load += FormNewClient_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             panel2.ResumeLayout(false);

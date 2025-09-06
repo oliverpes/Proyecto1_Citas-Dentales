@@ -179,5 +179,10 @@ namespace Proyecto1_Citas_Dentales.Forms
         {
             // Puedes dejarlo vacío si es solo decorativo.
         }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }

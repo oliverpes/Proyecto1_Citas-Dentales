@@ -31,8 +31,6 @@ namespace Proyecto1_Citas_Dentales
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMainMenu));
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             panelSideMenu = new Panel();
             button1 = new Button();
             buttonReportDoctor = new Button();
@@ -58,7 +56,6 @@ namespace Proyecto1_Citas_Dentales
             panel1 = new Panel();
             panel3 = new Panel();
             pictureBox2 = new PictureBox();
-            guna2ComboBox1 = new Guna2ComboBox();
             panel2 = new Panel();
             button4 = new Button();
             panelSideMenu.SuspendLayout();
@@ -356,7 +353,7 @@ namespace Proyecto1_Citas_Dentales
             // 
             pictureBox3.Anchor = AnchorStyles.None;
             pictureBox3.Image = (Image)resources.GetObject("pictureBox3.Image");
-            pictureBox3.Location = new Point(664, 320);
+            pictureBox3.Location = new Point(599, 331);
             pictureBox3.Margin = new Padding(3, 4, 3, 4);
             pictureBox3.Name = "pictureBox3";
             pictureBox3.Size = new Size(124, 106);
@@ -471,24 +468,6 @@ namespace Proyecto1_Citas_Dentales
             pictureBox2.TabStop = false;
             pictureBox2.Click += pictureBox2_Click;
             // 
-            // guna2ComboBox1
-            // 
-            guna2ComboBox1.BackColor = Color.Transparent;
-            guna2ComboBox1.CustomizableEdges = customizableEdges1;
-            guna2ComboBox1.DrawMode = DrawMode.OwnerDrawFixed;
-            guna2ComboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
-            guna2ComboBox1.FocusedColor = Color.FromArgb(94, 148, 255);
-            guna2ComboBox1.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
-            guna2ComboBox1.Font = new Font("Segoe UI", 10F);
-            guna2ComboBox1.ForeColor = Color.FromArgb(94, 148, 255);
-            guna2ComboBox1.ItemHeight = 30;
-            guna2ComboBox1.Location = new Point(376, 50);
-            guna2ComboBox1.Name = "guna2ComboBox1";
-            guna2ComboBox1.ShadowDecoration.CustomizableEdges = customizableEdges2;
-            guna2ComboBox1.Size = new Size(592, 36);
-            guna2ComboBox1.TabIndex = 25;
-            guna2ComboBox1.SelectedIndexChanged += guna2ComboBox1_SelectedIndexChanged;
-            // 
             // panel2
             // 
             panel2.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
@@ -530,7 +509,6 @@ namespace Proyecto1_Citas_Dentales
             Controls.Add(panel2);
             Controls.Add(btnMinimizar);
             Controls.Add(btnMaximizar);
-            Controls.Add(guna2ComboBox1);
             Controls.Add(panel3);
             Controls.Add(button2);
             Controls.Add(panel1);
@@ -553,6 +531,8 @@ namespace Proyecto1_Citas_Dentales
             panel2.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
+
+
         }
 
         #endregion
@@ -579,7 +559,6 @@ namespace Proyecto1_Citas_Dentales
         private Panel panel1;
         private Panel panel3;
         private Label label6;
-        private Guna2ComboBox guna2ComboBox1;
         private Panel panel2;
         private Button button4;
         private PictureBox pictureBox3;

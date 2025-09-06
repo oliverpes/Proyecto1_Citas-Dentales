@@ -1,379 +1,443 @@
-﻿using Proyecto1_Citas_Dentales.Forms;
-using System.ComponentModel;
-using BusinessLogic;
-using System.IO;
-using System.Data.SqlClient;
-using System.Data;
-using System.Runtime.InteropServices;
-using ClosedXML.Excel; // <-- Importante para Excel
-using System.Drawing;
-using System.Windows.Forms;
+﻿    using Proyecto1_Citas_Dentales.Forms;
+    using System.ComponentModel;
+    using BusinessLogic;
+    using System.IO;
+    using System.Data.SqlClient;
+    using System.Data;
+    using System.Runtime.InteropServices;
+    using ClosedXML.Excel; // <-- Importante para Excel
+    using System.Drawing;
+    using System.Windows.Forms;
 
-namespace Proyecto1_Citas_Dentales
-{
-    public partial class FormMainMenu : Form
+    namespace Proyecto1_Citas_Dentales
     {
-        // Mover el formulario sin la barra general
-        [DllImport("user32.dll")]
-        public static extern bool ReleaseCapture();
-
-        [DllImport("user32.dll")]
-        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
-
-        public const int WM_NCLBUTTONDOWN = 0xA1;
-        public const int HTCAPTION = 0x2;
-
-        // Constantes para el redimensionamiento
-        private const int HTLEFT = 10;
-        private const int HTRIGHT = 11;
-        private const int HTTOP = 12;
-        private const int HTTOPLEFT = 13;
-        private const int HTTOPRIGHT = 14;
-        private const int HTBOTTOM = 15;
-        private const int HTBOTTOMLEFT = 16;
-        private const int HTBOTTOMRIGHT = 17;
-        private const int WM_NCHITTEST = 0x84;
-        private const int resizeAreaSize = 10;
-
-        // Variables para botones y formularios
-        private Button currentButton;
-        private Form activeForm;
-
-        // Variables para maximizar sin cubrir la barra de tareas
-        private bool isMaximized = false;
-        private Rectangle previousBounds;
-
-        public FormMainMenu()
+        public partial class FormMainMenu : Form
         {
-            InitializeComponent();
+            // Mover el formulario sin la barra general
+            [DllImport("user32.dll")]
+            public static extern bool ReleaseCapture();
+
+            [DllImport("user32.dll")]
+            public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+
+            public const int WM_NCLBUTTONDOWN = 0xA1;
+            public const int HTCAPTION = 0x2;
+
+            // Constantes para el redimensionamiento
+            private const int HTLEFT = 10;
+            private const int HTRIGHT = 11;
+            private const int HTTOP = 12;
+            private const int HTTOPLEFT = 13;
+            private const int HTTOPRIGHT = 14;
+            private const int HTBOTTOM = 15;
+            private const int HTBOTTOMLEFT = 16;
+            private const int HTBOTTOMRIGHT = 17;
+            private const int WM_NCHITTEST = 0x84;
+            private const int resizeAreaSize = 10;
+
+            // Variables para botones y formularios
+            private Button currentButton;
+            private Form activeForm;
+
+            // Variables para maximizar sin cubrir la barra de tareas
+            private bool isMaximized = false;
+            private Rectangle previousBounds;
+
+            public FormMainMenu()
+            {
+                InitializeComponent();
+                CargarHorariosEnComboBox();
 
             this.FormBorderStyle = FormBorderStyle.None;
-            this.DoubleBuffered = true;
-            this.MinimumSize = new Size(600, 400);
+                this.DoubleBuffered = true;
+                this.MinimumSize = new Size(600, 400);
 
-            guna2ComboBox1.BorderRadius = 10;
-            guna2ComboBox1.Font = new Font("Segoe UI", 10);
-            guna2ComboBox1.ForeColor = Color.Black;
-            guna2ComboBox1.ItemHeight = 35;
-            guna2ComboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
-        }
+                
+            }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            // Forzar el enfoque para que se activen los bordes desde el inicio
-            this.Activate();
-        }
-
-        private void panel1_Paint(object sender, PaintEventArgs e) { }
-
-        private void panelSuperior_MouseDown(object sender, MouseEventArgs e)
-        {
-            ReleaseCapture();
-            SendMessage(this.Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0);
-        }
-
-        private void ActivateButton(object btnSender)
-        {
-            if (btnSender != null)
+            private void Form1_Load(object sender, EventArgs e)
             {
-                if (currentButton != (Button)btnSender)
+                // Forzar el enfoque para que se activen los bordes desde el inicio
+                this.Activate();
+            }
+
+            private void panel1_Paint(object sender, PaintEventArgs e) { }
+
+            private void panelSuperior_MouseDown(object sender, MouseEventArgs e)
+            {
+                ReleaseCapture();
+                SendMessage(this.Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0);
+            }
+
+            private void ActivateButton(object btnSender)
+            {
+                if (btnSender != null)
                 {
-                    DisableButton();
-                    Color color = Color.FromArgb(135, 206, 250);
-                    currentButton = (Button)btnSender;
-                    currentButton.BackColor = color;
-                    currentButton.ForeColor = Color.White;
-                    currentButton.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point);
+                    if (currentButton != (Button)btnSender)
+                    {
+                        DisableButton();
+                        Color color = Color.FromArgb(135, 206, 250);
+                        currentButton = (Button)btnSender;
+                        currentButton.BackColor = color;
+                        currentButton.ForeColor = Color.White;
+                        currentButton.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point);
+                    }
                 }
             }
-        }
 
-        private void DisableButton()
-        {
-            foreach (Control previousBtn in panelSideMenu.Controls)
+            private void DisableButton()
             {
-                if (previousBtn.GetType() == typeof(Button))
+                foreach (Control previousBtn in panelSideMenu.Controls)
                 {
-                    Color color = Color.FromArgb(70, 130, 180);
-                    previousBtn.BackColor = color;
-                    previousBtn.ForeColor = Color.LightGray;
-                    previousBtn.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
+                    if (previousBtn.GetType() == typeof(Button))
+                    {
+                        Color color = Color.FromArgb(70, 130, 180);
+                        previousBtn.BackColor = color;
+                        previousBtn.ForeColor = Color.LightGray;
+                        previousBtn.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
+                    }
                 }
             }
-        }
 
-        private void OpenChildForm(Form childForm, object btnSender)
-        {
-            if (activeForm != null)
+            private void OpenChildForm(Form childForm, object btnSender)
             {
-                activeForm.Close();
+                if (activeForm != null)
+                {
+                    activeForm.Close();
+                }
+
+                ActivateButton(btnSender);
+                activeForm = childForm;
+                childForm.TopLevel = false;
+                childForm.FormBorderStyle = FormBorderStyle.None;
+                childForm.Dock = DockStyle.Fill;
+
+                this.panelDesktopPanel.Controls.Add(childForm);
+                this.panelDesktopPanel.Tag = childForm;
+
+                childForm.BringToFront();
+                childForm.Show();
             }
 
-            ActivateButton(btnSender);
-            activeForm = childForm;
-            childForm.TopLevel = false;
-            childForm.FormBorderStyle = FormBorderStyle.None;
-            childForm.Dock = DockStyle.Fill;
-
-            this.panelDesktopPanel.Controls.Add(childForm);
-            this.panelDesktopPanel.Tag = childForm;
-
-            childForm.BringToFront();
-            childForm.Show();
-        }
-
-        private void buttonNewDates_Click(object sender, EventArgs e)
-        {
-            OpenChildForm(new Forms.FormAppointments(), sender);
-        }
-
-        private void buttonNewQueryType_Click(object sender, EventArgs e)
-        {
-            OpenChildForm(new Forms.FormQueryTypes(), sender);
-        }
-
-        private void buttonAdmClients_Click(object sender, EventArgs e)
-        {
-            OpenChildForm(new Forms.FormAdminClients(), sender);
-        }
-
-        private void buttonAdmDoctors_Click(object sender, EventArgs e)
-        {
-            OpenChildForm(new Forms.FormAdminDoctors(), sender);
-        }
-
-        private void buttonReportDate_Click(object sender, EventArgs e)
-        {
-            OpenChildForm(new Forms.FormReportDate(), sender);
-        }
-
-        private void buttonReportClient_Click(object sender, EventArgs e)
-        {
-            OpenChildForm(new Forms.FormReportClient(), sender);
-        }
-
-        private void buttonReportDoctor_Click(object sender, EventArgs e)
-        {
-            OpenChildForm(new Forms.FormReportDoctor(), sender);
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-            if (activeForm != null)
+            private void buttonNewDates_Click(object sender, EventArgs e)
             {
-                activeForm.Close();
+                OpenChildForm(new Forms.FormAppointments(), sender);
             }
-        }
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            if (!isMaximized)
+            private void buttonNewQueryType_Click(object sender, EventArgs e)
             {
-                previousBounds = this.Bounds;
-                Rectangle workingArea = Screen.FromHandle(this.Handle).WorkingArea;
-                this.Bounds = workingArea;
-                isMaximized = true;
+                OpenChildForm(new Forms.FormQueryTypes(), sender);
             }
-            else
+
+            private void buttonAdmClients_Click(object sender, EventArgs e)
             {
-                this.Bounds = previousBounds;
-                isMaximized = false;
+                OpenChildForm(new Forms.FormAdminClients(), sender);
             }
-        }
 
-        private void btnMinimizar_Click(object sender, EventArgs e)
-        {
-            this.WindowState = FormWindowState.Minimized;
-        }
+            private void buttonAdmDoctors_Click(object sender, EventArgs e)
+            {
+                OpenChildForm(new Forms.FormAdminDoctors(), sender);
+            }
 
-        private void button1_Click(object sender, EventArgs e) {
-            //boton que muestra las politicas de privacidad
-            OpenChildForm(new Forms.privacyPolitics(), sender);
-        }
+            private void buttonReportDate_Click(object sender, EventArgs e)
+            {
+                OpenChildForm(new Forms.FormReportDate(), sender);
+            }
+
+            private void buttonReportClient_Click(object sender, EventArgs e)
+            {
+                OpenChildForm(new Forms.FormReportClient(), sender);
+            }
+
+            private void buttonReportDoctor_Click(object sender, EventArgs e)
+            {
+                OpenChildForm(new Forms.FormReportDoctor(), sender);
+            }
+
+            private void label1_Click(object sender, EventArgs e)
+            {
+                if (activeForm != null)
+                {
+                    activeForm.Close();
+                }
+            }
+
+            private void button2_Click(object sender, EventArgs e)
+            {
+                this.Close();
+            }
+
+            private void button3_Click(object sender, EventArgs e)
+            {
+                if (!isMaximized)
+                {
+                    previousBounds = this.Bounds;
+                    Rectangle workingArea = Screen.FromHandle(this.Handle).WorkingArea;
+                    this.Bounds = workingArea;
+                    isMaximized = true;
+                }
+                else
+                {
+                    this.Bounds = previousBounds;
+                    isMaximized = false;
+                }
+            }
+
+            private void btnMinimizar_Click(object sender, EventArgs e)
+            {
+                this.WindowState = FormWindowState.Minimized;
+            }
+
+            private void button1_Click(object sender, EventArgs e) {
+                //boton que muestra las politicas de privacidad
+                OpenChildForm(new Forms.privacyPolitics(), sender);
+            }
 
 
-        private void panelLogo_Paint(object sender, PaintEventArgs e) { }
+            private void panelLogo_Paint(object sender, PaintEventArgs e) { }
 
-        private void button3_Click_1(object sender, EventArgs e)
+            private void button3_Click_1(object sender, EventArgs e)
+            {
+                try
+                {
+                    string connectionString = File.ReadAllText("config.txt").Trim();
+                    using (SqlConnection connection = new SqlConnection(connectionString))
+                    {
+                        if (connection.State == ConnectionState.Open)
+                            connection.Close();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error al cerrar la conexión: " + ex.Message);
+                }
+
+                login loginForm = new login();
+                loginForm.Show();
+                this.Hide();
+            }
+
+            private void inputAvailableTimes_SelectedIndexChanged(object sender, EventArgs e) { }
+
+            private void cmbInputAvailableTimes_DrawItem(object sender, DrawItemEventArgs e)
+            {
+                if (e.Index < 0) return;
+
+                ComboBox cmb = sender as ComboBox;
+                e.DrawBackground();
+                using (Brush brush = new SolidBrush(e.ForeColor))
+                {
+                    e.Graphics.DrawString(cmb.Items[e.Index].ToString(), e.Font, brush, e.Bounds);
+                }
+                e.DrawFocusRectangle();
+            }
+
+            private void panel3_Paint(object sender, PaintEventArgs e) { }
+
+        //boton para ver las disponibilidad
+
+
+
+        private void CargarHorariosEnComboBox()
         {
             try
             {
                 string connectionString = File.ReadAllText("config.txt").Trim();
+
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
-                    if (connection.State == ConnectionState.Open)
-                        connection.Close();
+                    connection.Open();
+
+                    string query = @"
+                SELECT DiaSemana, HoraInicio, HoraFin
+                FROM HorariosDisponibles
+                ORDER BY DiaSemana, HoraInicio";
+
+                    using (SqlCommand cmd = new SqlCommand(query, connection))
+                    {
+                        SqlDataReader reader = cmd.ExecuteReader();
+
+                        //guna2ComboBox1.Items.Clear();
+
+                        while (reader.Read())
+                        {
+                            int diaSemana = (int)reader["DiaSemana"];
+                            string diaNombre = DiaSemanaANombre(diaSemana);
+
+                            // Leer Time como TimeSpan
+                            TimeSpan horaInicio = (TimeSpan)reader["HoraInicio"];
+                            TimeSpan horaFin = (TimeSpan)reader["HoraFin"];
+
+                            // Formatear a "HH:mm"
+                            string horario = $"{diaNombre} {horaInicio:hh\\:mm} - {horaFin:hh\\:mm}";
+
+                            //guna2ComboBox1.Items.Add(horario);
+                        }
+                    }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al cerrar la conexión: " + ex.Message);
+                MessageBox.Show("Error al cargar horarios: " + ex.Message);
             }
-
-            login loginForm = new login();
-            loginForm.Show();
-            this.Hide();
         }
 
-        private void inputAvailableTimes_SelectedIndexChanged(object sender, EventArgs e) { }
 
-        private void cmbInputAvailableTimes_DrawItem(object sender, DrawItemEventArgs e)
+        private string DiaSemanaANombre(int diaSemana)
         {
-            if (e.Index < 0) return;
-
-            ComboBox cmb = sender as ComboBox;
-            e.DrawBackground();
-            using (Brush brush = new SolidBrush(e.ForeColor))
+            switch (diaSemana)
             {
-                e.Graphics.DrawString(cmb.Items[e.Index].ToString(), e.Font, brush, e.Bounds);
+                case 0: return "Domingo";
+                case 1: return "Lunes";
+                case 2: return "Martes";
+                case 3: return "Miércoles";
+                case 4: return "Jueves";
+                case 5: return "Viernes";
+                case 6: return "Sábado";
+                default: return "Desconocido";
             }
-            e.DrawFocusRectangle();
         }
 
-        private void panel3_Paint(object sender, PaintEventArgs e) { }
-
-        private void guna2ComboBox1_SelectedIndexChanged(object sender, EventArgs e) { }
+        private void guna2ComboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Aquí no harás nada, pero evita el error del diseñador
+        }
 
         private void panel1_Paint_1(object sender, PaintEventArgs e) { }
 
-        // Redimensionar bordes y esquinas del formulario sin bordes
-        protected override void WndProc(ref Message m)
-        {
-            base.WndProc(ref m);
-
-            if (m.Msg == WM_NCHITTEST)
+            // Redimensionar bordes y esquinas del formulario sin bordes
+            protected override void WndProc(ref Message m)
             {
-                Point pos = new Point(m.LParam.ToInt32());
-                pos = this.PointToClient(pos);
+                base.WndProc(ref m);
 
-                if (pos.X <= resizeAreaSize)
+                if (m.Msg == WM_NCHITTEST)
                 {
-                    if (pos.Y <= resizeAreaSize)
-                        m.Result = (IntPtr)HTTOPLEFT;
-                    else if (pos.Y >= this.ClientSize.Height - resizeAreaSize)
-                        m.Result = (IntPtr)HTBOTTOMLEFT;
-                    else
-                        m.Result = (IntPtr)HTLEFT;
-                }
-                else if (pos.X >= this.ClientSize.Width - resizeAreaSize)
-                {
-                    if (pos.Y <= resizeAreaSize)
-                        m.Result = (IntPtr)HTTOPRIGHT;
-                    else if (pos.Y >= this.ClientSize.Height - resizeAreaSize)
-                        m.Result = (IntPtr)HTBOTTOMRIGHT;
-                    else
-                        m.Result = (IntPtr)HTRIGHT;
-                }
-                else if (pos.Y <= resizeAreaSize)
-                {
-                    m.Result = (IntPtr)HTTOP;
-                }
-                else if (pos.Y >= this.ClientSize.Height - resizeAreaSize)
-                {
-                    m.Result = (IntPtr)HTBOTTOM;
-                }
-            }
-        }
+                    Point pos = new Point(m.LParam.ToInt32());
+                    pos = this.PointToClient(pos);
 
-        private void panelDesktopPanel_Paint(object sender, PaintEventArgs e) { }
-
-        private void pictureBox2_Click(object sender, EventArgs e)
-        {
-            if (activeForm != null)
-            {
-                activeForm.Close();
-            }
-        }
-
-        private void label6_Click(object sender, EventArgs e)
-        {
-            if (activeForm != null)
-            {
-                activeForm.Close();
-            }
-        }
-
-        // Aquí el método que crea el backup en Excel
-        private void button4_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                string connectionString = File.ReadAllText("config.txt").Trim();
-
-                // Tablas a respaldar
-                string[] tablas = new string[]
-                {
-            "Clientes",
-            "Doctores",
-            "EstadosDoctor",
-            "TiposConsulta",
-            "Citas",
-            "HorariosDisponibles",
-            "Usuarios"
-                };
-
-                DataSet ds = new DataSet();
-
-                using (SqlConnection conn = new SqlConnection(connectionString))
-                {
-                    conn.Open();
-
-                    foreach (string tabla in tablas)
+                    if (pos.X <= resizeAreaSize)
                     {
-                        string query = $"SELECT * FROM {tabla}";
-
-                        using (SqlDataAdapter adapter = new SqlDataAdapter(query, conn))
-                        {
-                            DataTable dt = new DataTable(tabla);
-                            adapter.Fill(dt);
-                            ds.Tables.Add(dt);
-                        }
+                        if (pos.Y <= resizeAreaSize)
+                            m.Result = (IntPtr)HTTOPLEFT;
+                        else if (pos.Y >= this.ClientSize.Height - resizeAreaSize)
+                            m.Result = (IntPtr)HTBOTTOMLEFT;
+                        else
+                            m.Result = (IntPtr)HTLEFT;
+                    }
+                    else if (pos.X >= this.ClientSize.Width - resizeAreaSize)
+                    {
+                        if (pos.Y <= resizeAreaSize)
+                            m.Result = (IntPtr)HTTOPRIGHT;
+                        else if (pos.Y >= this.ClientSize.Height - resizeAreaSize)
+                            m.Result = (IntPtr)HTBOTTOMRIGHT;
+                        else
+                            m.Result = (IntPtr)HTRIGHT;
+                    }
+                    else if (pos.Y <= resizeAreaSize)
+                    {
+                        m.Result = (IntPtr)HTTOP;
+                    }
+                    else if (pos.Y >= this.ClientSize.Height - resizeAreaSize)
+                    {
+                        m.Result = (IntPtr)HTBOTTOM;
                     }
                 }
+            }
 
-                // Crear Excel con ClosedXML
-                using (XLWorkbook workbook = new XLWorkbook())
+            private void panelDesktopPanel_Paint(object sender, PaintEventArgs e) { }
+
+            private void pictureBox2_Click(object sender, EventArgs e)
+            {
+                if (activeForm != null)
                 {
-                    foreach (DataTable table in ds.Tables)
-                    {
-                        var ws = workbook.Worksheets.Add(table);
+                    activeForm.Close();
+                }
+            }
 
-                        // Si es la hoja Usuarios, ocultar la columna Contraseña
-                        if (table.TableName == "Usuarios")
+            private void label6_Click(object sender, EventArgs e)
+            {
+                if (activeForm != null)
+                {
+                    activeForm.Close();
+                }
+            }
+
+            // Aquí el método que crea el backup en Excel
+            private void button4_Click(object sender, EventArgs e)
+            {
+                try
+                {
+                    string connectionString = File.ReadAllText("config.txt").Trim();
+
+                    // Tablas a respaldar
+                    string[] tablas = new string[]
+                    {
+                "Clientes",
+                "Doctores",
+                "EstadosDoctor",
+                "TiposConsulta",
+                "Citas",
+                "HorariosDisponibles",
+                "Usuarios"
+                    };
+
+                    DataSet ds = new DataSet();
+
+                    using (SqlConnection conn = new SqlConnection(connectionString))
+                    {
+                        conn.Open();
+
+                        foreach (string tabla in tablas)
                         {
-                            // Buscar columna "Contraseña" (o "Password", según esté en tu BD)
-                            var passwordColumn = table.Columns.IndexOf("Contraseña");
-                            if (passwordColumn >= 0)
+                            string query = $"SELECT * FROM {tabla}";
+
+                            using (SqlDataAdapter adapter = new SqlDataAdapter(query, conn))
                             {
-                                // ClosedXML usa índice base 1 para columnas
-                                int colIndex = passwordColumn + 1;
-                                ws.Column(colIndex).Hide();
+                                DataTable dt = new DataTable(tabla);
+                                adapter.Fill(dt);
+                                ds.Tables.Add(dt);
                             }
                         }
                     }
 
-                    // Obtener carpeta Descargas del usuario actual
-                    string downloadsPath = Path.Combine(
-                        Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads");
+                    // Crear Excel con ClosedXML
+                    using (XLWorkbook workbook = new XLWorkbook())
+                    {
+                        foreach (DataTable table in ds.Tables)
+                        {
+                            var ws = workbook.Worksheets.Add(table);
 
-                    string fileName = $"Backup_CitasDentales_{DateTime.Now:yyyyMMdd_HHmmss}.xlsx";
-                    string fullPath = Path.Combine(downloadsPath, fileName);
+                            // Si es la hoja Usuarios, ocultar la columna Contraseña
+                            if (table.TableName == "Usuarios")
+                            {
+                                // Buscar columna "Contraseña" (o "Password", según esté en tu BD)
+                                var passwordColumn = table.Columns.IndexOf("Contraseña");
+                                if (passwordColumn >= 0)
+                                {
+                                    // ClosedXML usa índice base 1 para columnas
+                                    int colIndex = passwordColumn + 1;
+                                    ws.Column(colIndex).Hide();
+                                }
+                            }
+                        }
 
-                    workbook.SaveAs(fullPath);
+                        // Obtener carpeta Descargas del usuario actual
+                        string downloadsPath = Path.Combine(
+                            Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads");
 
-                    MessageBox.Show($"Backup creado correctamente en:\n{fullPath}", "Backup exitoso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        string fileName = $"Backup_CitasDentales_{DateTime.Now:yyyyMMdd_HHmmss}.xlsx";
+                        string fullPath = Path.Combine(downloadsPath, fileName);
+
+                        workbook.SaveAs(fullPath);
+
+                        MessageBox.Show($"Backup creado correctamente en:\n{fullPath}", "Backup exitoso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error al crear el backup: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al crear el backup: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
 
+        }
     }
-}
