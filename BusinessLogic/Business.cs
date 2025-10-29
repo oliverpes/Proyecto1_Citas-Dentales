@@ -610,7 +610,7 @@ namespace BusinessLogic
                 {
                     conn.Open();
 
-                    // Verificar existencia de tipo de consulta activo
+                    // Validaciones
                     using (SqlCommand cmd = new SqlCommand("SELECT COUNT(*) FROM TiposConsulta WHERE Id = @Id AND Estado = 1", conn))
                     {
                         cmd.Parameters.AddWithValue("@Id", queryTypeId);
@@ -618,7 +618,6 @@ namespace BusinessLogic
                             throw new InvalidOperationException("El tipo de consulta no existe.");
                     }
 
-                    // Verificar existencia de cliente
                     using (SqlCommand cmd = new SqlCommand("SELECT COUNT(*) FROM Clientes WHERE Id = @Id", conn))
                     {
                         cmd.Parameters.AddWithValue("@Id", clientId);
@@ -626,7 +625,6 @@ namespace BusinessLogic
                             throw new InvalidOperationException("El cliente no existe.");
                     }
 
-                    // Verificar existencia de doctor activo
                     using (SqlCommand cmd = new SqlCommand("SELECT COUNT(*) FROM Doctores WHERE Id = @Id AND EstadoId = 1", conn))
                     {
                         cmd.Parameters.AddWithValue("@Id", doctorId);
@@ -634,7 +632,6 @@ namespace BusinessLogic
                             throw new InvalidOperationException("El doctor no existe.");
                     }
 
-                    // Validar que no haya conflicto de hora entre mismo doctor y cliente
                     using (SqlCommand cmd = new SqlCommand(
                         @"SELECT COUNT(*) FROM Citas 
                   WHERE ClienteId = @ClienteId AND DoctorId = @DoctorId 
@@ -647,21 +644,24 @@ namespace BusinessLogic
                             throw new InvalidOperationException("El cliente ya tiene una cita con el mismo doctor en un rango de 59 minutos.");
                     }
 
-                    // Insertar cita (sin especificar el ID)
+                    // Insertar cita y obtener el ID generado
+                    int newAppointmentId;
                     using (SqlCommand cmd = new SqlCommand(
                         @"INSERT INTO Citas (Fecha, TipoConsultaId, ClienteId, DoctorId)
+                  OUTPUT INSERTED.Id
                   VALUES (@Fecha, @TipoConsultaId, @ClienteId, @DoctorId)", conn))
                     {
                         cmd.Parameters.AddWithValue("@Fecha", date);
                         cmd.Parameters.AddWithValue("@TipoConsultaId", queryTypeId);
                         cmd.Parameters.AddWithValue("@ClienteId", clientId);
                         cmd.Parameters.AddWithValue("@DoctorId", doctorId);
-                        cmd.ExecuteNonQuery();
-                    }
-                }
 
-                response.Success = true;
-                response.Message = "Cita guardada correctamente.";
+                        newAppointmentId = (int)cmd.ExecuteScalar();
+                    }
+
+                    response.Success = true;
+                    response.Message = $"Cita guardada correctamente. Número de cita: {newAppointmentId}";
+                }
             }
             catch (Exception ex)
             {
@@ -672,7 +672,8 @@ namespace BusinessLogic
         }
 
 
-        
+
+
 
 
 

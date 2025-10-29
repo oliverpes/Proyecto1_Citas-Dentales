@@ -40,7 +40,7 @@
             label4 = new Label();
             inputDate = new DateTimePicker();
             label3 = new Label();
-            inputID = new TextBox();
+            inputAppointmentNumber = new TextBox();
             label2 = new Label();
             buttonSaveAppointment = new Button();
             panel1.SuspendLayout();
@@ -89,7 +89,7 @@
             panel2.Controls.Add(label4);
             panel2.Controls.Add(inputDate);
             panel2.Controls.Add(label3);
-            panel2.Controls.Add(inputID);
+            panel2.Controls.Add(inputAppointmentNumber);
             panel2.Controls.Add(label2);
             panel2.Location = new Point(105, 129);
             panel2.Margin = new Padding(3, 4, 3, 4);
@@ -209,18 +209,18 @@
             label3.TabIndex = 2;
             label3.Text = "Fecha de la cita:";
             // 
-            // inputID
+            // inputAppointmentNumber
             // 
-            inputID.BackColor = Color.White;
-            inputID.BorderStyle = BorderStyle.FixedSingle;
-            inputID.Dock = DockStyle.Top;
-            inputID.Font = new Font("Segoe UI", 10F);
-            inputID.ForeColor = Color.Black;
-            inputID.Location = new Point(0, 39);
-            inputID.Margin = new Padding(3, 4, 3, 4);
-            inputID.Name = "inputID";
-            inputID.Size = new Size(411, 30);
-            inputID.TabIndex = 1;
+            inputAppointmentNumber.BackColor = Color.White;
+            inputAppointmentNumber.BorderStyle = BorderStyle.FixedSingle;
+            inputAppointmentNumber.Dock = DockStyle.Top;
+            inputAppointmentNumber.Font = new Font("Segoe UI", 10F);
+            inputAppointmentNumber.ForeColor = Color.Black;
+            inputAppointmentNumber.Location = new Point(0, 39);
+            inputAppointmentNumber.Margin = new Padding(3, 4, 3, 4);
+            inputAppointmentNumber.Name = "inputAppointmentNumber";
+            inputAppointmentNumber.Size = new Size(411, 30);
+            inputAppointmentNumber.TabIndex = 1;
             // 
             // label2
             // 
@@ -289,7 +289,7 @@
         private ComboBox inputType;
         private Button buttonSaveAppointment;
         private Label label7;
-        private TextBox inputID;
+        private TextBox inputAppointmentNumber;
         private Label label2;
     }
 }

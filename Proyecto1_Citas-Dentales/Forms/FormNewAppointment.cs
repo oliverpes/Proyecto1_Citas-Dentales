@@ -88,17 +88,22 @@ namespace Proyecto1_Citas_Dentales.Forms
 
             if (response.Success)
             {
+                // Mostrar número de cita en el campo correspondiente
+                inputAppointmentNumber.Text = response.Message.Split(':').Last().Trim();
+
+                MessageBox.Show(response.Message, "Nueva cita", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
                 if (Owner is FormAppointments formAppointments)
                 {
                     formAppointments.UpdateData();
                 }
-                this.Close();
             }
             else
             {
                 MessageBox.Show(response.Message, "Nueva cita", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
