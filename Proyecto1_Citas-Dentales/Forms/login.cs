@@ -1,5 +1,6 @@
 ﻿using BusinessLogic;
 using System;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace Proyecto1_Citas_Dentales.Forms
@@ -21,34 +22,55 @@ namespace Proyecto1_Citas_Dentales.Forms
             string usuario = UsuarioTxt.Text.Trim();
             string contraseña = ContraseñaTxt.Text;
 
-            UserService userService = new UserService();
-            bool esValido = userService.ValidarUsuario(usuario, contraseña);
+            // Validar que sea un correo electrónico
+            if (!EsCorreoValido(usuario))
+            {
+                MessageBox.Show("Por favor ingrese un correo electrónico válido.", "Error de formato", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
-            if (esValido)
+            // Validar campos vacíos
+            if (string.IsNullOrWhiteSpace(usuario) || string.IsNullOrWhiteSpace(contraseña))
             {
-                FormMainMenu mainMenu = new FormMainMenu();
-                mainMenu.StartPosition = FormStartPosition.CenterScreen;
-                mainMenu.Location = this.Location;
-                mainMenu.Show();
-                this.Hide();
+                MessageBox.Show("Por favor ingrese usuario y contraseña.", "Campos obligatorios", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
-            else
+
+            try
             {
-                MessageBox.Show("Usuario o contraseña incorrectos.");
+                UserService userService = new UserService();
+                bool esValido = userService.ValidarUsuario(usuario, contraseña);
+
+                if (esValido)
+                {
+                    FormMainMenu mainMenu = new FormMainMenu();
+                    mainMenu.StartPosition = FormStartPosition.CenterScreen;
+                    mainMenu.Location = this.Location;
+                    mainMenu.Show();
+                    this.Hide();
+                }
+                else
+                {
+                    MessageBox.Show("Usuario o contraseña incorrectos.", "Error de inicio de sesión", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al intentar iniciar sesión: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // Validar formato de correo electrónico
+        private bool EsCorreoValido(string correo)
+        {
+            string patron = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
+            return Regex.IsMatch(correo, patron);
         }
 
         private void UsuarioTxt_TextChanged(object sender, EventArgs e) { }
         private void ContraseñaTxt_TextChanged(object sender, EventArgs e) { }
 
-        private void labelTitulo_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
+        private void labelTitulo_Click(object sender, EventArgs e) { }
+        private void label1_Click(object sender, EventArgs e) { }
     }
 }

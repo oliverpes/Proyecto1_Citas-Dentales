@@ -124,9 +124,9 @@
             labelNota.ForeColor = Color.White;
             labelNota.Location = new Point(125, 524);
             labelNota.Name = "labelNota";
-            labelNota.Size = new Size(384, 23);
+            labelNota.Size = new Size(397, 23);
             labelNota.TabIndex = 6;
-            labelNota.Text = "¿No tienes cuenta? Descárgala y únete a Cdental";
+            labelNota.Text = "¿No tienes cuenta? Contactanos y únete a Cdental";
             // 
             // login
             // 
