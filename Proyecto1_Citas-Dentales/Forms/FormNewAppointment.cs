@@ -104,5 +104,10 @@ namespace Proyecto1_Citas_Dentales.Forms
         {
 
         }
+
+        private void inputDate_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
