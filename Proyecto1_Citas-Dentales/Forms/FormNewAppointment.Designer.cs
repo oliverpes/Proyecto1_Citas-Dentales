@@ -188,7 +188,7 @@
             inputDate.Format = DateTimePickerFormat.Custom;
             inputDate.Location = new Point(0, 113);
             inputDate.Margin = new Padding(3, 4, 3, 4);
-            inputDate.MaxDate = new DateTime(2025, 12, 31, 0, 0, 0, 0);
+            inputDate.MaxDate = new DateTime(2028, 12, 31, 0, 0, 0, 0);
             inputDate.MinDate = new DateTime(2023, 1, 1, 0, 0, 0, 0);
             inputDate.Name = "inputDate";
             inputDate.Size = new Size(411, 30);
