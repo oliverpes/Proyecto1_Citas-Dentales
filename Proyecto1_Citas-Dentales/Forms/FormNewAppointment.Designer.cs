@@ -41,6 +41,9 @@
             inputDate = new DateTimePicker();
             label3 = new Label();
             buttonSaveAppointment = new Button();
+            inputAppointmentNumber = new Label();
+            label2 = new Label();
+            label8 = new Label();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             SuspendLayout();
@@ -223,12 +226,52 @@
             buttonSaveAppointment.UseVisualStyleBackColor = false;
             buttonSaveAppointment.Click += buttonSaveAppointment_Click;
             // 
+            // inputAppointmentNumber
+            // 
+            inputAppointmentNumber.Anchor = AnchorStyles.None;
+            inputAppointmentNumber.AutoSize = true;
+            inputAppointmentNumber.Font = new Font("Segoe UI", 12F);
+            inputAppointmentNumber.ForeColor = Color.Black;
+            inputAppointmentNumber.Location = new Point(755, 323);
+            inputAppointmentNumber.Name = "inputAppointmentNumber";
+            inputAppointmentNumber.Padding = new Padding(0, 5, 0, 11);
+            inputAppointmentNumber.Size = new Size(0, 44);
+            inputAppointmentNumber.TabIndex = 10;
+            // 
+            // label2
+            // 
+            label2.Anchor = AnchorStyles.None;
+            label2.AutoSize = true;
+            label2.Font = new Font("Segoe UI", 12F);
+            label2.ForeColor = Color.Black;
+            label2.Location = new Point(670, 322);
+            label2.Name = "label2";
+            label2.Padding = new Padding(0, 5, 0, 11);
+            label2.Size = new Size(79, 44);
+            label2.TabIndex = 11;
+            label2.Text = "No cita:";
+            // 
+            // label8
+            // 
+            label8.Anchor = AnchorStyles.None;
+            label8.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label8.ForeColor = Color.IndianRed;
+            label8.Location = new Point(605, 244);
+            label8.Name = "label8";
+            label8.Padding = new Padding(0, 5, 0, 11);
+            label8.Size = new Size(323, 78);
+            label8.TabIndex = 12;
+            label8.Text = "Nota: cuando se crea la cita se mostrara el numero de la cita";
+            // 
             // FormNewAppointment
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.AliceBlue;
             ClientSize = new Size(973, 682);
+            Controls.Add(label8);
+            Controls.Add(label2);
+            Controls.Add(inputAppointmentNumber);
             Controls.Add(buttonSaveAppointment);
             Controls.Add(panel2);
             Controls.Add(panel1);
@@ -259,5 +302,8 @@
         private ComboBox inputType;
         private Button buttonSaveAppointment;
         private Label label7;
+        private Label inputAppointmentNumber;
+        private Label label2;
+        private Label label8;
     }
 }
