@@ -40,8 +40,6 @@
             label4 = new Label();
             inputDate = new DateTimePicker();
             label3 = new Label();
-            inputAppointmentNumber = new TextBox();
-            label2 = new Label();
             buttonSaveAppointment = new Button();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
@@ -89,8 +87,6 @@
             panel2.Controls.Add(label4);
             panel2.Controls.Add(inputDate);
             panel2.Controls.Add(label3);
-            panel2.Controls.Add(inputAppointmentNumber);
-            panel2.Controls.Add(label2);
             panel2.Location = new Point(105, 129);
             panel2.Margin = new Padding(3, 4, 3, 4);
             panel2.Name = "panel2";
@@ -104,7 +100,7 @@
             inputClient.Font = new Font("Segoe UI", 10F);
             inputClient.ForeColor = Color.Black;
             inputClient.FormattingEnabled = true;
-            inputClient.Location = new Point(0, 337);
+            inputClient.Location = new Point(0, 268);
             inputClient.Margin = new Padding(3, 4, 3, 4);
             inputClient.Name = "inputClient";
             inputClient.Size = new Size(411, 31);
@@ -116,7 +112,7 @@
             label6.Dock = DockStyle.Top;
             label6.Font = new Font("Segoe UI", 12F);
             label6.ForeColor = Color.Black;
-            label6.Location = new Point(0, 293);
+            label6.Location = new Point(0, 224);
             label6.Name = "label6";
             label6.Padding = new Padding(0, 5, 0, 11);
             label6.Size = new Size(76, 44);
@@ -130,7 +126,7 @@
             inputDoctor.Font = new Font("Segoe UI", 10F);
             inputDoctor.ForeColor = Color.Black;
             inputDoctor.FormattingEnabled = true;
-            inputDoctor.Location = new Point(0, 262);
+            inputDoctor.Location = new Point(0, 193);
             inputDoctor.Margin = new Padding(3, 4, 3, 4);
             inputDoctor.Name = "inputDoctor";
             inputDoctor.Size = new Size(411, 31);
@@ -142,7 +138,7 @@
             label5.Dock = DockStyle.Top;
             label5.Font = new Font("Segoe UI", 12F);
             label5.ForeColor = Color.Black;
-            label5.Location = new Point(0, 218);
+            label5.Location = new Point(0, 149);
             label5.Name = "label5";
             label5.Padding = new Padding(0, 5, 0, 11);
             label5.Size = new Size(77, 44);
@@ -156,7 +152,7 @@
             inputType.Font = new Font("Segoe UI", 10F);
             inputType.ForeColor = Color.Black;
             inputType.FormattingEnabled = true;
-            inputType.Location = new Point(0, 187);
+            inputType.Location = new Point(0, 118);
             inputType.Margin = new Padding(3, 4, 3, 4);
             inputType.Name = "inputType";
             inputType.Size = new Size(411, 31);
@@ -168,7 +164,7 @@
             label4.Dock = DockStyle.Top;
             label4.Font = new Font("Segoe UI", 12F);
             label4.ForeColor = Color.Black;
-            label4.Location = new Point(0, 143);
+            label4.Location = new Point(0, 74);
             label4.Name = "label4";
             label4.Padding = new Padding(0, 5, 0, 11);
             label4.Size = new Size(118, 44);
@@ -186,7 +182,7 @@
             inputDate.Dock = DockStyle.Top;
             inputDate.Font = new Font("Segoe UI", 10F);
             inputDate.Format = DateTimePickerFormat.Custom;
-            inputDate.Location = new Point(0, 113);
+            inputDate.Location = new Point(0, 44);
             inputDate.Margin = new Padding(3, 4, 3, 4);
             inputDate.MaxDate = new DateTime(2028, 12, 31, 0, 0, 0, 0);
             inputDate.MinDate = new DateTime(2023, 1, 1, 0, 0, 0, 0);
@@ -202,38 +198,12 @@
             label3.Dock = DockStyle.Top;
             label3.Font = new Font("Segoe UI", 12F);
             label3.ForeColor = Color.Black;
-            label3.Location = new Point(0, 69);
+            label3.Location = new Point(0, 0);
             label3.Name = "label3";
             label3.Padding = new Padding(0, 5, 0, 11);
             label3.Size = new Size(149, 44);
             label3.TabIndex = 2;
             label3.Text = "Fecha de la cita:";
-            // 
-            // inputAppointmentNumber
-            // 
-            inputAppointmentNumber.BackColor = Color.White;
-            inputAppointmentNumber.BorderStyle = BorderStyle.FixedSingle;
-            inputAppointmentNumber.Dock = DockStyle.Top;
-            inputAppointmentNumber.Font = new Font("Segoe UI", 10F);
-            inputAppointmentNumber.ForeColor = Color.Black;
-            inputAppointmentNumber.Location = new Point(0, 39);
-            inputAppointmentNumber.Margin = new Padding(3, 4, 3, 4);
-            inputAppointmentNumber.Name = "inputAppointmentNumber";
-            inputAppointmentNumber.Size = new Size(411, 30);
-            inputAppointmentNumber.TabIndex = 1;
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Dock = DockStyle.Top;
-            label2.Font = new Font("Segoe UI", 12F);
-            label2.ForeColor = Color.Black;
-            label2.Location = new Point(0, 0);
-            label2.Name = "label2";
-            label2.Padding = new Padding(0, 0, 0, 11);
-            label2.Size = new Size(151, 39);
-            label2.TabIndex = 0;
-            label2.Text = "Numero de cita:";
             // 
             // buttonSaveAppointment
             // 
@@ -289,7 +259,5 @@
         private ComboBox inputType;
         private Button buttonSaveAppointment;
         private Label label7;
-        private TextBox inputAppointmentNumber;
-        private Label label2;
     }
 }
